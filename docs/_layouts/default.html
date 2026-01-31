@@ -11,6 +11,20 @@
 {% seo %}
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
     <style>
+      .highlighter-rouge,
+      .language-python,
+      .language-bash,
+      .language-json {
+        background-color: #161b22 !important;
+        border-radius: 8px !important;
+        margin: 16px 0 !important;
+      }
+      .highlighter-rouge .highlight,
+      .highlight {
+        background-color: #161b22 !important;
+        border-radius: 8px !important;
+        margin: 0 !important;
+      }
       .main-content code {
         background-color: #161b22 !important;
         color: #79c0ff !important;
@@ -28,6 +42,7 @@
         overflow-x: auto !important;
         border-radius: 8px !important;
         line-height: 1.6 !important;
+        margin: 0 !important;
       }
       .main-content pre code {
         background-color: transparent !important;
@@ -35,14 +50,14 @@
         padding: 0 !important;
         color: #c9d1d9 !important;
       }
-      .main-content .highlight,
-      .main-content .highlight pre {
-        background-color: #161b22 !important;
-      }
       .highlight .k, .highlight .kd, .highlight .kn { color: #ff7b72 !important; }
-      .highlight .s, .highlight .s1, .highlight .s2 { color: #a5d6ff !important; }
-      .highlight .nf, .highlight .fm { color: #d2a8ff !important; }
       .highlight .nc { color: #ffa657 !important; }
+      .highlight .nf { color: #d2a8ff !important; }
+      .highlight .n { color: #c9d1d9 !important; }
+      .highlight .p { color: #c9d1d9 !important; }
+      .highlight .o { color: #ff7b72 !important; }
+      .highlight .bp { color: #79c0ff !important; }
+      .highlight .s, .highlight .s1, .highlight .s2 { color: #a5d6ff !important; }
       .highlight .c, .highlight .c1 { color: #8b949e !important; font-style: italic !important; }
     </style>
   </head>
