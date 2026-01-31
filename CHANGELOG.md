@@ -109,6 +109,22 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 - Implementação de widgets básicos
 - Sistema de configuração
 
+## [0.3.0] - 2026-01-31
+
+### Added
+- **Window**: Always-on-top functionality for Windows (`SetWindowPos` with `HWND_TOPMOST`) and Linux (`SDL_VIDEO_WINDOW_ALWAYS_ON_TOP`).
+- **Tests**: Added `test_physics_engine_corner_entry` to achieve 100% coverage on physics engine.
+
+### Changed
+- **Physics**: Implemented "Human Hand" steering model with rate limiting (max 2.5 units/second).
+- **Physics**: Refined damping using exponential moving average for smoother, more realistic steering.
+- **Physics**: Micro-corrections now only activate under high load (Speed > 40 + Steering > 0.1).
+- **Config**: Added `layout.json` to `.gitignore` (user-specific window positions).
+
+### Fixed
+- **Physics**: Eliminated unrealistic "full rotation" on initialization.
+- **Tests**: Updated `test_window_init_windows_os` to include `SetWindowPos` mock verification.
+
 ## [0.2.0] - 2026-01-31
 
 ### Added

@@ -2,7 +2,7 @@
 
 Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado continuamente conforme o progresso.
 
-**Última atualização**: 2026-01-31 (v0.2.0)
+**Última atualização**: 2026-01-31 (v0.3.0)
 
 ---
 
