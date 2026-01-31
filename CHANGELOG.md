@@ -23,7 +23,9 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 - SharedMemoryProvider (Stub) para estrutura futura de memória compartilhada
 - Documentação da estrutura de memória do rFactor 2 / LMU
 - Classe abstrata `Widget` (Foundation UI)
+- Documentação detalhada da API Widget (atributos e interface)
 - Testes unitários para `Widget` (100% cobertura)
+- Testes de edge cases para funções de normalização (NaN, Inf, tipos inválidos)
 
 ### Planejado
 
