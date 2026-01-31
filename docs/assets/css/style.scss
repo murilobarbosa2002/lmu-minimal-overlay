@@ -1,0 +1,235 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+/* ==================== TEMA ESCURO ==================== */
+
+:root {
+  --bg-primary: #0d1117;
+  --bg-secondary: #161b22;
+  --bg-tertiary: #21262d;
+  --text-primary: #c9d1d9;
+  --text-secondary: #8b949e;
+  --accent-primary: #58a6ff;
+  --accent-secondary: #1f6feb;
+  --border-color: #30363d;
+  --code-bg: #161b22;
+  --sidebar-bg: #161b22;
+}
+
+/* Background principal */
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+/* Header */
+.page-header {
+  background-image: linear-gradient(120deg, #1f6feb, #58a6ff);
+  background-color: var(--accent-secondary);
+}
+
+.project-name {
+  color: #ffffff;
+}
+
+.project-tagline {
+  color: #e6edf3;
+  opacity: 0.9;
+}
+
+.btn {
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+.btn:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Main content */
+.main-content-wrapper {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.main-content h1,
+.main-content h2,
+.main-content h3,
+.main-content h4,
+.main-content h5,
+.main-content h6 {
+  color: var(--text-primary);
+}
+
+.main-content h1,
+.main-content h2 {
+  border-bottom-color: var(--border-color);
+}
+
+.main-content a {
+  color: var(--accent-primary);
+}
+
+.main-content a:hover {
+  color: #79c0ff;
+}
+
+.main-content code {
+  background-color: var(--code-bg);
+  color: #79c0ff;
+  border: 1px solid var(--border-color);
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+.main-content pre {
+  background-color: var(--code-bg);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+.main-content pre code {
+  background-color: transparent;
+  border: none;
+  color: var(--text-primary);
+}
+
+.main-content blockquote {
+  border-left-color: var(--border-color);
+  color: var(--text-secondary);
+}
+
+.main-content table {
+  border-color: var(--border-color);
+}
+
+.main-content table th,
+.main-content table td {
+  border-color: var(--border-color);
+}
+
+.main-content table tr {
+  background-color: var(--bg-primary);
+  border-top-color: var(--border-color);
+}
+
+.main-content table tr:nth-child(2n) {
+  background-color: var(--bg-secondary);
+}
+
+.main-content hr {
+  border-bottom-color: var(--border-color);
+}
+
+/* Sidebar */
+.sidebar {
+  background-color: var(--sidebar-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+}
+
+.sidebar h3,
+.sidebar h4 {
+  color: var(--text-primary);
+  border-bottom-color: var(--border-color);
+}
+
+.sidebar a {
+  color: var(--accent-primary);
+}
+
+.sidebar a:hover {
+  color: #79c0ff;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+  color: var(--text-secondary);
+  border-bottom-color: var(--border-color);
+}
+
+.breadcrumb a {
+  color: var(--accent-primary);
+}
+
+.breadcrumb a:hover {
+  color: #79c0ff;
+}
+
+/* Footer */
+.site-footer {
+  border-top-color: var(--border-color);
+  color: var(--text-secondary);
+}
+
+.site-footer-owner,
+.site-footer-credits {
+  color: var(--text-secondary);
+}
+
+.site-footer a {
+  color: var(--accent-primary);
+}
+
+.site-footer a:hover {
+  color: #79c0ff;
+}
+
+/* Scrollbar (Webkit) */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #484f58;
+}
+
+/* Selection */
+::selection {
+  background-color: rgba(88, 166, 255, 0.3);
+  color: var(--text-primary);
+}
+
+/* Ajustes para melhor contraste */
+.main-content img {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 4px;
+}
+
+/* Badges e labels */
+.main-content .badge,
+.main-content .label {
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+/* Melhorias de acessibilidade */
+a:focus,
+button:focus {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
+/* Responsivo - ajustes para mobile */
+@media (max-width: 768px) {
+  .sidebar {
+    background-color: var(--bg-secondary);
+  }
+}
