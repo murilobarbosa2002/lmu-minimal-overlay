@@ -17,15 +17,14 @@ class WindowManager:
     def init(self) -> None:
         pygame.init()
         pygame.display.set_caption(self.title)
+        # NOFRAME is crucial for transparency on Linux/Windows overlays
         flags = pygame.SRCALPHA | pygame.NOFRAME
         self.surface = pygame.display.set_mode((self.width, self.height), flags, 32)
-        self.window = sdl2_video.Window.from_display_module()
         self.is_running = True
 
     def move_window(self, dx: int, dy: int) -> None:
-        if self.window:
-            x, y = self.window.position
-            self.window.position = (int(x + dx), int(y + dy))
+        # Not used in fullscreen mode, but kept for interface compatibility if needed
+        pass
 
     def set_transparent(self, transparent: bool) -> None:
         if os.name == 'nt':

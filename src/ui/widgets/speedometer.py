@@ -79,7 +79,9 @@ class Speedometer(Widget):
                 
         elif event.type == pygame.MOUSEMOTION:
             if self.is_dragging:
-                # Logic now handled by Main/Window to move the actual window
+                mouse_pos = event.pos
+                self.x = mouse_pos[0] + self.drag_offset[0]
+                self.y = mouse_pos[1] + self.drag_offset[1]
                 return True
                 
         return False
