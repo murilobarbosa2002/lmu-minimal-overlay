@@ -5,8 +5,6 @@ from src.core.domain.telemetry_data import TelemetryData
 
 
 class MockTelemetryProvider(ITelemetryProvider):
-    """Provider mock que gera dados sintéticos de telemetria para testes."""
-
     def __init__(self):
         self._start_time = time.time()
 

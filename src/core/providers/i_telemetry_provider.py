@@ -3,7 +3,7 @@ from src.core.domain.telemetry_data import TelemetryData
 
 
 class ITelemetryProvider(ABC):
-class ITelemetryProvider(ABC):
+
     @abstractmethod
     def get_data(self) -> TelemetryData:
         pass
