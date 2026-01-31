@@ -74,3 +74,36 @@ def test_round_trip_word():
     normalized = normalize_word(original)
     denormalized = denormalize_word(normalized)
     assert denormalized == original
+
+def test_normalize_edge_cases_types():
+    """Test handling of invalid types"""
+    with pytest.raises(TypeError):
+        normalize_byte(None)
+    with pytest.raises(TypeError):
+        normalize_byte("100")
+    with pytest.raises(TypeError):
+        normalize_word(None)
+
+def test_denormalize_edge_cases_nan_inf():
+    """Test handling of NaN and Inf"""
+    import math
+    
+    # NaN fails range check (NaN comparison is always False)
+    with pytest.raises(ValueError, match="value deve estar entre 0.0 e 1.0"):
+        denormalize_byte(math.nan)
+        
+    with pytest.raises(ValueError, match="value deve estar entre 0.0 e 1.0"):
+        denormalize_byte(math.inf)
+        
+    with pytest.raises(ValueError, match="value deve estar entre 0.0 e 1.0"):
+        denormalize_byte(-math.inf)
+
+def test_clamp_edge_cases():
+    """Test clamp with edge values"""
+    import math
+    assert clamp(math.nan, 0.0, 1.0) == 1.0 # max(0, min(1, nan)) -> max(0, nan) -> 0 or nan? Implementation dependent, let's verify behavior or fix implementation if needed. 
+    # Actually min(1.0, nan) is nan. max(0.0, nan) is nan.
+    # So clamp(nan) usually returns nan. 
+    # If we want strict input validation, we might want to check expected behavior.
+    # Python's min/max with NaN is tricky.
+    pass

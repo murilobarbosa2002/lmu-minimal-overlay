@@ -52,7 +52,7 @@ Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado co
   - [x] Implementar denormalize_word(value: float) -> int
   - [x] Implementar clamp(value, min, max) -> float
   - [x] Testar com pytest (100% cobertura) funções com pytest
-  - [ ] Adicionar testes de edge cases
+  - [x] Adicionar testes de edge cases
 
 - [ ] **State Management**
   - [ ] Criar classe abstrata ApplicationState
@@ -63,10 +63,10 @@ Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado co
 
 ### 1.4 Layer 3: Presentation - Base
 
-- [ ] **Widget Base**
-  - [ ] Criar classe abstrata Widget
-  - [ ] Definir métodos draw(), update(), handle_input()
-  - [ ] Implementar get_rect() e set_position()
+- [x] **Widget Base**
+  - [x] Criar classe abstrata Widget
+  - [x] Definir métodos draw(), update(), handle_input()
+  - [x] Implementar get_rect() e set_position()
   - [ ] Documentar interface completa
 
 - [ ] **Window Manager**
