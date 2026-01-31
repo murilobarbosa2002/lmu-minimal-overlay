@@ -43,24 +43,25 @@ class Speedometer(Widget):
             self.gear_surf = None
 
     def draw(self, surface: pygame.Surface) -> None:
-        s = pygame.Surface((self.width, self.height))
-        s.set_alpha(128)
-        s.fill((0, 0, 0))
+        bg_rect = pygame.Rect(self.x, self.y, self.width, self.height)
+        
+        s = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
+        pygame.draw.rect(s, (0, 0, 0, 200), s.get_rect(), border_radius=15)
         surface.blit(s, (self.x, self.y))
         
         if self.speed_surf is None:
-            font = FontManager.get_font(60, bold=True)
+            font = FontManager.get_font(80, bold=True)
             self.speed_surf = font.render(f"{int(self.speed)}", True, self.text_color)
             
         speed_rect = self.speed_surf.get_rect(center=(self.x + self.width // 2, self.y + self.height // 2))
         surface.blit(self.speed_surf, speed_rect)
         
         if self.gear_surf is None:
-            font = FontManager.get_font(40, bold=True)
+            font = FontManager.get_font(50, bold=True)
             gear_str = "R" if self.gear == -1 else "N" if self.gear == 0 else str(self.gear)
             self.gear_surf = font.render(gear_str, True, self.gear_color)
             
-        gear_rect = self.gear_surf.get_rect(center=(self.x + self.width // 2, self.y + 30))
+        gear_rect = self.gear_surf.get_rect(center=(self.x + self.width // 2, self.y + 40))
         surface.blit(self.gear_surf, gear_rect)
         
         if self.unit_surf is None:

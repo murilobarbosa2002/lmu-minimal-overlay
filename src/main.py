@@ -5,23 +5,15 @@ from src.core.state_machine import StateMachine
 from src.core.states import RunningState, EditState
 from src.core.providers.mock_telemetry_provider import MockTelemetryProvider
 from src.core.domain.telemetry_data import TelemetryData
-
-def main():
-    window = WindowManager(title="LMU Telemetry Overlay", width=1280, height=720)
-    window.init()
-    provider = MockTelemetryProvider()
 from src.ui.widgets.speedometer import Speedometer
 
 def main():
-    window = WindowManager(title="LMU Telemetry Overlay", width=1280, height=720)
+    window = WindowManager(title="LMU Telemetry Overlay", width=250, height=250)
     window.init()
     provider = MockTelemetryProvider()
     state_machine = StateMachine()
     
-    # Create Widgets
-    # Center screen
-    cx, cy = 1280 // 2, 720 // 2
-    speedometer = Speedometer(x=cx - 100, y=cy - 75)
+    speedometer = Speedometer(x=25, y=25, width=200, height=200)
     
     widgets = [speedometer]
     
