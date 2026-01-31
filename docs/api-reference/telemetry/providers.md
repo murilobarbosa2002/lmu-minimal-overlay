@@ -137,3 +137,51 @@ Testes implementados:
 
 Veja [Architecture - Layers](../../architecture/layers.md).
 Veja [Architecture - Layers](../../architecture/layers.md).
+
+## SharedMemoryProvider (Stub)
+
+**Nota**: Este provider está em estágio inicial (Stub) e não está funcional na versão atual. A implementação completa via `mmap` será realizada na Fase 3.
+
+Este provider lerá dados da memória compartilhada (Shared Memory) do Le Mans Ultimate, que utiliza a mesma engine do rFactor 2.
+
+### Funcionamento Interno
+
+O LMU expõe dados de telemetria através de arquivos mapeados em memória (Memory Mapped Files) no Windows.
+
+- **Nome do Mapa**: `$rFactor2SMMP_Scoring$` e `$rFactor2SMMP_Telemetry$` (A ser confirmado para LMU)
+- **Método de Acesso**: Biblioteca `mmap` do Python
+- **Formato**: Struct C binária (ctypes)
+
+### Estrutura de Dados (Preview)
+
+A struct de telemetria típica do rFactor 2 contém:
+
+```c
+struct rF2VehicleTelemetry {
+    // Time
+    double mDeltaTime;
+    double mElapsedTime;
+    
+    // Inputs
+    double mThrottle;
+    double mBrake;
+    double mClutch;
+    double mSteeringWheelAngle;
+    
+    // Vehicle State
+    double mEngineRPM;
+    double mCarSpeed; // m/s
+    long mGear;
+    
+    // ... outros campos (temperaturas, pressões, física)
+};
+```
+
+### Implementação Atual (Stub)
+
+Atualmente, o provider apenas implementa a interface `ITelemetryProvider` para garantir integridade arquitetural:
+
+- `is_available()`: Retorna `False`
+- `connect()`: Levanta `NotImplementedError`
+- `get_data()`: Levanta `RuntimeError`
+
