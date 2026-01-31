@@ -13,11 +13,16 @@ class TestOverlayApp:
         
         mock_provider = Mock()
         mock_font_provider = Mock()
+        mock_config_manager = Mock()
+        # Default behavior for get_layout to return empty list for widgets
+        # and empty dict for window config
+        mock_config_manager.get_layout.side_effect = lambda key, default=None: [] if key == "widgets" else {}
         
         return OverlayApp(
             window=mock_window,
             provider=mock_provider,
-            font_provider=mock_font_provider
+            font_provider=mock_font_provider,
+            config_manager=mock_config_manager
         )
 
     def test_setup_initializes_components(self, app):
@@ -109,3 +114,51 @@ class TestOverlayApp:
                             mock_draw.assert_called_once()
                             mock_close.assert_called_once()
                             mock_exit.assert_called_once()
+    
+    def test_setup_loads_widgets_from_config(self, app):
+        # Setup mock config to return valid widget data
+        app.config_manager.get_layout.side_effect = lambda key, default=None: [
+            {"type": "DashboardCard", "x": 100, "y": 200, "width": 300, "height": 100}
+        ] if key == "widgets" else {}
+        
+        app.setup()
+        
+        assert len(app.widgets) == 1
+        assert app.widgets[0].x == 100
+        assert app.widgets[0].y == 200
+
+    def test_save_state(self, app):
+        app.setup()
+        
+        # Setup window props
+        app.window.x = 10
+        app.window.y = 20
+        app.window.width = 1920
+        app.window.height = 1080
+        
+        app.save_state()
+        
+        # Verify window config saved
+        app.config_manager.set_layout.assert_any_call("window", {
+            "x": 10, "y": 20, "width": 1920, "height": 1080, "always_on_top": True
+        })
+        
+        # Verify widgets saved
+        # We check that set_layout was called for widgets with a list containing one dict
+        args = app.config_manager.set_layout.call_args_list[-1]
+        assert args[0][0] == "widgets"
+        assert len(args[0][1]) == 1
+        assert args[0][1][0]["type"] == "DashboardCard"
+
+    @patch('sys.exit')
+    def test_run_saves_state_on_exit(self, mock_exit, app):
+        type(app.window).is_running = PropertyMock(side_effect=[True, False])
+        
+        with patch.object(app, 'setup'):
+            with patch.object(app, '_handle_input'):
+                with patch.object(app, '_update'):
+                    with patch.object(app, '_draw'):
+                        with patch.object(app.window, 'close'):
+                             with patch.object(app, 'save_state') as mock_save:
+                                app.run()
+                                mock_save.assert_called_once()

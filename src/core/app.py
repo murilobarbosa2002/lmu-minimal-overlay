@@ -7,6 +7,7 @@ from src .core .application .services .input_handler import InputHandler
 from src .core .application .states .running_state import RunningState 
 from src .core .application .states .edit_state import EditState 
 from src .core .providers .i_telemetry_provider import ITelemetryProvider 
+from src .core .interfaces .i_config_manager import IConfigManager 
 from src .ui .widgets .dashboard_card import DashboardCard 
 
 
@@ -15,21 +16,54 @@ class OverlayApp :
     self ,
     window :IWindowManager ,
     provider :ITelemetryProvider ,
-    font_provider :IFontProvider 
+    font_provider :IFontProvider ,
+    config_manager :IConfigManager 
     ):
         self .window =window 
         self .provider =provider 
         self .font_provider =font_provider 
+        self .config_manager =config_manager 
         self .state_machine =StateMachine ()
         self .widgets =[]
         self .input_handler =None 
 
     def setup (self )->None :
+        # Apply window configuration
+        win_cfg =self .config_manager .get_layout ("window",{})
+        x =win_cfg .get ("x",0 )
+        y =win_cfg .get ("y",0 )
+        self .window .set_position (x ,y )
+        
         self .window .init ()
         self .provider .connect ()
-        self .widgets =[
-        DashboardCard (x =1700 ,y =50 ,width =350 ,height =130 )
-        ]
+        
+        # Load widgets
+        self .widgets =[]
+        widgets_data =self .config_manager .get_layout ("widgets",[])
+        
+        if not widgets_data :
+            # Default setup
+            default_widget =DashboardCard (x =1700 ,y =50 ,width =350 ,height =130 )
+            self .widgets .append (default_widget )
+            
+            # Save default layout
+            new_widgets_data =[{
+                "type":"DashboardCard",
+                "x":1700 ,
+                "y":50 ,
+                "width":350 ,
+                "height":130 
+            }]
+            self .config_manager .set_layout ("widgets",new_widgets_data )
+        else :
+            for w_data in widgets_data :
+                if w_data .get ("type")=="DashboardCard":
+                    self .widgets .append (DashboardCard (
+                        x =w_data .get ("x",1700 ),
+                        y =w_data .get ("y",50 ),
+                        width =w_data .get ("width",350 ),
+                        height =w_data .get ("height",130 )
+                    ))
         running_state =RunningState (self .state_machine ,widgets =self .widgets )
         edit_state =EditState (self .state_machine ,widgets =self .widgets )
         self .state_machine .change_state (running_state )
@@ -53,11 +87,38 @@ class OverlayApp :
             self .state_machine .draw (self .window .surface )
         self .window .update_display ()
 
+    def save_state (self )->None :
+        # Save window position if available
+        if hasattr (self .window ,'x')and hasattr (self .window ,'y'):
+             win_cfg ={
+                 "x":self .window .x ,
+                 "y":self .window .y ,
+                 "width":getattr (self .window ,'width',1920 ),
+                 "height":getattr (self .window ,'height',1080 ),
+                 "always_on_top":True 
+             }
+             self .config_manager .set_layout ("window",win_cfg )
+
+        # Save widgets
+        widgets_data =[]
+        for widget in self .widgets :
+            w_data ={
+                "type":type (widget ).__name__ ,
+                "x":widget .x ,
+                "y":widget .y ,
+                "width":widget .width ,
+                "height":widget .height 
+            }
+            widgets_data .append (w_data )
+        
+        self .config_manager .set_layout ("widgets",widgets_data )
+
     def run (self ):
         self .setup ()
         while self .window .is_running :
             self ._handle_input ()
             self ._update ()
             self ._draw ()
+        self .save_state ()
         self .window .close ()
         sys .exit ()

@@ -124,3 +124,13 @@ def test_surface_property_getter():
     
     assert wm.surface is wm._surface
 
+@patch('os.environ', {})
+def test_set_position():
+    wm = WindowManager()
+    wm.set_position(100, 200)
+    
+    assert wm.x == 100
+    assert wm.y == 200
+    import os
+    assert os.environ['SDL_VIDEO_WINDOW_POS'] == "100,200"
+

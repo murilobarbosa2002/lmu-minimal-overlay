@@ -1,0 +1,10 @@
+{
+    "window": {
+        "x": 100,
+        "y": 100,
+        "width": 1920,
+        "height": 200,
+        "always_on_top": true
+    },
+    "widgets": []
+}

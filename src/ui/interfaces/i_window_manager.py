@@ -8,6 +8,10 @@ class IWindowManager (ABC ):
         pass 
 
     @abstractmethod 
+    def set_position (self ,x :int ,y :int )->None :
+        pass 
+
+    @abstractmethod 
     def clear (self )->None :
         pass 
 

@@ -27,6 +27,15 @@ class WindowManager (IWindowManager ):
             )
         else :
             self .transparency_handler =transparency_handler 
+        
+        self .x =0 
+        self .y =0 
+
+    def set_position (self ,x :int ,y :int )->None :
+        self .x =x 
+        self .y =y 
+        import os 
+        os .environ ['SDL_VIDEO_WINDOW_POS']="%d,%d" %(x ,y )
 
     def init (self )->None :
         pygame .init ()
