@@ -1,5 +1,4 @@
 import pygame
-import pygame._sdl2.video as sdl2_video
 import os
 import sys
 
@@ -9,7 +8,6 @@ class WindowManager:
         self.width = width
         self.height = height
         self.surface: pygame.Surface | None = None
-        self.window: sdl2_video.Window | None = None
         self.is_running = False
         self.clock = pygame.time.Clock()
         self.fps = 60
@@ -17,20 +15,9 @@ class WindowManager:
     def init(self) -> None:
         pygame.init()
         pygame.display.set_caption(self.title)
-        # NOFRAME is crucial for transparency on Linux/Windows overlays
         flags = pygame.SRCALPHA | pygame.NOFRAME
         self.surface = pygame.display.set_mode((self.width, self.height), flags, 32)
         self.is_running = True
-
-    def move_window(self, dx: int, dy: int) -> None:
-        # Not used in fullscreen mode, but kept for interface compatibility if needed
-        pass
-
-    def set_transparent(self, transparent: bool) -> None:
-        if os.name == 'nt':
-            pass
-        else:
-            pass
 
     def clear(self) -> None:
         if self.surface:

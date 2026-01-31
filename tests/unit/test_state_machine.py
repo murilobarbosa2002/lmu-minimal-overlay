@@ -1,7 +1,9 @@
 import pytest
 from unittest.mock import Mock
-from src.core.state_machine import StateMachine, ApplicationState
-from src.core.states import RunningState, EditState
+from src.core.application.services.state_machine import StateMachine
+from src.core.application.interfaces.state import IApplicationState as ApplicationState
+from src.core.application.states.running_state import RunningState
+from src.core.application.states.edit_state import EditState
 from src.core.domain.telemetry_data import TelemetryData
 import pygame
 

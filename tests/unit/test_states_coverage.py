@@ -1,7 +1,9 @@
 import pytest
 from unittest.mock import Mock, call
 import pygame
-from src.core.states import RunningState, EditState
+from src.core.application.states.running_state import RunningState
+from src.core.application.states.edit_state import EditState
+from src.core.application.interfaces.state import IApplicationState as ApplicationState
 from src.ui.widgets.widget import Widget
 from src.core.domain.telemetry_data import TelemetryData
 

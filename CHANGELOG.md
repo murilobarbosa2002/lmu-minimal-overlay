@@ -34,8 +34,9 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 - Widget `Speedometer` funcional com cache de renderização
 - Utilitário `FontManager`
 - Atualização em `main.py` para exibir o velocímetro
-- Refinamento visual: Janela estilo "Card" (250x250) e fontes Roboto
-- Testes unitários para Fonts e Speedometer (100% cobertura)
+- Refatoração SRP: Criação de `OverlayApp` e limpeza de `main.py`
+- Arquitetura SOLID: Reestruturação de `src/core` em `application/services/states`
+- Limpeza de Código: Remoção de comentários e docstrings em `src/`
 
 ### Planejado
 

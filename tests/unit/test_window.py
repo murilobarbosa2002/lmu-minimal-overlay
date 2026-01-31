@@ -28,12 +28,6 @@ def test_handle_events_quit(mock_get):
     assert wm.is_running is False
     assert len(events) == 1
 
-def test_set_transparent_safe():
-    # Should not raise error on Linux/Test env
-    wm = WindowManager()
-    wm.set_transparent(True)
-    wm.set_transparent(False)
-
 @patch('pygame.display.set_mode')
 @patch('pygame.init')
 def test_window_init_windows_os(mock_init, mock_set_mode):
@@ -74,9 +68,3 @@ def test_clear_screen_no_surface():
     wm.surface = None
     # Should not raise exception
     wm.clear()
-
-def test_set_transparent_windows():
-    with patch('os.name', 'nt'):
-        wm = WindowManager()
-        # Should execute safely (stub)
-        wm.set_transparent(True)

@@ -195,14 +195,14 @@ Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado co
 
 ### 4.1 Application Main
 
-- [ ] **main.py**
-  - [ ] Implementar entry point
-  - [ ] Implementar loop principal Pygame
-  - [ ] Integrar TelemetryProvider
-  - [ ] Integrar ConfigManager
-  - [ ] Integrar Widgets
-  - [ ] Implementar gerenciamento de estados
-  - [ ] Implementar captura de eventos (F1, F2, ESC)
+- [x] **main.py**
+  - [x] Implementar entry point
+  - [x] Implementar loop principal Pygame
+  - [x] Integrar TelemetryProvider
+  - [x] Integrar ConfigManager (Parcial)
+  - [x] Integrar Widgets
+  - [x] Implementar gerenciamento de estados
+  - [x] Implementar captura de eventos (F1, F2, ESC)
   - [ ] Implementar salvamento ao fechar
 
 - [ ] **Testes de Integração**
@@ -299,13 +299,13 @@ Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado co
 
 ### 7.1 Testes Unitários
 
-- [ ] **Core**
-  - [ ] Testar normalização (100% cobertura)
-  - [ ] Testar TelemetryData
-  - [ ] Testar states
+- [x] **Core**
+  - [x] Testar normalização (100% cobertura)
+  - [x] Testar TelemetryData
+  - [x] Testar states
 
-- [ ] **Infra**
-  - [ ] Testar MockTelemetryProvider
+- [x] **Infra**
+  - [x] Testar MockTelemetryProvider
   - [ ] Testar SharedMemoryProvider
   - [ ] Testar ITelemetryProvider interface
 
@@ -444,20 +444,20 @@ Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado co
 ## Métricas de Progresso
 
 ### Fase 1: Fundação
-- **Progresso**: 90% (9/10 tarefas)
-- **Status**: 🟡 Em Progresso
+- **Progresso**: 100% (10/10 tarefas)
+- **Status**: 🟢 Completo
 
 ### Fase 2: Widgets
-- **Progresso**: 0% (0/12 tarefas)
-- **Status**: ⚪ Não Iniciado
+- **Progresso**: 33% (4/12 tarefas)
+- **Status**: 🟡 Em Progresso
 
 ### Fase 3: Configuração
 - **Progresso**: 0% (0/6 tarefas)
 - **Status**: ⚪ Não Iniciado
 
 ### Fase 4: Integração
-- **Progresso**: 0% (0/8 tarefas)
-- **Status**: ⚪ Não Iniciado
+- **Progresso**: 50% (4/8 tarefas)
+- **Status**: 🟡 Em Progresso
 
 ### Fase 5: Produção
 - **Progresso**: 0% (0/7 tarefas)
@@ -468,8 +468,8 @@ Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado co
 - **Status**: ⚪ Não Iniciado
 
 ### Fase 7: Testes
-- **Progresso**: 0% (0/13 tarefas)
-- **Status**: ⚪ Não Iniciado
+- **Progresso**: 40% (5/13 tarefas)
+- **Status**: 🟡 Em Progresso
 
 ### Fase 8: Documentação
 - **Progresso**: 85% (11/13 tarefas)
