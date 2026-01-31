@@ -22,7 +22,7 @@ def test_speedometer_init():
     speedometer = Speedometer(x=10, y=10)
     assert speedometer.x == 10
     assert speedometer.y == 10
-    assert speedometer.width == 400
+    assert speedometer.width == 350
     assert speedometer.height == 130
     assert speedometer.speed == 0.0
     assert speedometer.gear == 0
