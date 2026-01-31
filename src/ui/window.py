@@ -1,48 +1,48 @@
 import pygame
-import os
 import sys
+from src.ui.interfaces.i_window_manager import IWindowManager
+from src.ui.platform.transparency_handler import ITransparencyHandler, Win32TransparencyHandler, NullTransparencyHandler
 
-class WindowManager:
-    def __init__(self, title: str = "LMU Overlay", width: int = 800, height: int = 600):
+
+class WindowManager(IWindowManager):
+    def __init__(
+        self, 
+        title: str = "LMU Overlay", 
+        width: int = 800, 
+        height: int = 600,
+        transparency_handler: ITransparencyHandler | None = None
+    ):
         self.title = title
         self.width = width
         self.height = height
-        self.surface: pygame.Surface | None = None
-        self.is_running = False
+        self._surface: pygame.Surface | None = None
+        self._is_running = False
         self.clock = pygame.time.Clock()
         self.fps = 60
+        
+        if transparency_handler is None:
+            self.transparency_handler = (
+                Win32TransparencyHandler() if sys.platform == "win32" 
+                else NullTransparencyHandler()
+            )
+        else:
+            self.transparency_handler = transparency_handler
 
     def init(self) -> None:
         pygame.init()
         pygame.display.set_caption(self.title)
         flags = pygame.SRCALPHA | pygame.NOFRAME
-        self.surface = pygame.display.set_mode((self.width, self.height), flags)
+        self._surface = pygame.display.set_mode((self.width, self.height), flags)
         
         if sys.platform == "win32":
-            try:
-                import win32gui
-                import win32con
-                import win32api
-                
-                hwnd = pygame.display.get_wm_info()["window"]
-                
-                ex_style = win32gui.GetWindowLong(hwnd, win32con.GWL_EXSTYLE)
-                win32gui.SetWindowLong(hwnd, win32con.GWL_EXSTYLE, ex_style | win32con.WS_EX_LAYERED)
-                
-                win32gui.SetLayeredWindowAttributes(
-                    hwnd, 
-                    win32api.RGB(255, 0, 128), 
-                    217, 
-                    win32con.LWA_COLORKEY | win32con.LWA_ALPHA
-                )
-            except ImportError:
-                pass
+            hwnd = pygame.display.get_wm_info()["window"]
+            self.transparency_handler.apply_transparency(hwnd)
 
-        self.is_running = True
+        self._is_running = True
 
     def clear(self) -> None:
-        if self.surface:
-            self.surface.fill((255, 0, 128))
+        if self._surface:
+            self._surface.fill((255, 0, 128))
 
     def update_display(self) -> None:
         pygame.display.flip()
@@ -52,9 +52,22 @@ class WindowManager:
         events = pygame.event.get()
         for event in events:
             if event.type == pygame.QUIT:
-                self.is_running = False
+                self._is_running = False
         return events
 
     def close(self) -> None:
-        self.is_running = False
+        self._is_running = False
         pygame.quit()
+
+    @property
+    def surface(self) -> pygame.Surface | None:
+        return self._surface
+
+    @property
+    def is_running(self) -> bool:
+        return self._is_running
+
+    @is_running.setter
+    def is_running(self, value: bool) -> None:
+        self._is_running = value
+

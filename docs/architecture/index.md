@@ -4,28 +4,39 @@ Entenda a arquitetura do LMU Telemetry Overlay.
 
 ## Visão Geral
 
-O sistema é organizado em **3 camadas distintas** seguindo princípios **SOLID** e **Clean Code**:
+O sistema é organizado em **4 camadas distintas** seguindo princípios **SOLID** e **Clean Architecture**:
+
+> **Nota (v0.4.0+)**: Arquitetura refatorada com Dependency Injection, SOLID compliance, e separação de concerns. Veja [Design Patterns](design-patterns.md) para detalhes.
 
 ```
 ┌─────────────────────────────────────┐
-│   Layer 3: Presentation (UI)       │
+│   Presentation Layer (UI)          │
 │   - Pygame rendering                │
 │   - Window management               │
 │   - Widget system                   │
+│   - Behaviors (Draggable)           │
 └─────────────────────────────────────┘
               ↓
 ┌─────────────────────────────────────┐
-│   Layer 2: Domain (Core Logic)     │
+│   Application Layer                 │
+│   - State management                │
+│   - Input handling                  │
+│   - Service orchestration           │
+└─────────────────────────────────────┘
+              ↓
+┌─────────────────────────────────────┐
+│   Domain Layer (Core Logic)         │
 │   - TelemetryData dataclass         │
 │   - Normalization logic             │
-│   - State management                │
+│   - Unit conversion                 │
 └─────────────────────────────────────┘
               ↓
 ┌─────────────────────────────────────┐
-│   Layer 1: Infrastructure           │
+│   Infrastructure Layer              │
+│   - Dependency Injection            │
 │   - ITelemetryProvider interface    │
-│   - SharedMemoryProvider (Windows)  │
-│   - MockTelemetryProvider (WSL)     │
+│   - Platform handlers               │
+│   - SharedMemory / Mock providers   │
 └─────────────────────────────────────┘
 ```
 

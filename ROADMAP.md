@@ -397,8 +397,6 @@ Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado co
 - [ ] Adicionar binários (se aplicável)
 - [ ] Anunciar release
 
----
-
 ## Fase 10: Funcionalidades Futuras
 
 ### 10.1 Novos Widgets

@@ -23,13 +23,19 @@ Primeiros passos com o projeto.
 - [Quick Start](getting-started/quick-start.md)
 - [Configuração](getting-started/configuration.md)
 
+### Product
+
+Entenda a visão e lógica de negócio.
+
+- [**Product Documentation**](PRODUCT.md) - Lógica de negócio completa
+
 ### Architecture
 
 Entenda a arquitetura do sistema.
 
-- [Overview](architecture/index.md)
+- [Overview](architecture/index.md) - **Clean Architecture & SOLID**
 - [Camadas](architecture/layers.md)
-- [Design Patterns](architecture/design-patterns.md)
+- [Design Patterns](architecture/design-patterns.md) - **Incluindo DI Container**
 - [Fluxo de Dados](architecture/data-flow.md)
 
 ### Guides

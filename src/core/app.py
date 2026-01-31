@@ -1,18 +1,25 @@
 import sys
 import pygame
-from src.ui.window import WindowManager
+from src.ui.interfaces.i_window_manager import IWindowManager
+from src.ui.interfaces.i_font_provider import IFontProvider
 from src.core.application.services.state_machine import StateMachine
 from src.core.application.states.running_state import RunningState
 from src.core.application.states.edit_state import EditState
-from src.core.providers.mock_telemetry_provider import MockTelemetryProvider
+from src.core.providers.i_telemetry_provider import ITelemetryProvider
 from src.ui.widgets.speedometer import Speedometer
-
 from src.core.application.services.input_handler import InputHandler
 
+
 class OverlayApp:
-    def __init__(self):
-        self.window = WindowManager(title="LMU Telemetry Overlay", width=1920, height=1080)
-        self.provider = MockTelemetryProvider()
+    def __init__(
+        self, 
+        window: IWindowManager, 
+        provider: ITelemetryProvider,
+        font_provider: IFontProvider
+    ):
+        self.window = window
+        self.provider = provider
+        self.font_provider = font_provider
         self.state_machine = StateMachine()
         self.widgets = []
         self.input_handler = None
