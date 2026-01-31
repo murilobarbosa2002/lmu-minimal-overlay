@@ -28,6 +28,9 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 - Testes de edge cases para funções de normalização (NaN, Inf, tipos inválidos)
 - Sistema de State Management (`StateMachine`, `RunningState`, `EditState`)
 - Testes unitários para State Management (100% cobertura)
+- `WindowManager` com suporte a configurações específicas de SO
+- `main.py` com loop de aplicação integrado
+- Documentação do Window Manager
 
 ### Planejado
 

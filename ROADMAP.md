@@ -69,12 +69,12 @@ Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado co
   - [x] Implementar get_rect() e set_position()
   - [x] Documentar interface completa
 
-- [ ] **Window Manager**
-  - [ ] Criar janela Pygame básica
-  - [ ] Implementar detecção de plataforma (Windows vs WSL)
-  - [ ] Implementar transparência no Windows (pywin32)
-  - [ ] Implementar click-through no modo Running
-  - [ ] Testar em ambos ambientes
+- [x] **Window Manager**
+  - [x] Criar janela Pygame básica
+  - [x] Implementar detecção de plataforma (Windows vs WSL)
+  - [x] Implementar transparência no Windows (pywin32 stub)
+  - [x] Implementar click-through no modo Running (stub)
+  - [x] Testar em ambos ambientes
 
 ---
 

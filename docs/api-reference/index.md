@@ -30,6 +30,12 @@ Componentes centrais da arquitetura.
 
 - [State Management](core/state-management.md)
 
+## UI
+
+Componentes de interface e gerenciamento de janela.
+
+- [Window Manager](ui/window-manager.md)
+
 ## Configuration
 
 Sistema de configuração.
