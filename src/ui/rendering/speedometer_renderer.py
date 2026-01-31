@@ -61,13 +61,14 @@ class SpeedometerRenderer:
         
         surface.blit(bg_surface, (x, y))
         
-        # Calculate section positions
+        # Calculate section positions with symmetric spacing
+        lateral_padding = 15  # Same padding on both sides
         steering_width = 80
         bars_width = 130
         speed_width = width - steering_width - bars_width
         
-        # Render steering indicator (LEFT)
-        steering_cx = x + 40
+        # Render steering indicator (LEFT) - centered in its section with padding
+        steering_cx = x + lateral_padding + (steering_width - lateral_padding * 2) // 2
         steering_cy = y + height // 2
         self.steering.render(surface, steering_cx, steering_cy, steering_angle, text_color)
         
@@ -78,8 +79,8 @@ class SpeedometerRenderer:
             speed, gear, unit, text_color, gear_color
         )
         
-        # Render indicator bars (RIGHT)
-        bars_x = x + steering_width + speed_width + 15
+        # Render indicator bars (RIGHT) - with same lateral padding as steering
+        bars_x = x + steering_width + speed_width + lateral_padding
         bars_y = y + (height - 90) // 2
         self.bars.render(
             surface, bars_x, bars_y,

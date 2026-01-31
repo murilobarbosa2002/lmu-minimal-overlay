@@ -43,19 +43,19 @@ class SpeedGearDisplay:
             self.gear_surf = gear_font.render(gear_text, True, gear_color)
             self._cached_gear = gear
         
-        # Position elements (gear on top, speed below)
+        # Position elements (gear -> unit -> speed)
         gear_x = x + width // 2 - self.gear_surf.get_width() // 2
         gear_y = y + 15
         
-        speed_x = x + width // 2 - self.speed_surf.get_width() // 2
-        speed_y = gear_y + self.gear_surf.get_height() + 5
-        
         unit_x = x + width // 2 - self.unit_surf.get_width() // 2
-        unit_y = speed_y + self.speed_surf.get_height() + 5
+        unit_y = gear_y + self.gear_surf.get_height() + 3
+        
+        speed_x = x + width // 2 - self.speed_surf.get_width() // 2
+        speed_y = unit_y + self.unit_surf.get_height() + 3
         
         surface.blit(self.gear_surf, (gear_x, gear_y))
-        surface.blit(self.speed_surf, (speed_x, speed_y))
         surface.blit(self.unit_surf, (unit_x, unit_y))
+        surface.blit(self.speed_surf, (speed_x, speed_y))
     
     def invalidate_cache(self) -> None:
         """Clear cached surfaces"""
