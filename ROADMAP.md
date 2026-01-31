@@ -67,7 +67,7 @@ Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado co
   - [x] Criar classe abstrata Widget
   - [x] Definir métodos draw(), update(), handle_input()
   - [x] Implementar get_rect() e set_position()
-  - [ ] Documentar interface completa
+  - [x] Documentar interface completa
 
 - [ ] **Window Manager**
   - [ ] Criar janela Pygame básica
