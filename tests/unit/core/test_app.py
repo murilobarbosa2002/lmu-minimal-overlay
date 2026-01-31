@@ -23,7 +23,9 @@ class TestOverlayApp:
     def test_setup_initializes_components(self, app):
         app.setup()
         
-        assert len(app.widgets) == 1
+        app.window.init.assert_called_once()
+        app.provider.connect.assert_called_once()
+        assert len(app.widgets) == 2
         assert app.state_machine.current_state is not None
         assert app.input_handler is not None
 

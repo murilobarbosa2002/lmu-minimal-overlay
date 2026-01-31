@@ -30,3 +30,12 @@ class DraggableBehavior:
             self.widget.set_position(new_x, new_y)
             return True
         return False
+
+    def handle_input(self, event: pygame.event.Event) -> bool:
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            return self.handle_mouse_down(event)
+        elif event.type == pygame.MOUSEBUTTONUP:
+            return self.handle_mouse_up(event)
+        elif event.type == pygame.MOUSEMOTION:
+            return self.handle_mouse_motion(event)
+        return False

@@ -7,6 +7,7 @@ from src.core.application.states.running_state import RunningState
 from src.core.application.states.edit_state import EditState
 from src.core.providers.i_telemetry_provider import ITelemetryProvider
 from src.ui.widgets.speedometer import Speedometer
+from src.ui.widgets.pedals import Pedals
 from src.core.application.services.input_handler import InputHandler
 
 
@@ -24,10 +25,13 @@ class OverlayApp:
         self.widgets = []
         self.input_handler = None
 
-    def setup(self):
+    def setup(self) -> None:
         self.window.init()
-        speedometer = Speedometer(x=1500, y=850, width=280, height=130)
-        self.widgets = [speedometer]
+        self.provider.connect()
+        self.widgets = [
+            Speedometer(x=1700, y=50, font_provider=self.font_provider),
+            Pedals(x=1700, y=300, font_provider=self.font_provider)
+        ]
         running_state = RunningState(self.state_machine, widgets=self.widgets)
         edit_state = EditState(self.state_machine, widgets=self.widgets)
         self.state_machine.change_state(running_state)
