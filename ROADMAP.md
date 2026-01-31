@@ -21,21 +21,21 @@ Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado co
 
 ### 1.2 Layer 1: Infrastructure
 
-- [ ] **ITelemetryProvider (Interface)**
-  - [ ] Definir interface abstrata com métodos get_data(), is_available(), connect(), disconnect()
-  - [ ] Adicionar type hints completos
-  - [ ] Documentar com docstrings em português
+- [x] **ITelemetryProvider (Interface)**
+  - [x] Definir interface abstrata com métodos get_data(), is_available(), connect(), disconnect()
+  - [x] Adicionar type hints completos
+  - [x] Documentar com docstrings em português
 
 - [x] **TelemetryData (Dataclass)**
   - [x] Criar dataclass com todos campos tipados
   - [x] Adicionar validação de dados
   - [x] Implementar método __str__ para debug
 
-- [ ] **MockTelemetryProvider**
-  - [ ] Implementar geração de dados senoidais
-  - [ ] Simular variação realista de speed, rpm, inputs
-  - [ ] Adicionar timestamp
-  - [ ] Testar com pytest
+- [x] **MockTelemetryProvider**
+  - [x] Implementar geração de dados senoidais
+  - [x] Simular variação realista de speed, rpm, inputs
+  - [x] Adicionar timestamp
+  - [x] Testar com pytest (100% cobertura)
 
 - [ ] **SharedMemoryProvider (Stub)**
   - [ ] Criar estrutura básica

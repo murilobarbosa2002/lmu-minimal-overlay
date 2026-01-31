@@ -15,6 +15,11 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 - Funções de normalização (normalize_byte, normalize_word, denormalize_byte, denormalize_word, clamp)
 - Testes unitários para funções de normalização (100% cobertura)
 - Teste E2E para funções de normalização
+- Interface ITelemetryProvider (ABC)
+- Testes unitários para ITelemetryProvider
+- MockTelemetryProvider com dados senoidais realistas
+- Testes unitários para MockTelemetryProvider (100% cobertura)
+- Teste E2E para MockTelemetryProvider
 
 ### Planejado
 
