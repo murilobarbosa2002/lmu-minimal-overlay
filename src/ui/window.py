@@ -16,7 +16,7 @@ class WindowManager:
         pygame.init()
         pygame.display.set_caption(self.title)
         flags = pygame.SRCALPHA | pygame.NOFRAME
-        self.surface = pygame.display.set_mode((self.width, self.height), flags)
+        self.surface = pygame.display.set_mode((self.width, self.height), flags, 32)
         self.is_running = True
 
     def set_transparent(self, transparent: bool) -> None:

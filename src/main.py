@@ -8,12 +8,12 @@ from src.core.domain.telemetry_data import TelemetryData
 from src.ui.widgets.speedometer import Speedometer
 
 def main():
-    window = WindowManager(title="LMU Telemetry Overlay", width=250, height=250)
+    window = WindowManager(title="LMU Telemetry Overlay", width=300, height=160)
     window.init()
     provider = MockTelemetryProvider()
     state_machine = StateMachine()
     
-    speedometer = Speedometer(x=25, y=25, width=200, height=200)
+    speedometer = Speedometer(x=10, y=5, width=280, height=150)
     
     widgets = [speedometer]
     
