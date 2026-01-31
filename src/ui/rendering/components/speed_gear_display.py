@@ -24,26 +24,22 @@ class SpeedGearDisplay:
         gear_color: tuple[int, int, int]
     ) -> None:
         """Render speed, unit, and gear centered in given area"""
-        # Cache speed text
         if self.speed_surf is None or int(speed) != getattr(self, '_cached_speed', None):
             speed_font = FontManager.get_font(size=48, bold=True)
             self.speed_surf = speed_font.render(str(int(speed)), True, text_color)
             self._cached_speed = int(speed)
         
-        # Cache unit text
         if self.unit_surf is None or unit != getattr(self, '_cached_unit', None):
             unit_font = FontManager.get_font(size=18)
             self.unit_surf = unit_font.render(unit, True, text_color)
             self._cached_unit = unit
         
-        # Cache gear text
         if self.gear_surf is None or gear != getattr(self, '_cached_gear', None):
             gear_font = FontManager.get_font(size=40, bold=True)
             gear_text = "R" if gear == -1 else "N" if gear == 0 else str(gear)
             self.gear_surf = gear_font.render(gear_text, True, gear_color)
             self._cached_gear = gear
         
-        # Position elements (gear -> unit -> speed)
         gear_x = x + width // 2 - self.gear_surf.get_width() // 2
         gear_y = y + 15
         

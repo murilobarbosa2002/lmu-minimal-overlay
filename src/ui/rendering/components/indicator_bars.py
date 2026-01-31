@@ -7,9 +7,9 @@ class IndicatorBars:
     
     def __init__(self, spacing: int = 12):
         self.spacing = spacing
-        self.throttle_bar = Bar(label="T", color=(0, 255, 0))  # Green
-        self.brake_bar = Bar(label="B", color=(255, 0, 0))     # Red
-        self.ffb_bar = Bar(label="F", color=(255, 165, 0))     # Orange
+        self.throttle_bar = Bar(label="T", color=(0, 255, 0))
+        self.brake_bar = Bar(label="B", color=(255, 0, 0))
+        self.ffb_bar = Bar(label="F", color=(255, 165, 0))
     
     def render(
         self,
@@ -24,15 +24,12 @@ class IndicatorBars:
         """Render all three bars horizontally"""
         current_x = x
         
-        # Throttle
         self.throttle_bar.render(surface, current_x, y, throttle, text_color)
         current_x += self.throttle_bar.width + self.spacing
         
-        # Brake
         self.brake_bar.render(surface, current_x, y, brake, text_color)
         current_x += self.brake_bar.width + self.spacing
         
-        # Force Feedback
         self.ffb_bar.render(surface, current_x, y, ffb, text_color)
     
     def get_total_width(self) -> int:

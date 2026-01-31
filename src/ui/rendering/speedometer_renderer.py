@@ -33,10 +33,8 @@ class SpeedometerRenderer:
         gear_color: tuple
     ) -> None:
         """Render complete dashboard card with all components"""
-        # Draw gradient background with rounded corners
         bg_surface = pygame.Surface((width, height), pygame.SRCALPHA)
         
-        # Create gradient
         temp_surface = pygame.Surface((width, height))
         top_color = (30, 35, 45)
         bottom_color = (5, 5, 8)
@@ -48,38 +46,32 @@ class SpeedometerRenderer:
             b = int(top_color[2] * (1 - ratio) + bottom_color[2] * ratio)
             pygame.draw.line(temp_surface, (r, g, b), (0, y_offset), (width, y_offset))
         
-        # Apply rounded corners mask
         bg_surface.blit(temp_surface, (0, 0))
         mask = pygame.Surface((width, height), pygame.SRCALPHA)
         pygame.draw.rect(mask, (255, 255, 255), (0, 0, width, height), border_radius=24)
         bg_surface.blit(mask, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
         
-        # Add subtle border
         border_surf = pygame.Surface((width, height), pygame.SRCALPHA)
         pygame.draw.rect(border_surf, (255, 255, 255, 30), (0, 0, width, height), width=1, border_radius=24)
         bg_surface.blit(border_surf, (0, 0))
         
         surface.blit(bg_surface, (x, y))
         
-        # Calculate section positions with symmetric spacing
-        lateral_padding = 15  # Same padding on both sides
+        lateral_padding = 15
         steering_width = 80
         bars_width = 130
         speed_width = width - steering_width - bars_width
         
-        # Render steering indicator (LEFT) - centered in its section with padding
         steering_cx = x + lateral_padding + (steering_width - lateral_padding * 2) // 2
         steering_cy = y + height // 2
         self.steering.render(surface, steering_cx, steering_cy, steering_angle, text_color)
         
-        # Render speed/gear display (CENTER)
         speed_x = x + steering_width
         self.speed_gear.render(
             surface, speed_x, y, speed_width, height,
             speed, gear, unit, text_color, gear_color
         )
         
-        # Render indicator bars (RIGHT) - with same lateral padding as steering
         bars_x = x + steering_width + speed_width + lateral_padding
         bars_y = y + (height - 90) // 2
         self.bars.render(
