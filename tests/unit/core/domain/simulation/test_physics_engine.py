@@ -71,3 +71,17 @@ def test_steering_micro_corrections():
         
     # It should fluctuate slightly due to jitter even if target matches current
     assert changes > 0
+
+def test_physics_engine_corner_entry():
+    engine = PhysicsEngine()
+    engine.speed = 100.0
+    segment = TrackSegment(1.0, 50.0, 50.0, 'CORNER_ENTRY', 0.5)
+    
+    # Progress 0.5
+    engine.update(0.1, segment, 0.5)
+    
+    # Speed (100) > Target (50), so brake should be applied
+    assert engine.brake > 0.0
+    
+    # Steering should be increasing based on curvature * progress
+    assert engine.steering != 0.0

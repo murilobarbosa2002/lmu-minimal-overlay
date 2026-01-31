@@ -55,22 +55,24 @@ class PhysicsEngine :
         else :
             self .brake =max (target_brake ,self .brake -brake_speed )
 
-        # Reduced jitter for stability
-        smoothing_factor = 2.0 * dt # Increased smoothing (lower factor)
+        raw_target = target_steering
+
+        micro_correction = 0.0
+        if self.speed > 40 and abs(self.steering) > 0.1:
+            load_factor = abs(self.steering) * (self.speed / 100.0)
+            intensity = 0.002 * min(1.0, load_factor)
+            micro_correction = random.uniform(-intensity, intensity)
         
-        jitter_intensity = 0.0
-        if self.speed > 20: # Higher activation speed
-             load_factor = abs(self.steering) + (self.speed / 300.0)
-             # Reduced intensity multiplier from 0.02 to 0.005
-             jitter_intensity = 0.005 * min(1.0, load_factor)
+        target_with_noise = raw_target + micro_correction
+
+        max_steer_rate = 2.5 * dt 
         
-        micro_correction = random.uniform(-jitter_intensity, jitter_intensity)
+        diff = target_with_noise - self.steering
         
-        diff = target_steering - self.steering
-        self.steering += diff * min(1.0, smoothing_factor)
+        limited_change = max(-max_steer_rate, min(max_steer_rate, diff))
         
-        # Reduced micro-correction influence
-        self.steering += micro_correction * 0.2 
+        alpha = 5.0 * dt
+        self.steering += limited_change * min(1.0, alpha) 
 
         aero_drag =0.005 *self .speed 
 
