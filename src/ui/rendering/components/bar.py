@@ -52,6 +52,3 @@ class Bar:
                 fill_height
             )
             pygame.draw.rect(surface, self.color, fill_rect, border_radius=3)
-        
-        # Draw border
-        pygame.draw.rect(surface, text_color, bg_rect, 1, border_radius=3)

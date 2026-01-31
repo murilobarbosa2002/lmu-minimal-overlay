@@ -4,7 +4,7 @@ from src.core.domain.telemetry_data import TelemetryData
 
 
 class Speedometer(Widget):
-    def __init__(self, x: int, y: int, width: int = 400, height: int = 130):
+    def __init__(self, x: int, y: int, width: int = 350, height: int = 130):
         super().__init__(x, y, width, height)
         self.speed = 0.0
         self.gear = 0
