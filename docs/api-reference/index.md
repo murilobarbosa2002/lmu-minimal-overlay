@@ -18,10 +18,6 @@ Sistema de componentes visuais.
 - [Overview](widgets/index.md)
 - [Widget Base](widgets/base-widget.md)
 - [DashboardCard](widgets/dashboard-card.md)
-- [Speedometer (Deprecated)](widgets/dashboard-card.md)
-- [Pedals (Deprecated)](widgets/pedals.md)
-- [Steering Wheel (Deprecated)](widgets/steering-wheel.md)
-- [FFB Indicator (Deprecated)](widgets/ffb-indicator.md)
 - [Criando Widgets](widgets/creating-widgets.md)
 
 
