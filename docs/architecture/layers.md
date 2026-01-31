@@ -122,23 +122,6 @@ src/core/
 │   ├── i_telemetry_provider.py
 │   ├── shared_memory_provider.py
 │   └── mock_telemetry_provider.py
-```
-
-## Layer 2: Application Core (Domain & Services)
-
-Contém lógica de negócio, modelos e serviços de aplicação.
-
-### Responsabilidades
-
-- Definir modelos de dados (Domain)
-- Normalizar valores raw (Domain)
-- Gerenciar estados da aplicação (Application Service)
-- Orquestrar ciclo de vida (Application Service)
-
-### Arquivos
-
-```
-src/core/
 ├── domain/
 │   ├── telemetry_data.py
 │   └── normalize.py

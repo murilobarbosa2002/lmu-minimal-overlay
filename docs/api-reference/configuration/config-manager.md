@@ -5,29 +5,29 @@ Singleton de gerenciamento de configurações.
 ## Interface
 
 ```python
-class ConfigManager:
-    _instance = None
-    
-    def __new__(cls):
-        if cls._instance is None:
-            cls._instance = super().__new__(cls)
-            cls._instance._load_config()
-        return cls._instance
-    
-    def get(self, key: str) -> Any:
-        """Obtém valor de configuração."""
+class ConfigManager(IConfigManager):
+    def load_config(self) -> None:
         pass
-    
-    def get_colors(self) -> Dict[str, List[int]]:
-        """Obtém paleta de cores."""
+
+    def save_config(self) -> None:
         pass
-    
-    def save_layout(self, widgets: List[Widget]) -> None:
-        """Salva layout de widgets."""
+
+    def load_layout(self) -> None:
         pass
-    
-    def reload(self) -> None:
-        """Recarrega configurações."""
+
+    def save_layout(self) -> None:
+        pass
+
+    def get_config(self, key: str, default: Any = None) -> Any:
+        pass
+
+    def set_config(self, key: str, value: Any) -> None:
+        pass
+
+    def get_layout(self, key: str, default: Any = None) -> Any:
+        pass
+
+    def set_layout(self, key: str, value: Any) -> None:
         pass
 ```
 
@@ -35,12 +35,22 @@ class ConfigManager:
 
 ```python
 config = ConfigManager()
-colors = config.get_colors()
-ffb_threshold = config.get("thresholds.ffb_clipping")
+
+# Configuração (config.json)
+version = config.get_config("version", "1.0.0")
+config.set_config("update_interval_ms", 33)
+
+# Layout (layout.json)
+window_cfg = config.get_layout("window")
+config.set_layout("widgets", widget_data_list)
 ```
 
 ## Singleton
 
-Apenas uma instância existe. Chamadas subsequentes retornam mesma instância.
+Gerencia duas fontes de persistência:
+- `config.json`: Configurações globais da aplicação.
+- `layout.json`: Posição da janela e disposição dos widgets.
+
+Implementa padrão Singleton via `__new__` thread-safe.
 
 Veja [Architecture - Design Patterns](../../architecture/design-patterns.md).
