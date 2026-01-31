@@ -20,3 +20,6 @@ htmlcov/
 .vscode/
 .idea/
 .agent/
+
+# User-specific configuration (window positions, etc)
+layout.json
