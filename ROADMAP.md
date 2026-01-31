@@ -26,10 +26,10 @@ Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado co
   - [ ] Adicionar type hints completos
   - [ ] Documentar com docstrings em português
 
-- [ ] **TelemetryData (Dataclass)**
-  - [ ] Criar dataclass com todos campos tipados
-  - [ ] Adicionar validação de dados
-  - [ ] Implementar método __str__ para debug
+- [x] **TelemetryData (Dataclass)**
+  - [x] Criar dataclass com todos campos tipados
+  - [x] Adicionar validação de dados
+  - [x] Implementar método __str__ para debug
 
 - [ ] **MockTelemetryProvider**
   - [ ] Implementar geração de dados senoidais
@@ -443,7 +443,7 @@ Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado co
 ## Métricas de Progresso
 
 ### Fase 1: Fundação
-- **Progresso**: 80% (8/10 tarefas)
+- **Progresso**: 85% (8.5/10 tarefas)
 - **Status**: 🟡 Em Progresso
 
 ### Fase 2: Widgets

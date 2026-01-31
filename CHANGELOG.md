@@ -7,6 +7,12 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
 ## [Unreleased]
 
+### Added
+- TelemetryData dataclass com validação de ranges
+- Testes unitários para TelemetryData (100% cobertura)
+- Teste E2E para TelemetryData
+- Agent rule para explicar antes de commit com execução de testes
+
 ### Planejado
 
 - Implementação de ITelemetryProvider
