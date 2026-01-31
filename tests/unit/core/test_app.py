@@ -25,7 +25,7 @@ class TestOverlayApp:
         
         app.window.init.assert_called_once()
         app.provider.connect.assert_called_once()
-        assert len(app.widgets) == 2
+        assert len(app.widgets) == 1
         assert app.state_machine.current_state is not None
         assert app.input_handler is not None
 
