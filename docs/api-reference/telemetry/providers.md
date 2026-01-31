@@ -94,4 +94,46 @@ Testes implementados:
 - Métodos corretos estão presentes
 - Todos os métodos são chamados e funcionam corretamente
 
+
+## MockTelemetryProvider
+
+Provider para testes que gera dados sintéticos realistas baseados em funções senoidais.
+Útil para desenvolvimento sem o simulador rodando.
+
+### Uso
+
+```python
+from src.core.providers.mock_telemetry_provider import MockTelemetryProvider
+import time
+
+provider = MockTelemetryProvider()
+provider.connect()  # No-op
+
+while True:
+    data = provider.get_data()
+    print(f"RPM: {data.rpm}, Speed: {data.speed:.1f}")
+    time.sleep(0.1)
+```
+
+### Dados Gerados
+
+Todos os dados variam suavemente ao longo do tempo (baseado em `time.time()`):
+
+- **Speed**: 0 a 200 km/h
+- **RPM**: 1000 a 8000
+- **Gear**: 1 a 6 (calculado baseado no RPM)
+- **Inputs**: Throttle/Brake (0.0 a 1.0), Steering (-900° a +900°)
+- **FFB**: 0.0 a 1.0
+
+### Testes
+
+Cobertura: **100%**
+
+Testes implementados:
+- Workflow completo (connect/get/disconnect)
+- Validação de ranges de todos os campos
+- Cobertura de todas as marchas (1-6)
+- Consistência temporal dos dados
+
+Veja [Architecture - Layers](../../architecture/layers.md).
 Veja [Architecture - Layers](../../architecture/layers.md).
