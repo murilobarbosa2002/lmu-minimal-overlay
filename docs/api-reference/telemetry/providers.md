@@ -94,4 +94,94 @@ Testes implementados:
 - Métodos corretos estão presentes
 - Todos os métodos são chamados e funcionam corretamente
 
+
+## MockTelemetryProvider
+
+Provider para testes que gera dados sintéticos realistas baseados em funções senoidais.
+Útil para desenvolvimento sem o simulador rodando.
+
+### Uso
+
+```python
+from src.core.providers.mock_telemetry_provider import MockTelemetryProvider
+import time
+
+provider = MockTelemetryProvider()
+provider.connect()  # No-op
+
+while True:
+    data = provider.get_data()
+    print(f"RPM: {data.rpm}, Speed: {data.speed:.1f}")
+    time.sleep(0.1)
+```
+
+### Dados Gerados
+
+Todos os dados variam suavemente ao longo do tempo (baseado em `time.time()`):
+
+- **Speed**: 0 a 200 km/h
+- **RPM**: 1000 a 8000
+- **Gear**: 1 a 6 (calculado baseado no RPM)
+- **Inputs**: Throttle/Brake (0.0 a 1.0), Steering (-900° a +900°)
+- **FFB**: 0.0 a 1.0
+
+### Testes
+
+Cobertura: **100%**
+
+Testes implementados:
+- Workflow completo (connect/get/disconnect)
+- Validação de ranges de todos os campos
+- Cobertura de todas as marchas (1-6)
+- Consistência temporal dos dados
+
 Veja [Architecture - Layers](../../architecture/layers.md).
+Veja [Architecture - Layers](../../architecture/layers.md).
+
+## SharedMemoryProvider (Stub)
+
+**Nota**: Este provider está em estágio inicial (Stub) e não está funcional na versão atual. A implementação completa via `mmap` será realizada na Fase 3.
+
+Este provider lerá dados da memória compartilhada (Shared Memory) do Le Mans Ultimate, que utiliza a mesma engine do rFactor 2.
+
+### Funcionamento Interno
+
+O LMU expõe dados de telemetria através de arquivos mapeados em memória (Memory Mapped Files) no Windows.
+
+- **Nome do Mapa**: `$rFactor2SMMP_Scoring$` e `$rFactor2SMMP_Telemetry$` (A ser confirmado para LMU)
+- **Método de Acesso**: Biblioteca `mmap` do Python
+- **Formato**: Struct C binária (ctypes)
+
+### Estrutura de Dados (Preview)
+
+A struct de telemetria típica do rFactor 2 contém:
+
+```c
+struct rF2VehicleTelemetry {
+    // Time
+    double mDeltaTime;
+    double mElapsedTime;
+    
+    // Inputs
+    double mThrottle;
+    double mBrake;
+    double mClutch;
+    double mSteeringWheelAngle;
+    
+    // Vehicle State
+    double mEngineRPM;
+    double mCarSpeed; // m/s
+    long mGear;
+    
+    // ... outros campos (temperaturas, pressões, física)
+};
+```
+
+### Implementação Atual (Stub)
+
+Atualmente, o provider apenas implementa a interface `ITelemetryProvider` para garantir integridade arquitetural:
+
+- `is_available()`: Retorna `False`
+- `connect()`: Levanta `NotImplementedError`
+- `get_data()`: Levanta `RuntimeError`
+

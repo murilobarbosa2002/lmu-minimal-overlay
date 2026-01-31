@@ -3,14 +3,15 @@ from src.core.providers.i_telemetry_provider import ITelemetryProvider
 from src.core.domain.telemetry_data import TelemetryData
 
 
+
 def test_cannot_instantiate_interface():
-    """Interface abstrata não pode ser instanciada diretamente"""
+    """Abstract interface cannot be instantiated directly"""
     with pytest.raises(TypeError, match="Can't instantiate abstract class"):
         ITelemetryProvider()
 
 
 def test_concrete_implementation_must_implement_all_methods():
-    """Implementação concreta deve implementar todos os métodos abstratos"""
+    """Concrete implementation must implement all abstract methods"""
     
     class IncompleteProvider(ITelemetryProvider):
         def get_data(self) -> TelemetryData:
@@ -32,7 +33,7 @@ def test_concrete_implementation_must_implement_all_methods():
 
 
 def test_concrete_implementation_works():
-    """Implementação concreta completa deve funcionar"""
+    """Complete concrete implementation should work"""
     
     class CompleteProvider(ITelemetryProvider):
         def get_data(self) -> TelemetryData:
@@ -68,7 +69,7 @@ def test_concrete_implementation_works():
 
 
 def test_interface_has_correct_method_signatures():
-    """Verifica que a interface tem os métodos corretos"""
+    """Verifies that the interface has the correct methods"""
     assert hasattr(ITelemetryProvider, 'get_data')
     assert hasattr(ITelemetryProvider, 'is_available')
     assert hasattr(ITelemetryProvider, 'connect')
@@ -76,7 +77,7 @@ def test_interface_has_correct_method_signatures():
 
 
 def test_all_methods_coverage():
-    """Testa implementação concreta chamando todos os métodos para 100% cobertura"""
+    """Tests concrete implementation calling all methods for 100% coverage"""
     
     class FullCoverageProvider(ITelemetryProvider):
         def __init__(self):
@@ -125,3 +126,4 @@ def test_all_methods_coverage():
     
     provider.disconnect()
     assert provider.connected is False
+
