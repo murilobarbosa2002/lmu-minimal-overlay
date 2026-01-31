@@ -70,6 +70,37 @@
       .highlight .s, .highlight .s1, .highlight .s2 { color: #a5d6ff !important; }
       .highlight .c, .highlight .c1 { color: #8b949e !important; font-style: italic !important; }
 
+      .main-content table {
+        width: 100% !important;
+        border-collapse: collapse !important;
+        margin: 16px 0 !important;
+        background-color: var(--bg-secondary) !important;
+        border: 1px solid var(--border-color) !important;
+        border-radius: 6px !important;
+        overflow: hidden !important;
+      }
+      .main-content table thead {
+        background-color: var(--bg-tertiary) !important;
+      }
+      .main-content table th {
+        padding: 12px 16px !important;
+        text-align: left !important;
+        font-weight: 600 !important;
+        color: var(--text-primary) !important;
+        border-bottom: 2px solid var(--border-color) !important;
+      }
+      .main-content table td {
+        padding: 10px 16px !important;
+        color: var(--text-primary) !important;
+        border-bottom: 1px solid var(--border-color) !important;
+      }
+      .main-content table tr:last-child td {
+        border-bottom: none !important;
+      }
+      .main-content table tr:hover {
+        background-color: var(--bg-tertiary) !important;
+      }
+
       [data-theme="light"] .highlighter-rouge,
       [data-theme="light"] .language-python,
       [data-theme="light"] .language-bash,
