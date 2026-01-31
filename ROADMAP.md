@@ -16,6 +16,8 @@ Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado co
 - [x] Configurar estrutura de documentação GitHub Docs
 - [x] Criar documentação de produto (PRODUCT.md)
 - [x] Criar roadmap (ROADMAP.md)
+- [x] Criar setup.py e pytest.ini
+- [x] Criar main.py como entry point
 
 ### 1.2 Layer 1: Infrastructure
 
@@ -441,7 +443,7 @@ Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado co
 ## Métricas de Progresso
 
 ### Fase 1: Fundação
-- **Progresso**: 60% (6/10 tarefas)
+- **Progresso**: 80% (8/10 tarefas)
 - **Status**: 🟡 Em Progresso
 
 ### Fase 2: Widgets
