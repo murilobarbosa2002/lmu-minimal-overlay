@@ -57,22 +57,23 @@ class SpeedometerRenderer:
         
         surface.blit(bg_surface, (x, y))
         
-        lateral_padding = 15
-        steering_width = 80
-        bars_width = 130
-        speed_width = width - steering_width - bars_width
+        lateral_padding = 25
+        steering_section = 70
+        bars_section = 110
+        speed_width = width - steering_section - bars_section
         
-        steering_cx = x + lateral_padding + (steering_width - lateral_padding * 2) // 2
+        steering_cx = x + lateral_padding
         steering_cy = y + height // 2
         self.steering.render(surface, steering_cx, steering_cy, steering_angle, text_color)
         
-        speed_x = x + steering_width
+        speed_x = x + steering_section
         self.speed_gear.render(
             surface, speed_x, y, speed_width, height,
             speed, gear, unit, text_color, gear_color
         )
         
-        bars_x = x + steering_width + speed_width + lateral_padding
+        bars_total_width = self.bars.get_total_width()
+        bars_x = x + width - lateral_padding - bars_total_width
         bars_y = y + (height - 90) // 2
         self.bars.render(
             surface, bars_x, bars_y,
