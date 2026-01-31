@@ -31,10 +31,10 @@ Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado co
   - [x] Adicionar validação de dados
   - [x] Implementar método __str__ para debug
 
-- [x] **MockTelemetryProvider**
-  - [x] Implementar geração de dados senoidais
-  - [x] Simular variação realista de speed, rpm, inputs
-  - [x] Adicionar timestamp
+- [x] **MockTelemetryProvider (Physics-Lite)**
+  - [x] Implementar `PhysicsEngine` com inércia e arrasto
+  - [x] Implementar `TrackGenerator` com segmentos técnicos
+  - [x] Simular Trail Braking e input smoothing
   - [x] Testar com pytest (100% cobertura)
 
 - [x] **SharedMemoryProvider (Stub)**

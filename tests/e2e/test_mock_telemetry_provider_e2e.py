@@ -12,7 +12,7 @@ def test_mock_provider_workflow():
     
     data1 = provider.get_data()
     assert data1.speed >= 0.0
-    assert data1.rpm >= 1000
+    assert data1.rpm >= 800
     
     time.sleep(0.1)
     

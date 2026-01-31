@@ -1,14 +1,22 @@
 import time
-import math
+import random
+from dataclasses import replace
 from src.core.providers.i_telemetry_provider import ITelemetryProvider
 from src.core.domain.telemetry_data import TelemetryData
+from src.core.domain.simulation.physics_engine import PhysicsEngine
+from src.core.domain.simulation.track_generator import TrackGenerator
 
 
 class MockTelemetryProvider(ITelemetryProvider):
     def __init__(self):
         self._start_time = time.time()
         self._last_update = time.time()
-        self._state = 'ACCEL'
+        
+        self._physics = PhysicsEngine()
+        self._segments = TrackGenerator.generate_track()
+        
+        self._segment_index = 0
+        self._segment_start_time = time.time()
         
         self.data = TelemetryData(
             speed=0.0,
@@ -28,50 +36,34 @@ class MockTelemetryProvider(ITelemetryProvider):
         dt = current_time - self._last_update
         self._last_update = current_time
         
-        shift_points = {1: 70, 2: 120, 3: 160, 4: 200, 5: 240, 6: 285}
+        segment = self._segments[self._segment_index]
+        segment_elapsed = current_time - self._segment_start_time
+        progress = segment_elapsed / segment.duration
         
-        current_speed = self.data.speed
-        current_gear = self.data.gear
-        
-        if self._state == 'ACCEL':
-            accel_rate = 30.0 * dt
-            current_speed += accel_rate
+        if progress >= 1.0:
+            self._segment_index = (self._segment_index + 1) % len(self._segments)
+            self._segment_start_time = current_time
+            segment = self._segments[self._segment_index]
+            progress = 0.0
             
-            if current_gear < 6:
-                if current_speed > shift_points.get(current_gear, 999):
-                    current_gear += 1
-            
-            if current_speed >= 280:
-                self._state = 'BRAKE'
-                
-        else:
-            decel_rate = 60.0 * dt
-            current_speed -= decel_rate
-            
-            if current_gear > 1:
-                prev_gear_max = shift_points.get(current_gear - 1, 0)
-                if current_speed < (prev_gear_max - 10):
-                    current_gear -= 1
-            
-            if current_speed <= 60:
-                self._state = 'ACCEL'
-                current_gear = 2
-                
-        current_speed = max(0, min(current_speed, 300))
+        self._physics.update(dt, segment, progress)
         
-        self.data.speed = current_speed
-        self.data.gear = int(current_gear)
+        self.data.speed = self._physics.speed
+        self.data.rpm = int(self._physics.rpm)
+        self.data.gear = self._physics.gear
+        self.data.throttle_pct = self._physics.throttle
+        self.data.brake_pct = self._physics.brake
+        self.data.steering_angle = self._physics.steering * 540.0
         
-        self.data.rpm = int(4000 + (current_speed % 40) * 100) 
-        
-        self.data.throttle_pct = 1.0 if self._state == 'ACCEL' else 0.0
-        self.data.brake_pct = 1.0 if self._state == 'BRAKE' else 0.0
+        g_force = abs(self._physics.steering * self._physics.speed * 0.05)
+        road_noise = random.random() * 0.05
+        raw_ffb = (g_force * 0.8) + (2.0 if self._physics.steering != 0 and 'CORNER' in segment.type else 0.0) * 0.1
+        self.data.ffb_level = min(1.0, raw_ffb + road_noise)
         
         self.data.timestamp = current_time - self._start_time
 
     def get_data(self) -> TelemetryData:
         self._update_data()
-        from dataclasses import replace
         return replace(self.data)
 
     def is_available(self) -> bool:
@@ -82,3 +74,4 @@ class MockTelemetryProvider(ITelemetryProvider):
 
     def disconnect(self) -> None:
         pass
+
