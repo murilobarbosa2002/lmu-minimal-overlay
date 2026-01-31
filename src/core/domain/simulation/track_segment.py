@@ -1,10 +1,10 @@
-from dataclasses import dataclass
+from dataclasses import dataclass 
 
-@dataclass
-class TrackSegment:
+@dataclass 
+class TrackSegment :
     """Defines a segment of the virtual track"""
-    duration: float
-    target_speed: float
-    entry_speed: float
-    type: str
-    curvature: float
+    duration :float 
+    target_speed :float 
+    entry_speed :float 
+    type :str 
+    curvature :float 
