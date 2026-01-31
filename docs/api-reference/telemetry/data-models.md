@@ -113,4 +113,85 @@ Testes implementados:
 - Representação string
 - Workflow completo (E2E)
 
+## Funções de Normalização
+
+Funções utilitárias para converter valores brutos em valores normalizados (0.0-1.0).
+
+### normalize_byte
+
+Normaliza valores de 8 bits (0-255) para 0.0-1.0.
+
+```python
+from src.core.domain.normalize import normalize_byte
+
+throttle_raw = 200
+throttle_normalized = normalize_byte(throttle_raw)
+```
+
+### normalize_word
+
+Normaliza valores de 16 bits (0-65535) para 0.0-1.0.
+
+```python
+from src.core.domain.normalize import normalize_word
+
+steering_raw = 32767
+steering_normalized = normalize_word(steering_raw)
+```
+
+### denormalize_byte
+
+Converte valores normalizados (0.0-1.0) para 8 bits (0-255).
+
+```python
+from src.core.domain.normalize import denormalize_byte
+
+throttle_normalized = 0.75
+throttle_raw = denormalize_byte(throttle_normalized)
+```
+
+### denormalize_word
+
+Converte valores normalizados (0.0-1.0) para 16 bits (0-65535).
+
+```python
+from src.core.domain.normalize import denormalize_word
+
+steering_normalized = 0.5
+steering_raw = denormalize_word(steering_normalized)
+```
+
+### clamp
+
+Limita um valor entre um mínimo e máximo.
+
+```python
+from src.core.domain.normalize import clamp
+
+value = clamp(1.5, 0.0, 1.0)
+```
+
+### Validações
+
+Todas as funções validam os ranges de entrada:
+- `normalize_byte`: 0-255
+- `normalize_word`: 0-65535
+- `denormalize_byte`: 0.0-1.0
+- `denormalize_word`: 0.0-1.0
+- `clamp`: min_val ≤ max_val
+
+Valores fora do range levantam `ValueError`.
+
+### Testes
+
+Cobertura: **100%**
+
+Testes implementados:
+- Normalização de bytes válidos
+- Normalização de words válidos
+- Desnormalização válida
+- Validação de ranges inválidos
+- Clamp com valores dentro e fora do range
+- Round-trip (normalize → denormalize)
+
 Veja [Architecture - Layers](../../architecture/layers.md).

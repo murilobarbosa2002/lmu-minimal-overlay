@@ -45,12 +45,13 @@ Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado co
 
 ### 1.3 Layer 2: Domain
 
-- [ ] **Normalização de Dados**
-  - [ ] Implementar normalize_input(raw: int) -> float
-  - [ ] Implementar normalize_rpm(rpm: int, max_rpm: int) -> float
-  - [ ] Implementar normalize_steering(angle: float) -> float
-  - [ ] Implementar kmh_to_mph(speed_kmh: float) -> float
-  - [ ] Testar todas funções com pytest
+- [x] **Normalização de Dados**
+  - [x] Implementar normalize_byte(value: int) -> float
+  - [x] Implementar normalize_word(value: int) -> float
+  - [x] Implementar denormalize_byte(value: float) -> int
+  - [x] Implementar denormalize_word(value: float) -> int
+  - [x] Implementar clamp(value, min, max) -> float
+  - [x] Testar com pytest (100% cobertura) funções com pytest
   - [ ] Adicionar testes de edge cases
 
 - [ ] **State Management**
@@ -443,7 +444,7 @@ Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado co
 ## Métricas de Progresso
 
 ### Fase 1: Fundação
-- **Progresso**: 85% (8.5/10 tarefas)
+- **Progresso**: 90% (9/10 tarefas)
 - **Status**: 🟡 Em Progresso
 
 ### Fase 2: Widgets

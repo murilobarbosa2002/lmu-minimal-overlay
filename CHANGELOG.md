@@ -12,6 +12,9 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 - Testes unitários para TelemetryData (100% cobertura)
 - Teste E2E para TelemetryData
 - Agent rule para explicar antes de commit com execução de testes
+- Funções de normalização (normalize_byte, normalize_word, denormalize_byte, denormalize_word, clamp)
+- Testes unitários para funções de normalização (100% cobertura)
+- Teste E2E para funções de normalização
 
 ### Planejado
 
