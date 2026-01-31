@@ -28,9 +28,6 @@ class PygameFontProvider (IFontProvider ):
                     self ._fonts [key ]=font 
                     return font 
                 except Exception as e :
-                    # User reported "Passed a NULL pointer" on Wine. 
-                    # Suppress error and fallback to system font.
-                    # print (f"Failed to load font {font_path}: {e}")
                     pass
 
             try :
