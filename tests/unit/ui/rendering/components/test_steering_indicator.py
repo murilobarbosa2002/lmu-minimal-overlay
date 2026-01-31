@@ -36,10 +36,10 @@ class TestSteeringIndicator:
         # Force indicator to have an image
         self.indicator.wheel_image = pygame.Surface((60, 60))
         
-        with patch('pygame.transform.rotate', return_value=pygame.Surface((60, 60))) as mock_rotate:
+        with patch('pygame.transform.rotozoom', return_value=pygame.Surface((60, 60))) as mock_rotozoom:
             self.indicator.render(self.surface, 100, 100, 45.0, (255, 255, 255))
-            # Verify rotation called with negative angle
-            mock_rotate.assert_called_with(self.indicator.wheel_image, -45.0)
+            # Verify rotozoom called with negative angle and scale 1.0
+            mock_rotozoom.assert_called_with(self.indicator.wheel_image, -45.0, 1.0)
 
     def test_render_fallback_vector(self):
         # Force indicator to NOT have an image

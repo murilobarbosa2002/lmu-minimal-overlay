@@ -9,7 +9,7 @@ IndicatorBars
 class DashboardCardRenderer :
 
     def __init__ (self ):
-        self .steering =SteeringIndicator (radius =30 )
+        self .steering =SteeringIndicator (radius =45 )
         self .speed_gear =SpeedGearDisplay ()
         self .bars =IndicatorBars (spacing =12 )
 

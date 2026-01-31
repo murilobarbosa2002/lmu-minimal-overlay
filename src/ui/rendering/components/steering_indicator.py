@@ -45,7 +45,8 @@ class SteeringIndicator :
     color :tuple [int ,int ,int ]
     )->None :
         if self.wheel_image:
-            rotated_img = pygame.transform.rotate(self.wheel_image, -angle)
+            # rotozoom provides filtered rotation (smoother)
+            rotated_img = pygame.transform.rotozoom(self.wheel_image, -angle, 1.0)
             new_rect = rotated_img.get_rect(center=(cx, cy))
             surface.blit(rotated_img, new_rect)
             return
