@@ -3,7 +3,7 @@ from src.ui.widgets.widget import Widget
 from src.core.domain.telemetry_data import TelemetryData
 
 
-class Speedometer(Widget):
+class DashboardCard(Widget):
     def __init__(self, x: int, y: int, width: int = 350, height: int = 130):
         super().__init__(x, y, width, height)
         self.speed = 0.0
@@ -37,10 +37,10 @@ class Speedometer(Widget):
         self.ffb_level = data.ffb_level
 
     def draw(self, surface: pygame.Surface) -> None:
-        from src.ui.rendering.speedometer_renderer import SpeedometerRenderer
+        from src.ui.rendering.dashboard_card_renderer import DashboardCardRenderer
         
         if not hasattr(self, '_renderer'):
-            self._renderer = SpeedometerRenderer()
+            self._renderer = DashboardCardRenderer()
         
         self._renderer.render(
             surface=surface,

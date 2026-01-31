@@ -6,7 +6,7 @@ from src.ui.rendering.components import (
 )
 
 
-class SpeedometerRenderer:
+class DashboardCardRenderer:
     """Orchestrates rendering of dashboard card components"""
     
     def __init__(self):
@@ -76,6 +76,7 @@ class SpeedometerRenderer:
             surface, speed_x, y, speed_width, height,
             speed, gear, unit, text_color, gear_color
         )
+        
         bars_y = y + (height - 90) // 2
         self.bars.render(
             surface, bars_x, bars_y,

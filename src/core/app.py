@@ -3,11 +3,11 @@ import pygame
 from src.ui.interfaces.i_window_manager import IWindowManager
 from src.ui.interfaces.i_font_provider import IFontProvider
 from src.core.application.services.state_machine import StateMachine
+from src.core.application.services.input_handler import InputHandler
 from src.core.application.states.running_state import RunningState
 from src.core.application.states.edit_state import EditState
 from src.core.providers.i_telemetry_provider import ITelemetryProvider
-from src.ui.widgets.speedometer import Speedometer
-from src.core.application.services.input_handler import InputHandler
+from src.ui.widgets.dashboard_card import DashboardCard
 
 
 class OverlayApp:
@@ -28,7 +28,7 @@ class OverlayApp:
         self.window.init()
         self.provider.connect()
         self.widgets = [
-            Speedometer(x=1700, y=50, width=350, height=130)
+            DashboardCard(x=1700, y=50, width=350, height=130)
         ]
         running_state = RunningState(self.state_machine, widgets=self.widgets)
         edit_state = EditState(self.state_machine, widgets=self.widgets)
