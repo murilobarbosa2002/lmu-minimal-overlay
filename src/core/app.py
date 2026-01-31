@@ -29,7 +29,7 @@ class OverlayApp:
         self.window.init()
         self.provider.connect()
         self.widgets = [
-            Speedometer(x=1700, y=50, font_provider=self.font_provider),
+            Speedometer(x=1700, y=50, width=280, height=130),
             Pedals(x=1700, y=300, font_provider=self.font_provider)
         ]
         running_state = RunningState(self.state_machine, widgets=self.widgets)
