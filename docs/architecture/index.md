@@ -105,7 +105,10 @@ src/
 └── ui/ (Layer 3: Presentation)
     ├── window.py (WindowManager)
     ├── utils/ (Fonts)
-    └── widgets/ (Speedometer, etc.)
+    ├── rendering/
+    │   ├── dashboard_card_renderer.py
+    │   └── components/ (Bar, IndicatorBars, etc.)
+    └── widgets/ (DashboardCard, etc.)
 ```
 
 ## Próximos Passos

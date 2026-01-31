@@ -6,7 +6,7 @@ from src.ui.interfaces.i_font_provider import IFontProvider
 from src.ui.utils.pygame_font_provider import PygameFontProvider
 from src.core.providers.i_telemetry_provider import ITelemetryProvider
 from src.core.providers.mock_telemetry_provider import MockTelemetryProvider
-from src.ui.widgets.speedometer import Speedometer
+from src.ui.widgets.dashboard_card import DashboardCard
 from src.core.application.services.state_machine import StateMachine
 from src.core.application.states.running_state import RunningState
 from src.core.application.states.edit_state import EditState

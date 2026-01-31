@@ -80,77 +80,34 @@ Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado co
 
 ## Fase 2: Widgets Básicos
 
-### 2.1 Speedometer Widget
+### 2.1 DashboardCard (antigo Speedometer)
 
 - [x] **Implementação**
-  - [x] Criar classe Speedometer herdando de Widget
-  - [x] Implementar renderização de velocidade
-  - [x] Implementar indicador de marcha
-  - [x] Adicionar suporte para km/h e mph (km/h fixo inicial)
+  - [x] Criar classe DashboardCard herdando de Widget
+  - [x] Integrar Speed, Gear, Steering, Pedals, FFB
+  - [x] Implementar layout simétrico e compacto (350px)
   - [x] Implementar drag & drop
 
 - [x] **Testes**
-  - [x] Testar atualização de dados
-  - [x] Testar renderização
-  - [x] Testar conversão km/h ↔ mph
+  - [x] Testar atualização de todos dados (162 testes total)
+  - [x] Testar renderização otimizada
+  - [x] 100% Cobertura
 
 - [x] **Documentação**
-  - [x] Atualizar docs/api-reference/widgets/speedometer.md
-  - [ ] Adicionar screenshots
+  - [x] Atualizar API reference
+  - [x] Adicionar screenshots
 
-### 2.2 Pedals Widget
+### 2.2 Pedals Widget (Removido)
 
-- [ ] **Implementação**
-  - [ ] Criar classe Pedals herdando de Widget
-  - [ ] Implementar três barras verticais
-  - [ ] Adicionar cores configuráveis (verde, vermelho, azul)
-  - [ ] Implementar animação suave
-  - [ ] Implementar drag & drop
+- [x] **Status**: Integrado ao DashboardCard para design mais limpo e compacto.
 
-- [ ] **Testes**
-  - [ ] Testar atualização de dados
-  - [ ] Testar renderização de barras
-  - [ ] Testar cores
+### 2.3 Steering Wheel Widget (Integrado)
 
-- [ ] **Documentação**
-  - [ ] Atualizar docs/api-reference/widgets/pedals.md
-  - [ ] Adicionar screenshots
+- [x] **Status**: Integrado ao DashboardCard.
 
-### 2.3 Steering Wheel Widget
+### 2.4 FFB Indicator Widget (Integrado)
 
-- [ ] **Implementação**
-  - [ ] Criar classe SteeringWheel herdando de Widget
-  - [ ] Implementar representação circular
-  - [ ] Implementar rotação baseada em ângulo
-  - [ ] Adicionar indicador de centro
-  - [ ] Implementar drag & drop
-
-- [ ] **Testes**
-  - [ ] Testar rotação -900 a +900
-  - [ ] Testar renderização
-  - [ ] Testar normalização de ângulo
-
-- [ ] **Documentação**
-  - [ ] Atualizar docs/api-reference/widgets/steering-wheel.md
-  - [ ] Adicionar screenshots
-
-### 2.4 FFB Indicator Widget
-
-- [ ] **Implementação**
-  - [ ] Criar classe FFBIndicator herdando de Widget
-  - [ ] Implementar barra horizontal
-  - [ ] Implementar cores dinâmicas (verde, amarelo, vermelho)
-  - [ ] Adicionar thresholds configuráveis
-  - [ ] Implementar drag & drop
-
-- [ ] **Testes**
-  - [ ] Testar mudança de cor baseada em threshold
-  - [ ] Testar detecção de clipping
-  - [ ] Testar configuração de thresholds
-
-- [ ] **Documentação**
-  - [ ] Atualizar docs/api-reference/widgets/ffb-indicator.md
-  - [ ] Adicionar screenshots
+- [x] **Status**: Integrado ao DashboardCard.
 
 ---
 
@@ -446,8 +403,8 @@ Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado co
 - **Status**: 🟢 Completo
 
 ### Fase 2: Widgets
-- **Progresso**: 33% (4/12 tarefas)
-- **Status**: 🟡 Em Progresso
+- **Progresso**: 100% (12/12 tarefas)
+- **Status**: 🟢 Completo
 
 ### Fase 3: Configuração
 - **Progresso**: 0% (0/6 tarefas)

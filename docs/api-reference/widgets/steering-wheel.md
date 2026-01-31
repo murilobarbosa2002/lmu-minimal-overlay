@@ -1,15 +1,6 @@
 # Steering Wheel Widget
 
-Visualização do volante.
+> [!WARNING]
+> **DEPRECATED**: Este widget foi integrado ao [DashboardCard](dashboard-card.md).
 
-## Dados Utilizados
-
-- `steering_angle`: -900° a +900°
-
-## Visualização
-
-- Representação circular do volante
-- Rotação visual proporcional ao ângulo
-- Indicador central de posição neutra
-
-Veja [Widget Base](base-widget.md).
+Consulte a documentação do `DashboardCard` para detalhes sobre a visualização do volante.

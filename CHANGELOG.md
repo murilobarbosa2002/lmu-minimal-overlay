@@ -8,7 +8,11 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 ## [Unreleased]
 
 ### Changed
+- **BREAKING**: `Speedometer` renamed to `DashboardCard` to better reflect its multi-purpose nature (displays Speed, Gear, Steering, Throttle, Brake, FFB)
+- **BREAKING**: Removed `Pedals` widget (functionality integrated into `DashboardCard`)
 - **BREAKING**: `OverlayApp` now requires dependencies via constructor injection (use `AppFactory.create()` instead of direct instantiation)
+- **Architecture**: Comprehensive SOLID and Clean Architecture refactoring
+- **Layout**: New compact DashboardCard (350px width) with symmetric spacing (20px) and gradient background (95% opacity)
 - **Architecture**: Comprehensive SOLID and Clean Architecture refactoring across 5 phases
   - Implemented dependency injection container (`SimpleDIContainer`)
   - Extracted interfaces: `IWindowManager`, `IFontProvider`, `ITelemetryProvider`

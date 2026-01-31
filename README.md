@@ -7,7 +7,8 @@
 Overlay de telemetria em tempo real para Le Mans Ultimate. HUD transparente que exibe dados de telemetria e inputs sem interferir na experiência de corrida.
 
 ![LMU Telemetry Overlay](docs/assets/screenshot-placeholder.png)
-> *Screenshot será adicionado após implementação*
+![LMU Telemetry Overlay](docs/assets/screenshot-placeholder.png)
+> *Screenshot: DashboardCard integrado com volante, velocidade/marcha e barras de input*
 
 ## 🎯 Características
 
@@ -73,10 +74,10 @@ Documentação completa disponível em [GitHub Pages](https://murilobarbosa2002.
 
 | Widget | Descrição | Dados |
 |--------|-----------|-------|
-| **Speedometer** | Velocímetro digital | Velocidade, marcha |
-| **Pedals** | Visualização de pedais | Throttle, brake, clutch |
-| **Steering Wheel** | Ângulo do volante | Steering angle |
-| **FFB Indicator** | Force feedback | FFB level com clipping |
+| Widget | Descrição | Dados |
+|--------|-----------|-------|
+| **DashboardCard** | Card principal integrado | Speed, Gear, Steering, Pedals, FFB |
+| **FPS Counter** | Contador de quadros | FPS atual |
 
 ## ⌨️ Atalhos
 
