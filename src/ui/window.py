@@ -15,11 +15,7 @@ class WindowManager:
     def init(self) -> None:
         pygame.init()
         pygame.display.set_caption(self.title)
-        flags = pygame.SRCALPHA
-        if os.name == 'nt':
-            flags |= pygame.NOFRAME
-        else:
-            flags |= pygame.RESIZABLE
+        flags = pygame.SRCALPHA | pygame.NOFRAME
         self.surface = pygame.display.set_mode((self.width, self.height), flags)
         self.is_running = True
 
