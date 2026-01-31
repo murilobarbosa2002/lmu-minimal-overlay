@@ -33,3 +33,41 @@ def test_physics_engine_downshift():
     engine.update(0.1, TrackSegment(1.0, 40.0, 40.0, 'STRAIGHT', 0.0), 0.5)
     
     assert engine.gear < 4
+
+def test_steering_micro_corrections():
+    engine = PhysicsEngine()
+    engine.speed = 100.0 # High speed to trigger jitter
+    engine.steering = 0.5
+    
+    # Update with 0 steering target (straight)
+    # This would normally smooth to 0.0, but micro-corrections should add noise.
+    initial_steering = engine.steering
+    series_of_updates = []
+    
+    # Run a few updates
+    segment = TrackSegment(1.0, 100.0, 100.0, 'STRAIGHT', 0.0)
+    for _ in range(10):
+        engine.update(0.016, segment, 0.5)
+        series_of_updates.append(engine.steering)
+        
+    # Check that it's changing
+    assert any(val != initial_steering for val in series_of_updates)
+    
+    # Check that it doesn't stay perfectly static if we are just holding a turn
+    # (Though in STRAIGHT target is 0, so it will decay)
+    
+    # Test maintaining a turn
+    engine.steering = 0.5
+    segment_corner = TrackSegment(1.0, 100.0, 100.0, 'CORNER_MID', 0.5)
+    # CORNER_MID target steering is curvature (say 0.5)
+    
+    last_val = engine.steering
+    changes = 0
+    for _ in range(20):
+        engine.update(0.016, segment_corner, 0.5)
+        if engine.steering != last_val:
+            changes += 1
+        last_val = engine.steering
+        
+    # It should fluctuate slightly due to jitter even if target matches current
+    assert changes > 0
