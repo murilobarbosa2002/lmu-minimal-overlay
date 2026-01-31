@@ -33,12 +33,24 @@ class Bar :
         else:
             value =max (-1.0 ,min (1.0 ,value ))
 
-        label_font =FontManager .get_font (size =14 ,bold =True )
-        label_surf =label_font .render (self .label ,True ,text_color )
-        label_x =x +self .width //2 -label_surf .get_width ()//2 
-        surface .blit (label_surf ,(label_x ,y ))
+        # Percentage Value (Top)
+        pct_value = int(abs(value) * 100)
+        value_str = f"{pct_value}%"
+        value_font = FontManager.get_font(size=10, bold=True) 
+        value_surf = value_font.render(value_str, True, text_color)
+        value_x = x + self.width // 2 - value_surf.get_width() // 2
+        surface.blit(value_surf, (value_x, y))
 
-        bar_y =y +20 
+        bar_y = y + 20
+
+        # Label (Bottom) - Prepared for later use
+        label_font = FontManager.get_font(size=14, bold=True)
+        label_surf = label_font.render(self.label, True, text_color)
+        label_x = x + self.width // 2 - label_surf.get_width() // 2
+        label_y = bar_y + self.height + 4 
+        surface.blit(label_surf, (label_x, label_y))
+
+ 
         bg_rect =pygame .Rect (x ,bar_y ,self .width ,self .height )
 
         pygame .draw .rect (surface ,(40 ,40 ,40 ),bg_rect ,border_radius =3 )
