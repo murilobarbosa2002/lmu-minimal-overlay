@@ -1,48 +1,64 @@
 import pygame
-from src.ui.interfaces.i_font_provider import IFontProvider
+from src.ui.rendering.components import (
+    SteeringIndicator,
+    SpeedGearDisplay,
+    IndicatorBars
+)
 
 
 class SpeedometerRenderer:
-    def __init__(self, font_provider: IFontProvider):
-        self.font_provider = font_provider
-        self._bg_surface: pygame.Surface | None = None
-
-    def create_background(self, width: int, height: int) -> pygame.Surface:
-        if self._bg_surface is None:
-            self._bg_surface = pygame.Surface((width, height))
-            top_color = (30, 35, 45)
-            bottom_color = (5, 5, 8)
-            
-            for y in range(height):
-                ratio = y / height
-                r = top_color[0] * (1 - ratio) + bottom_color[0] * ratio
-                g = top_color[1] * (1 - ratio) + bottom_color[1] * ratio
-                b = top_color[2] * (1 - ratio) + bottom_color[2] * ratio
-                pygame.draw.line(self._bg_surface, (int(r), int(g), int(b)), (0, y), (width, y))
+    """Orchestrates rendering of dashboard card components"""
+    
+    def __init__(self):
+        self.steering = SteeringIndicator(radius=30)
+        self.speed_gear = SpeedGearDisplay()
+        self.bars = IndicatorBars(spacing=12)
+    
+    def render(
+        self,
+        surface: pygame.Surface,
+        x: int,
+        y: int,
+        width: int,
+        height: int,
+        speed: float,
+        gear: int,
+        unit: str,
+        steering_angle: float,
+        throttle_pct: float,
+        brake_pct: float,
+        ffb_level: float,
+        bg_color: tuple,
+        text_color: tuple,
+        gear_color: tuple
+    ) -> None:
+        """Render complete dashboard card with all components"""
+        # Draw background with rounded corners
+        bg_surface = pygame.Surface((width, height), pygame.SRCALPHA)
+        pygame.draw.rect(bg_surface, bg_color, (0, 0, width, height), border_radius=8)
+        surface.blit(bg_surface, (x, y))
         
-        return self._bg_surface
-
-    def create_masked_surface(self, width: int, height: int) -> pygame.Surface:
-        bg = self.create_background(width, height)
+        # Calculate section positions
+        steering_width = 80
+        bars_width = 130
+        speed_width = width - steering_width - bars_width
         
-        masked_surface = pygame.Surface((width, height), pygame.SRCALPHA)
-        masked_surface.blit(bg, (0, 0))
+        # Render steering indicator (LEFT)
+        steering_cx = x + 40
+        steering_cy = y + height // 2
+        self.steering.render(surface, steering_cx, steering_cy, steering_angle, text_color)
         
-        mask = pygame.Surface((width, height), pygame.SRCALPHA)
-        pygame.draw.rect(mask, (255, 255, 255), mask.get_rect(), border_radius=24)
-        masked_surface.blit(mask, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
+        # Render speed/gear display (CENTER)
+        speed_x = x + steering_width
+        self.speed_gear.render(
+            surface, speed_x, y, speed_width, height,
+            speed, gear, unit, text_color, gear_color
+        )
         
-        border_surf = pygame.Surface((width, height), pygame.SRCALPHA)
-        pygame.draw.rect(border_surf, (255, 255, 255, 30), border_surf.get_rect(), width=1, border_radius=24)
-        masked_surface.blit(border_surf, (0, 0))
-        
-        return masked_surface
-
-    def render_gear(self, gear: int, gear_color: tuple[int, int, int]) -> pygame.Surface:
-        font = self.font_provider.get_font(40, bold=True)
-        gear_str = "R" if gear == -1 else "N" if gear == 0 else str(gear)
-        return font.render(gear_str, True, gear_color)
-
-    def render_speed(self, speed: int, text_color: tuple[int, int, int]) -> pygame.Surface:
-        font = self.font_provider.get_font(90, bold=True)
-        return font.render(f"{int(speed)}", True, text_color)
+        # Render indicator bars (RIGHT)
+        bars_x = x + steering_width + speed_width + 15
+        bars_y = y + (height - 90) // 2
+        self.bars.render(
+            surface, bars_x, bars_y,
+            throttle_pct, brake_pct, ffb_level, text_color
+        )
