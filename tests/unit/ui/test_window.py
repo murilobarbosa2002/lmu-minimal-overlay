@@ -109,3 +109,18 @@ def test_clear_screen_no_surface():
     wm._surface = None
     # Should not raise exception
     wm.clear()
+
+
+def test_window_with_custom_transparency_handler():
+    custom_handler = Mock()
+    wm = WindowManager(transparency_handler=custom_handler)
+    
+    assert wm.transparency_handler is custom_handler
+
+
+def test_surface_property_getter():
+    wm = WindowManager()
+    wm._surface = Mock()
+    
+    assert wm.surface is wm._surface
+
