@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: 'pt-BR' }}">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+{% seo %}
+    <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+    <style>
+      .page-wrapper {
+        display: flex;
+        max-width: 1200px;
+        margin: 0 auto;
+        gap: 2rem;
+      }
+      
+      .sidebar {
+        width: 250px;
+        flex-shrink: 0;
+        position: sticky;
+        top: 20px;
+        height: fit-content;
+        background: #f6f8fa;
+        padding: 1.5rem;
+        border-radius: 6px;
+        font-size: 14px;
+      }
+      
+      .sidebar h3 {
+        margin-top: 0;
+        font-size: 16px;
+        border-bottom: 2px solid #d0d7de;
+        padding-bottom: 0.5rem;
+      }
+      
+      .sidebar ul {
+        list-style: none;
+        padding-left: 0;
+        margin: 0.5rem 0;
+      }
+      
+      .sidebar li {
+        margin: 0.3rem 0;
+      }
+      
+      .sidebar a {
+        color: #0969da;
+        text-decoration: none;
+      }
+      
+      .sidebar a:hover {
+        text-decoration: underline;
+      }
+      
+      .main-content-wrapper {
+        flex: 1;
+        min-width: 0;
+      }
+      
+      .breadcrumb {
+        font-size: 14px;
+        color: #57606a;
+        margin-bottom: 1rem;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid #d0d7de;
+      }
+      
+      .breadcrumb a {
+        color: #0969da;
+        text-decoration: none;
+      }
+      
+      .breadcrumb a:hover {
+        text-decoration: underline;
+      }
+      
+      @media (max-width: 768px) {
+        .page-wrapper {
+          flex-direction: column;
+        }
+        
+        .sidebar {
+          width: 100%;
+          position: static;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a id="skip-to-content" href="#content">Skip to the content.</a>
+
+    <header class="page-header" role="banner">
+      <h1 class="project-name">{{ page.title | default: site.title | default: site.github.repository_name }}</h1>
+      <h2 class="project-tagline">{{ page.description | default: site.description | default: site.github.project_tagline }}</h2>
+      {% if site.github.is_project_page %}
+        <a href="{{ site.github.repository_url }}" class="btn">View on GitHub</a>
+      {% endif %}
+      {% if site.show_downloads %}
+        <a href="{{ site.github.zip_url }}" class="btn">Download .zip</a>
+        <a href="{{ site.github.tar_url }}" class="btn">Download .tar.gz</a>
+      {% endif %}
+    </header>
+
+    <div class="page-wrapper">
+      <nav class="sidebar">
+        <h3>📚 Documentação</h3>
+        
+        <h4>🚀 Getting Started</h4>
+        <ul>
+          <li><a href="{{ '/getting-started/' | relative_url }}">Overview</a></li>
+          <li><a href="{{ '/getting-started/installation' | relative_url }}">Instalação</a></li>
+          <li><a href="{{ '/getting-started/quick-start' | relative_url }}">Quick Start</a></li>
+          <li><a href="{{ '/getting-started/configuration' | relative_url }}">Configuração</a></li>
+        </ul>
+        
+        <h4>🏗️ Architecture</h4>
+        <ul>
+          <li><a href="{{ '/architecture/' | relative_url }}">Overview</a></li>
+          <li><a href="{{ '/architecture/layers' | relative_url }}">Camadas</a></li>
+          <li><a href="{{ '/architecture/design-patterns' | relative_url }}">Design Patterns</a></li>
+          <li><a href="{{ '/architecture/data-flow' | relative_url }}">Fluxo de Dados</a></li>
+        </ul>
+        
+        <h4>📖 Guides</h4>
+        <ul>
+          <li><a href="{{ '/guides/development/' | relative_url }}">Development</a></li>
+          <li><a href="{{ '/guides/deployment/' | relative_url }}">Deployment</a></li>
+          <li><a href="{{ '/guides/user-guide/' | relative_url }}">User Guide</a></li>
+        </ul>
+        
+        <h4>🔧 API Reference</h4>
+        <ul>
+          <li><a href="{{ '/api-reference/telemetry/' | relative_url }}">Telemetry</a></li>
+          <li><a href="{{ '/api-reference/widgets/' | relative_url }}">Widgets</a></li>
+          <li><a href="{{ '/api-reference/configuration/' | relative_url }}">Configuration</a></li>
+        </ul>
+        
+        <h4>📄 Docs</h4>
+        <ul>
+          <li><a href="{{ '/PRODUCT' | relative_url }}">Product</a></li>
+          <li><a href="{{ '/' | relative_url }}../ROADMAP">Roadmap</a></li>
+        </ul>
+      </nav>
+
+      <main id="content" class="main-content-wrapper" role="main">
+        {{ content }}
+
+        <footer class="site-footer">
+          {% if site.github.is_project_page %}
+            <span class="site-footer-owner"><a href="{{ site.github.repository_url }}">{{ site.github.repository_name }}</a> mantido por <a href="{{ site.github.owner_url }}">{{ site.github.owner_name }}</a>.</span>
+          {% endif %}
+          <span class="site-footer-credits">Esta página foi gerada por <a href="https://pages.github.com">GitHub Pages</a>.</span>
+        </footer>
+      </main>
+    </div>
+  </body>
+</html>

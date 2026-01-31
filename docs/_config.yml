@@ -1,5 +1,8 @@
 title: LMU Telemetry Overlay
 description: Overlay de telemetria em tempo real para Le Mans Ultimate
-theme: jekyll-theme-cayman
+remote_theme: pages-themes/cayman@v0.2.0
+plugins:
+- jekyll-remote-theme
+title: LMU Telemetry Overlay
 lang: pt-BR
 show_downloads: false
