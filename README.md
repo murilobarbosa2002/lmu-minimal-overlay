@@ -169,13 +169,12 @@ Contribuições são bem-vindas! Veja [CONTRIBUTING.md](CONTRIBUTING.md) para de
 
 Veja [ROADMAP.md](ROADMAP.md) para plano completo de desenvolvimento.
 
-**Status Atual**: Fase 1 - Fundação (60% completo)
+**Status Atual**: Fase 3 - Configuração (Completo)
 
 **Próximas Fases**:
-- Fase 2: Widgets Básicos
-- Fase 3: Sistema de Configuração
-- Fase 4: Integração e Loop Principal
+- Fase 4: Integração (Em progresso)
 - Fase 5: Produção Windows
+- Fase 6: Otimizações e Performance
 
 ## 📄 Licença
 

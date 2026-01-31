@@ -8,6 +8,23 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 ## [Unreleased]
 
 ### Changed
+- **Config System**: Implemented full configuration management system (`ConfigManager`).
+- **Persistence**: Window position, size, and widget layout are now persisted in `config.json` and `layout.json`.
+- **UI**: DashboardCard background updated to deep blue for better aesthetics.
+- **Maintenance**: Strict code cleanup - removed all comments and docstrings from `src/` directory.
+- **Tests**: Achieved 100% test coverage across all codebase.
+
+### Added
+- `src/core/infrastructure/config_manager.py`: Singleton configuration manager.
+- `src/core/interfaces/i_config_manager.py`: Interface for config manager.
+- Unit tests for Config System.
+- `docs/testing/unit-testing.md`: Documentation on testing standards.
+
+### Fixed
+- Fixed reddish tint in DashboardCard gradient.
+- ConfigManager handles missing or corrupted JSON files gracefully.
+
+### Changed
 - **BREAKING**: `Speedometer` renamed to `DashboardCard` to better reflect its multi-purpose nature (displays Speed, Gear, Steering, Throttle, Brake, FFB)
 - **BREAKING**: Removed `Pedals` widget (functionality integrated into `DashboardCard`)
 - **BREAKING**: `OverlayApp` now requires dependencies via constructor injection (use `AppFactory.create()` instead of direct instantiation)
