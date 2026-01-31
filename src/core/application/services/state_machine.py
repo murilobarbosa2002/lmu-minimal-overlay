@@ -1,35 +1,12 @@
-from abc import ABC, abstractmethod
 import pygame
+from src.core.application.interfaces.state import IApplicationState
 from src.core.domain.telemetry_data import TelemetryData
-
-class ApplicationState(ABC):
-    def __init__(self, context):
-        self.context = context
-
-    def on_enter(self) -> None:
-        pass
-
-    def on_exit(self) -> None:
-        pass
-
-    @abstractmethod
-    def handle_input(self, event: pygame.event.Event) -> bool:
-        pass
-
-    @abstractmethod
-    def update(self, data: TelemetryData) -> None:
-        pass
-
-    @abstractmethod
-    def draw(self, surface: pygame.Surface) -> None:
-        pass
-
 
 class StateMachine:
     def __init__(self):
-        self.current_state: ApplicationState | None = None
+        self.current_state: IApplicationState | None = None
 
-    def change_state(self, new_state: ApplicationState) -> None:
+    def change_state(self, new_state: IApplicationState) -> None:
         if self.current_state:
             self.current_state.on_exit()
         
