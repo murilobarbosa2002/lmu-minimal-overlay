@@ -21,10 +21,10 @@ Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado co
 
 ### 1.2 Layer 1: Infrastructure
 
-- [ ] **ITelemetryProvider (Interface)**
-  - [ ] Definir interface abstrata com métodos get_data(), is_available(), connect(), disconnect()
-  - [ ] Adicionar type hints completos
-  - [ ] Documentar com docstrings em português
+- [x] **ITelemetryProvider (Interface)**
+  - [x] Definir interface abstrata com métodos get_data(), is_available(), connect(), disconnect()
+  - [x] Adicionar type hints completos
+  - [x] Documentar com docstrings em português
 
 - [x] **TelemetryData (Dataclass)**
   - [x] Criar dataclass com todos campos tipados
