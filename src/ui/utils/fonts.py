@@ -17,10 +17,11 @@ class FontManager :
 
             if os .path .exists (font_path ):
                 try :
-                    font =pygame .font .Font (font_path ,size )
-                    font .render ("test",False ,(0 ,0 ,0 ))
-                    cls ._fonts [key ]=font 
-                    return font 
+                    with open(font_path, 'rb') as f:
+                        font =pygame .font .Font (f ,size )
+                        font .render ("test",False ,(0 ,0 ,0 ))
+                        cls ._fonts [key ]=font 
+                        return font 
                 except Exception as e :
                     print (f"Failed to load font {font_path}: {e}")
                     pass 

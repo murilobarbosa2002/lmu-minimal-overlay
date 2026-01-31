@@ -16,10 +16,14 @@ class TestPygameFontProvider:
         provider = PygameFontProvider()
         assert provider._fonts == {}
 
+    @patch('builtins.open')
     @patch('os.path.exists')
     @patch('pygame.font.Font')
-    def test_get_font_from_assets_success(self, mock_font_class, mock_exists):
+    def test_get_font_from_assets_success(self, mock_font_class, mock_exists, mock_open):
         mock_exists.return_value = True
+        mock_file = MagicMock()
+        mock_open.return_value.__enter__.return_value = mock_file
+        
         mock_font = Mock()
         mock_font.render.return_value = Mock()
         mock_font_class.return_value = mock_font
@@ -27,7 +31,8 @@ class TestPygameFontProvider:
         result = self.provider.get_font(24, bold=False)
         
         assert result is mock_font
-        mock_font_class.assert_called_once()
+        mock_font_class.assert_called_once_with(mock_file, 24)
+        mock_open.assert_called_once()
 
     @patch('os.path.exists')
     @patch('pygame.font.SysFont')
@@ -96,26 +101,39 @@ class TestPygameFontProvider:
         
         mock_init.assert_called_once()
 
+    @patch('builtins.open')
     @patch('os.path.exists')
     @patch('pygame.font.Font')
-    def test_bold_font_requested(self, mock_font_class, mock_exists):
+    def test_bold_font_requested(self, mock_font_class, mock_exists, mock_open):
         mock_exists.return_value = True
+        mock_file = MagicMock()
+        mock_open.return_value.__enter__.return_value = mock_file
+        
         mock_font = Mock()
         mock_font.render.return_value = Mock()
         mock_font_class.return_value = mock_font
         
         self.provider.get_font(24, bold=True)
         
-        call_args = mock_font_class.call_args[0]
-        assert "Bold" in call_args[0]
+        # Verify open called with correct bold font path
+        open_args = mock_open.call_args[0]
+        assert "Bold" in open_args[0]
+        # Verify Font initialized with file object
+        mock_font_class.assert_called_with(mock_file, 24)
 
+    @patch('builtins.open')
     @patch('os.path.exists')
     @patch('pygame.font.Font')
     @patch('pygame.font.SysFont')
     @patch('builtins.print')
-    def test_font_load_exception_prints_error(self, mock_print, mock_sysfont, mock_font_class, mock_exists):
+    def test_font_load_exception_prints_error(self, mock_print, mock_sysfont, mock_font_class, mock_exists, mock_open):
         mock_exists.return_value = True
+        mock_file = MagicMock()
+        mock_open.return_value.__enter__.return_value = mock_file
+        
+        # Simulate error during Font init even with open file (e.g. invalid format)
         mock_font_class.side_effect = Exception("Font error")
+        
         mock_font = Mock()
         mock_sysfont.return_value = mock_font
         
