@@ -37,14 +37,27 @@ class SpeedGearDisplay :
             self .gear_surf =gear_font .render (gear_text ,True ,gear_color )
             self ._cached_gear =gear 
 
+        # Calculate total height of the content stack
+        gap = 3
+        total_content_height = (
+            self.gear_surf.get_height() + 
+            gap + 
+            self.unit_surf.get_height() + 
+            gap + 
+            self.speed_surf.get_height()
+        )
+
+        # Calculate starting Y position to center vertically
+        start_y = y + (height - total_content_height) // 2
+
         gear_x =x +width //2 -self .gear_surf .get_width ()//2 
-        gear_y =y +15 
+        gear_y = start_y 
 
         unit_x =x +width //2 -self .unit_surf .get_width ()//2 
-        unit_y =gear_y +self .gear_surf .get_height ()+3 
+        unit_y =gear_y +self .gear_surf .get_height ()+ gap
 
         speed_x =x +width //2 -self .speed_surf .get_width ()//2 
-        speed_y =unit_y +self .unit_surf .get_height ()+3 
+        speed_y =unit_y +self .unit_surf .get_height ()+ gap 
 
         surface .blit (self .gear_surf ,(gear_x ,gear_y ))
         surface .blit (self .unit_surf ,(unit_x ,unit_y ))

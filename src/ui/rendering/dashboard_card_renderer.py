@@ -71,7 +71,7 @@ class DashboardCardRenderer :
         speed_width =bars_left_edge -steering_right_edge -20 
 
         self .speed_gear .render (
-        surface ,speed_x ,y ,speed_width ,height ,
+        surface ,x ,y ,width ,height ,
         speed ,gear ,unit ,text_color ,gear_color 
         )
 
