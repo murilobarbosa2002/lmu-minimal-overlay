@@ -1,5 +1,5 @@
 import pytest
-from unittest.mock import Mock, patch, MagicMock
+from unittest.mock import Mock, patch, MagicMock, PropertyMock
 import pygame
 from src.core.app import OverlayApp
 
@@ -92,13 +92,20 @@ class TestOverlayApp:
                     mock_update.assert_called_once()
 
     @patch('sys.exit')
-    def test_run_loop(self, mock_exit, app):
-        app.window.is_running = False
+    def test_run_loop_execution(self, mock_exit, app):
+        # Setup property mock to return True then False
+        type(app.window).is_running = PropertyMock(side_effect=[True, False])
         
         with patch.object(app, 'setup') as mock_setup:
-            with patch.object(app.window, 'close') as mock_close:
-                app.run()
-                
-                mock_setup.assert_called_once()
-                mock_close.assert_called_once()
-                mock_exit.assert_called_once()
+            with patch.object(app, '_handle_input') as mock_input:
+                with patch.object(app, '_update') as mock_update:
+                    with patch.object(app, '_draw') as mock_draw:
+                        with patch.object(app.window, 'close') as mock_close:
+                            app.run()
+                            
+                            mock_setup.assert_called_once()
+                            mock_input.assert_called_once()
+                            mock_update.assert_called_once()
+                            mock_draw.assert_called_once()
+                            mock_close.assert_called_once()
+                            mock_exit.assert_called_once()

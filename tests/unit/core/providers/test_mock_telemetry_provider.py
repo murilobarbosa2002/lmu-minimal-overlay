@@ -116,6 +116,23 @@ def test_mock_provider_gear_shift_logic():
     
     assert provider._physics.gear > 3
 
+def test_mock_provider_track_looping():
+    """Verify track segments loop correctly"""
+    provider = MockTelemetryProvider()
+    
+    # Force 1 short segment
+    provider._segments = [TrackSegment(1.0, 100.0, 100.0, 'STRAIGHT', 0.0)]
+    provider._segment_index = 0
+    provider._segment_start_time = time.time() - 1.1 # Past duration
+    
+    # Trigger update
+    provider.get_data()
+    
+    # Should have advanced segment (index 0 again since len=1, but time reset)
+    # Actually if len=1 it goes to 0. 
+    # Let's verify _segment_start_time changed to near current time
+    assert provider._segment_start_time > (time.time() - 0.5)
+
 
 def test_mock_provider_data_within_ranges():
     """All values are within expected ranges"""
