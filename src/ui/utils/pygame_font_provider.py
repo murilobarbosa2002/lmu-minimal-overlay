@@ -1,5 +1,6 @@
 import pygame 
 import os 
+import io
 from typing import Optional 
 from src .ui .interfaces .i_font_provider import IFontProvider 
 
@@ -20,12 +21,17 @@ class PygameFontProvider (IFontProvider ):
             if os .path .exists (font_path ):
                 try :
                     with open(font_path, 'rb') as f:
-                        font =pygame .font .Font (f ,size )
-                        font .render ("test",False ,(0 ,0 ,0 ))
-                        self ._fonts [key ]=font 
-                        return font 
+                        font_data = io.BytesIO(f.read())
+                    
+                    font =pygame .font .Font (font_data ,size )
+                    font .render ("test",False ,(0 ,0 ,0 ))
+                    self ._fonts [key ]=font 
+                    return font 
                 except Exception as e :
-                    print (f"Failed to load font {font_path}: {e}")
+                    # User reported "Passed a NULL pointer" on Wine. 
+                    # Suppress error and fallback to system font.
+                    # print (f"Failed to load font {font_path}: {e}")
+                    pass
 
             try :
                 font =pygame .font .SysFont (font_name ,size ,bold =bold )

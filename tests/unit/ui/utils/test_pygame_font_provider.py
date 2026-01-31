@@ -2,6 +2,7 @@ import pytest
 import pygame
 from unittest.mock import Mock, patch, MagicMock
 from src.ui.utils.pygame_font_provider import PygameFontProvider
+import io
 
 
 class TestPygameFontProvider:
@@ -22,6 +23,7 @@ class TestPygameFontProvider:
     def test_get_font_from_assets_success(self, mock_font_class, mock_exists, mock_open):
         mock_exists.return_value = True
         mock_file = MagicMock()
+        mock_file.read.return_value = b'fontdata'
         mock_open.return_value.__enter__.return_value = mock_file
         
         mock_font = Mock()
@@ -31,7 +33,10 @@ class TestPygameFontProvider:
         result = self.provider.get_font(24, bold=False)
         
         assert result is mock_font
-        mock_font_class.assert_called_once_with(mock_file, 24)
+        # Should be called with a BytesIO object containing the data, not the file handle
+        call_args = mock_font_class.call_args
+        assert isinstance(call_args[0][0], io.BytesIO)
+        assert call_args[0][0].getvalue() == b'fontdata'
         mock_open.assert_called_once()
 
     @patch('os.path.exists')
@@ -107,6 +112,7 @@ class TestPygameFontProvider:
     def test_bold_font_requested(self, mock_font_class, mock_exists, mock_open):
         mock_exists.return_value = True
         mock_file = MagicMock()
+        mock_file.read.return_value = b'bolddata'
         mock_open.return_value.__enter__.return_value = mock_file
         
         mock_font = Mock()
@@ -118,8 +124,10 @@ class TestPygameFontProvider:
         # Verify open called with correct bold font path
         open_args = mock_open.call_args[0]
         assert "Bold" in open_args[0]
-        # Verify Font initialized with file object
-        mock_font_class.assert_called_with(mock_file, 24)
+        # Verify Font initialized with BytesIO
+        call_args = mock_font_class.call_args
+        assert isinstance(call_args[0][0], io.BytesIO)
+        assert call_args[0][0].getvalue() == b'bolddata'
 
     @patch('builtins.open')
     @patch('os.path.exists')
@@ -137,7 +145,9 @@ class TestPygameFontProvider:
         mock_font = Mock()
         mock_sysfont.return_value = mock_font
         
+        
         result = self.provider.get_font(24)
         
         assert result is mock_font
-        mock_print.assert_called_once()
+        # Error is suppressed, so print should not be called
+        mock_print.assert_not_called()
