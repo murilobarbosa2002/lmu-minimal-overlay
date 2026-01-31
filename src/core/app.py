@@ -7,12 +7,15 @@ from src.core.application.states.edit_state import EditState
 from src.core.providers.mock_telemetry_provider import MockTelemetryProvider
 from src.ui.widgets.speedometer import Speedometer
 
+from src.core.application.services.input_handler import InputHandler
+
 class OverlayApp:
     def __init__(self):
         self.window = WindowManager(title="LMU Telemetry Overlay", width=1920, height=1080)
         self.provider = MockTelemetryProvider()
         self.state_machine = StateMachine()
         self.widgets = []
+        self.input_handler = None
 
     def setup(self):
         self.window.init()
@@ -21,25 +24,12 @@ class OverlayApp:
         running_state = RunningState(self.state_machine, widgets=self.widgets)
         edit_state = EditState(self.state_machine, widgets=self.widgets)
         self.state_machine.change_state(running_state)
+        # Initialize InputHandler
+        self.input_handler = InputHandler(self.state_machine, self.window, self.widgets)
 
     def _handle_input(self):
-        events = self.window.handle_events()
-        for event in events:
-            if event.type == pygame.KEYDOWN:
-                self._handle_global_keys(event)
-            self.state_machine.handle_input(event)
-
-    def _handle_global_keys(self, event):
-        if event.key == pygame.K_F1:
-            self._toggle_mode()
-        elif event.key == pygame.K_ESCAPE:
-            self.window.is_running = False
-
-    def _toggle_mode(self):
-        if isinstance(self.state_machine.current_state, RunningState):
-            self.state_machine.change_state(EditState(self.state_machine, self.widgets))
-        else:
-            self.state_machine.change_state(RunningState(self.state_machine, self.widgets))
+        if self.input_handler:
+            self.input_handler.handle_input()
 
     def _update(self):
         try:
