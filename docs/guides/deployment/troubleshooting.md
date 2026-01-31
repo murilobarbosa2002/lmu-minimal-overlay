@@ -35,4 +35,9 @@ Reduza `fps_target` em `config.json`:
 
 Delete `config/layout.json` e reinicie.
 
+## Erros de Fonte ("Passed a NULL pointer")
+
+Geralmente ocorre em ambientes Wine/Proton devido a caminhos de arquivo do Windows (`Z:\...`).
+**Solução**: Atualize para a versão mais recente. O sistema de carregamento de fontes foi reescrito para usar streams de memória (`io.BytesIO`) e ignorar caminhos de arquivo problemáticos.
+
 Veja [Getting Started - Installation](../../getting-started/installation.md).

@@ -21,11 +21,17 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 - `docs/testing/unit-testing.md`: Documentation on testing standards.
 
 ### Fixed
-- Fixed reddish tint in DashboardCard gradient.
-- ConfigManager handles missing or corrupted JSON files gracefully.
+- **Fonts**: Fixed "Passed a NULL pointer" error on Wine/Proton by using `io.BytesIO` streams for font loading.
+- **Fonts**: Suppressed Pygame welcome message at startup.
+- **Fixed**: Reddish tint in DashboardCard gradient.
+- **Config**: ConfigManager handles missing or corrupted JSON files gracefully.
 
-### Changed
-- **BREAKING**: `Speedometer` renamed to `DashboardCard` to better reflect its multi-purpose nature (displays Speed, Gear, Steering, Throttle, Brake, FFB)
+### Added
+- `src/core/infrastructure/config_manager.py`: Singleton configuration manager.
+- `src/core/interfaces/i_config_manager.py`: Interface for config manager.
+- `tests/unit/ui/utils/test_fonts.py`: Comprehensive tests for FontManager static class (100% coverage).
+- Unit tests for Config System.
+- `docs/testing/unit-testing.md`: Documentation on testing standards.
 - **BREAKING**: Removed `Pedals` widget (functionality integrated into `DashboardCard`)
 - **BREAKING**: `OverlayApp` now requires dependencies via constructor injection (use `AppFactory.create()` instead of direct instantiation)
 - **Architecture**: Comprehensive SOLID and Clean Architecture refactoring
