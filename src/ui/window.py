@@ -1,4 +1,5 @@
 import pygame
+import pygame._sdl2.video as sdl2_video
 import os
 import sys
 
@@ -8,6 +9,7 @@ class WindowManager:
         self.width = width
         self.height = height
         self.surface: pygame.Surface | None = None
+        self.window: sdl2_video.Window | None = None
         self.is_running = False
         self.clock = pygame.time.Clock()
         self.fps = 60
@@ -17,7 +19,13 @@ class WindowManager:
         pygame.display.set_caption(self.title)
         flags = pygame.SRCALPHA | pygame.NOFRAME
         self.surface = pygame.display.set_mode((self.width, self.height), flags, 32)
+        self.window = sdl2_video.Window.from_display_module()
         self.is_running = True
+
+    def move_window(self, dx: int, dy: int) -> None:
+        if self.window:
+            x, y = self.window.position
+            self.window.position = (int(x + dx), int(y + dy))
 
     def set_transparent(self, transparent: bool) -> None:
         if os.name == 'nt':

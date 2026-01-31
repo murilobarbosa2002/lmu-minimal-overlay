@@ -44,31 +44,24 @@ class Speedometer(Widget):
 
     def draw(self, surface: pygame.Surface) -> None:
         bg_rect = pygame.Rect(self.x, self.y, self.width, self.height)
-        # Main Card Body (More transparent: 160 alpha)
         s = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
         pygame.draw.rect(s, (0, 0, 0, 160), s.get_rect(), border_radius=15)
         surface.blit(s, (self.x, self.y))
         
-        # Render Speed (Centered)
         if self.speed_surf is None:
             font = FontManager.get_font(90, bold=True)
             self.speed_surf = font.render(f"{int(self.speed)}", True, self.text_color)
             
-        # Move Speed slightly UP to close gap
         speed_rect = self.speed_surf.get_rect(center=(self.x + self.width // 2, self.y + self.height // 2 + 5))
         surface.blit(self.speed_surf, speed_rect)
         
-        # Render Gear (Top Center)
         if self.gear_surf is None:
             font = FontManager.get_font(40, bold=True)
             gear_str = "R" if self.gear == -1 else "N" if self.gear == 0 else str(self.gear)
             self.gear_surf = font.render(gear_str, True, self.gear_color)
             
-        # Move Gear slightly DOWN to close gap
         gear_rect = self.gear_surf.get_rect(center=(self.x + self.width // 2, self.y + 35))
         surface.blit(self.gear_surf, gear_rect)
-        
-        # Unit ("km/h") removed as per request
 
     def handle_input(self, event: pygame.event.Event) -> bool:
         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -86,9 +79,7 @@ class Speedometer(Widget):
                 
         elif event.type == pygame.MOUSEMOTION:
             if self.is_dragging:
-                mouse_pos = event.pos
-                self.x = mouse_pos[0] + self.drag_offset[0]
-                self.y = mouse_pos[1] + self.drag_offset[1]
+                # Logic now handled by Main/Window to move the actual window
                 return True
                 
         return False

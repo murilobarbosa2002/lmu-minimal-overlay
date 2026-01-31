@@ -8,12 +8,13 @@ from src.core.domain.telemetry_data import TelemetryData
 from src.ui.widgets.speedometer import Speedometer
 
 def main():
-    window = WindowManager(title="LMU Telemetry Overlay", width=1920, height=1080)
+    # Wide/Short "card" overlay style
+    window = WindowManager(title="LMU Telemetry Overlay", width=300, height=150)
     window.init()
     provider = MockTelemetryProvider()
     state_machine = StateMachine()
     
-    speedometer = Speedometer(x=1500, y=850, width=280, height=130)
+    speedometer = Speedometer(x=10, y=10, width=280, height=130)
     
     widgets = [speedometer]
     
@@ -32,6 +33,12 @@ def main():
                         state_machine.change_state(running_state)
                 elif event.key == pygame.K_ESCAPE:
                     window.is_running = False
+            
+            # Handle Dragging Window
+            if event.type == pygame.MOUSEMOTION:
+                if speedometer.is_dragging:
+                    window.move_window(*event.rel)
+
             state_machine.handle_input(event)
             
         try:
