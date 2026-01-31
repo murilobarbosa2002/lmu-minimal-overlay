@@ -55,27 +55,19 @@ class PhysicsEngine :
         else :
             self .brake =max (target_brake ,self .brake -brake_speed )
 
-        # Improved Steering Logic (Smoothness + Micro-corrections)
-        # 1. Base Smoothing (Exponential moving average for human-like input latency)
-        # Lower factor = smoother but more delay. Higher = snappier.
-        smoothing_factor = 3.0 * dt  # Adjustable responsiveness
+        smoothing_factor = 3.0 * dt
         
-        # 2. Micro-corrections (Simulating human grip adjustments and road feedback)
-        # Intensity increases with speed and cornering force
         jitter_intensity = 0.0
         if self.speed > 10:
-             # More jitter at high speed or high steering load
              load_factor = abs(self.steering) + (self.speed / 300.0)
              jitter_intensity = 0.02 * min(1.0, load_factor)
         
         micro_correction = random.uniform(-jitter_intensity, jitter_intensity)
         
-        # Apply smoothing to the target first
+        
         diff = target_steering - self.steering
         self.steering += diff * min(1.0, smoothing_factor)
         
-        # Apply micro-correction on top of the smoothed value, mostly when maintaining angle
-        # But dampen it so it doesn't look like a seizure
         self.steering += micro_correction * 0.5 
 
         aero_drag =0.005 *self .speed 
