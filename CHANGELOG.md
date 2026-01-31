@@ -7,6 +7,32 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
 ## [Unreleased]
 
+### Changed
+- **BREAKING**: `OverlayApp` now requires dependencies via constructor injection (use `AppFactory.create()` instead of direct instantiation)
+- **Architecture**: Comprehensive SOLID and Clean Architecture refactoring across 5 phases
+  - Implemented dependency injection container (`SimpleDIContainer`)
+  - Extracted interfaces: `IWindowManager`, `IFontProvider`, `ITelemetryProvider`
+  - Created platform-specific handlers (`Win32TransparencyHandler`, `NullTransparencyHandler`)
+  - Extracted Speedometer components: `SpeedometerRenderer`, `DraggableBehavior`, `unit_converter`
+  - Removed singleton pattern from `FontManager`, replaced with injectable `PygameFontProvider`
+  - Created `AppFactory` for dependency wiring
+- Removed all comments from production code (maintained only in tests and docs)
+
+### Added
+- `src/core/infrastructure/di_container.py`: Dependency injection container
+- `src/core/infrastructure/app_factory.py`: Application factory for DI wiring
+- `src/ui/interfaces/`: Interface definitions (IWindowManager, IFontProvider)
+- `src/ui/platform/transparency_handler.py`: Platform-specific transparency handling
+- `src/ui/behaviors/draggable.py`: Reusable drag-and-drop behavior
+- `src/ui/rendering/speedometer_renderer.py`: Speedometer visual rendering
+- `src/core/domain/unit_converter.py`: Pure unit conversion functions
+- `src/ui/utils/pygame_font_provider.py`: Injectable font provider
+- 44 new comprehensive tests (100% coverage for new modules)
+
+### Fixed
+- Test coverage improved from 98% to 99% (144 tests passing)
+- Window property access in tests (changed from direct `surface` to `_surface`)
+
 ### Added
 - Script `run_windows.bat` com auto-instalação de Python e Chocolatey
 - Guia de instalação para Windows (`docs/guides/windows-setup.md`)

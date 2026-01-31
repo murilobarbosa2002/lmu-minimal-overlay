@@ -399,6 +399,26 @@ Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado co
 
 ---
 
+## Phase 3: Code Quality & Architecture (IN PROGRESS)
+**Status**: ✅ **COMPLETED** (January 2026)
+
+### Completed
+- ✅ **Architecture Refactoring** (v0.4.0)
+  - ✅ Dependency injection container implementation
+  - ✅ SOLID principles compliance across codebase
+  - ✅ Clean Architecture patterns (interfaces, handlers, services)
+  - ✅ Removed singleton patterns (FontManager → PygameFontProvider)
+  - ✅ Platform-specific code separation (Win32TransparencyHandler)
+  - ✅ Component extraction (SpeedometerRenderer, DraggableBehavior)
+  - ✅ 99% test coverage (144 tests passing)
+- ✅ **Code Cleanup**: Removed all comments from production code
+- ✅ **Testing Infrastructure**: 100% coverage on new modules
+
+### In Progress
+- 🔄 **Documentation Updates**: Architecture diagrams and integration guides
+
+---
+
 ## Fase 10: Funcionalidades Futuras
 
 ### 10.1 Novos Widgets

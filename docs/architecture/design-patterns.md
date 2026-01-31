@@ -23,6 +23,73 @@ class Widget(ABC):
 
 Todos widgets (Speedometer, Pedals, etc) herdam de `Widget`.
 
+## Patterns Adicionais (v0.4.0+)
+
+### Dependency Injection
+
+**Injeção de Dependências** com container customizado.
+
+```python
+from src.core.infrastructure.di_container import SimpleDIContainer
+from src.core.infrastructure.app_factory import AppFactory
+
+# Uso via factory
+app = AppFactory.create()  # Todas dependências resolvidas
+app.run()
+```
+
+**Benefícios:**
+- **Testabilidade**: Mock de todas dependências
+- **Desacoplamento**: Componentes independentes
+- **Configurabilidade**: Fácil trocar implementações
+
+### Strategy Pattern
+
+**Estratégia** para comportamentos específicos de plataforma.
+
+```python
+# Diferentes handlers para transparência
+class Win32TransparencyHandler:
+    def apply_transparency(self, hwnd): ...
+
+class NullTransparencyHandler:
+    def apply_transparency(self, hwnd): pass
+```
+
+## SOLID Compliance
+
+### Single Responsibility Principle
+
+Cada classe tem uma responsabilidade única:
+- `WindowManager`: Gerencia janela
+- `Win32TransparencyHandler`: Aplica transparência Windows
+- `SpeedometerRenderer`: Renderiza velocímetro
+
+### Open/Closed Principle
+
+Extensível sem modificações:
+- Novos `TransparencyHandler` para outras plataformas
+- Novos `Widget` sem alterar base
+
+### Liskov Substitution Principle
+
+Implementações substituíveis:
+- `MockTelemetryProvider` ↔ `SharedMemoryProvider`
+- `Win32TransparencyHandler` ↔ `NullTransparencyHandler`
+
+### Interface Segregation Principle
+
+Interfaces pequenas e focadas:
+- `IWindowManager`: Operações de janela
+- `IFontProvider`: Operações de fonte
+- `ITelemetryProvider`: Operações de telemetria
+
+### Dependency Inversion Principle
+
+Alto nível depende de abstrações:
+- `OverlayApp` depende de `IWindowManager`, não de `WindowManager`
+- Uso de `AppFactory` para injeção
+
 ### Benefícios
 
 - Adicione novos widgets sem modificar código existente

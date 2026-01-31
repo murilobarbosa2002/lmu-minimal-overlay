@@ -57,8 +57,63 @@ flake8 .
 4. Registre em `__init__.py`
 5. Adicione testes
 
-## Próximos Passos
+## Navegação
 
 - [Setup WSL](setup-wsl.md)
 - [Padrões de Código](code-standards.md)
 - [Testes](testing.md)
+- [Contribuindo](contributing.md)
+- [Dependency Injection](#dependency-injection)
+
+## Dependency Injection
+
+### Usando AppFactory
+
+Forma recomendada de criar a aplicação:
+
+```python
+from src.core.infrastructure.app_factory import AppFactory
+
+app = AppFactory.create()  # DI automático
+app.run()
+```
+
+### Registro Customizado
+
+Para testes ou configurações específicas:
+
+```python
+from src.core.infrastructure.di_container import SimpleDIContainer
+
+container = SimpleDIContainer()
+
+# Registrar singleton
+container.register(
+    IFontProvider,
+    lambda c: PygameFontProvider(),
+    singleton=True
+)
+
+# Resolver serviço
+font_provider = container.resolve(IFontProvider)
+```
+
+### Testing com DI
+
+```python
+from unittest.mock import Mock
+
+def test_app():
+    mock_window = Mock(spec=IWindowManager)
+    mock_provider = Mock(spec=ITelemetryProvider)
+    mock_fonts = Mock(spec=IFontProvider)
+    
+    app = OverlayApp(
+        window=mock_window,
+        provider=mock_provider,
+        font_provider=mock_fonts
+    )
+    
+    app.setup()
+    # Testes com mocks...
+```
