@@ -43,25 +43,48 @@ class Speedometer(Widget):
             self.gear_surf = None
 
     def draw(self, surface: pygame.Surface) -> None:
-        bg_rect = pygame.Rect(self.x, self.y, self.width, self.height)
-        s = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
-        pygame.draw.rect(s, (0, 0, 0, 160), s.get_rect(), border_radius=15)
-        surface.blit(s, (self.x, self.y))
-        
-        if self.speed_surf is None:
-            font = FontManager.get_font(90, bold=True)
-            self.speed_surf = font.render(f"{int(self.speed)}", True, self.text_color)
+
+        if not hasattr(self, '_bg_surface'):
+            self._bg_surface = pygame.Surface((self.width, self.height))
+            top_color = (30, 35, 45)
+            bottom_color = (5, 5, 8)
             
-        speed_rect = self.speed_surf.get_rect(center=(self.x + self.width // 2, self.y + 95))
-        surface.blit(self.speed_surf, speed_rect)
+            for y in range(self.height):
+                ratio = y / self.height
+                r = top_color[0] * (1 - ratio) + bottom_color[0] * ratio
+                g = top_color[1] * (1 - ratio) + bottom_color[1] * ratio
+                b = top_color[2] * (1 - ratio) + bottom_color[2] * ratio
+                pygame.draw.line(self._bg_surface, (int(r), int(g), int(b)), (0, y), (self.width, y))
+                
+        masked_surface = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
+        masked_surface.blit(self._bg_surface, (0, 0))
         
+        mask = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
+        pygame.draw.rect(mask, (255, 255, 255), mask.get_rect(), border_radius=24)
+        masked_surface.blit(mask, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
+        
+        border_surf = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
+        pygame.draw.rect(border_surf, (255, 255, 255, 30), border_surf.get_rect(), width=1, border_radius=24)
+        masked_surface.blit(border_surf, (0, 0))
+        
+        surface.blit(masked_surface, (self.x, self.y))
+
         if self.gear_surf is None:
             font = FontManager.get_font(40, bold=True)
             gear_str = "R" if self.gear == -1 else "N" if self.gear == 0 else str(self.gear)
             self.gear_surf = font.render(gear_str, True, self.gear_color)
             
-        gear_rect = self.gear_surf.get_rect(center=(self.x + self.width // 2, self.y + 30))
+        gear_rect = self.gear_surf.get_rect(centerx=self.x + self.width // 2, top=self.y + 20)
         surface.blit(self.gear_surf, gear_rect)
+
+        if self.speed_surf is None:
+            font = FontManager.get_font(90, bold=True)
+            self.speed_surf = font.render(f"{int(self.speed)}", True, self.text_color)
+            
+        speed_rect = self.speed_surf.get_rect(centerx=self.x + self.width // 2, bottom=self.y + self.height - 10)
+        surface.blit(self.speed_surf, speed_rect)
+
+
 
     def handle_input(self, event: pygame.event.Event) -> bool:
         if event.type == pygame.MOUSEBUTTONDOWN:
