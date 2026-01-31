@@ -349,18 +349,25 @@ Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado co
 
 ### 8.2 README Principal
 
-- [ ] Criar README.md na raiz
-- [ ] Adicionar badges (build, coverage, license)
+- [x] Criar README.md na raiz
+- [x] Adicionar badges (build, coverage, license)
 - [ ] Adicionar screenshots do overlay
-- [ ] Adicionar quick start
-- [ ] Adicionar links para documentação
+- [x] Adicionar quick start
+- [x] Adicionar links para documentação
 
 ### 8.3 CHANGELOG
 
-- [ ] Criar CHANGELOG.md
-- [ ] Documentar todas mudanças
-- [ ] Seguir formato Keep a Changelog
-- [ ] Versionar seguindo SemVer
+- [x] Criar CHANGELOG.md
+- [x] Documentar todas mudanças
+- [x] Seguir formato Keep a Changelog
+- [x] Versionar seguindo SemVer
+
+### 8.4 CONTRIBUTING
+
+- [x] Criar CONTRIBUTING.md
+- [x] Workflow de contribuição
+- [x] Padrões de código
+- [x] Checklist de PR
 
 ---
 
@@ -462,7 +469,7 @@ Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado co
 - **Status**: ⚪ Não Iniciado
 
 ### Fase 8: Documentação
-- **Progresso**: 50% (2/4 tarefas)
+- **Progresso**: 85% (11/13 tarefas)
 - **Status**: 🟡 Em Progresso
 
 ### Fase 9: Deploy
