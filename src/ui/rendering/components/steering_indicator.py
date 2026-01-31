@@ -1,13 +1,26 @@
-import pygame 
-import math 
-
+import pygame
+import math
+import os
 
 class SteeringIndicator :
     def __init__ (self ,radius :int =30 ):
         self .radius =radius 
+        self .wheel_image =None
+        
+        img_path = "src/assets/images/wheel-mockup.png"
+        if not os.path.exists(img_path):
+            base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+            img_path = os.path.join(base_dir, "src/assets/images/wheel-mockup.png")
+            
+        if os.path.exists(img_path):
+            try:
+                raw_img = pygame.image.load(img_path)
+                diameter = self.radius * 2
+                self.wheel_image = pygame.transform.smoothscale(raw_img, (diameter, diameter))
+            except Exception:
+                pass 
 
     def _rotate_point(self, point: tuple[float, float], angle_deg: float, cx: int, cy: int) -> tuple[int, int]:
-        """Rotates a point around (cx, cy) by angle_deg."""
         x, y = point
         tx = x
         ty = y
@@ -15,7 +28,7 @@ class SteeringIndicator :
         rad = math.radians(angle_deg)
         cos_a = math.cos(rad)
         sin_a = math.sin(rad)
-        sin_a = math.sin(rad)
+
         
         rx = tx * cos_a - ty * sin_a
         ry = tx * sin_a + ty * cos_a
@@ -31,6 +44,12 @@ class SteeringIndicator :
     angle :float ,
     color :tuple [int ,int ,int ]
     )->None :
+        if self.wheel_image:
+            rotated_img = pygame.transform.rotate(self.wheel_image, -angle)
+            new_rect = rotated_img.get_rect(center=(cx, cy))
+            surface.blit(rotated_img, new_rect)
+            return
+
         r = self.radius
         
         color_rim = (30, 30, 30) 
