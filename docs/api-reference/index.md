@@ -23,6 +23,13 @@ Sistema de componentes visuais.
 - [FFB Indicator](widgets/ffb-indicator.md)
 - [Criando Widgets](widgets/creating-widgets.md)
 
+
+## Core
+
+Componentes centrais da arquitetura.
+
+- [State Management](core/state-management.md)
+
 ## Configuration
 
 Sistema de configuração.
