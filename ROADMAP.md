@@ -54,12 +54,12 @@ Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado co
   - [x] Testar com pytest (100% cobertura) funções com pytest
   - [x] Adicionar testes de edge cases
 
-- [ ] **State Management**
-  - [ ] Criar classe abstrata ApplicationState
-  - [ ] Implementar RunningState
-  - [ ] Implementar EditState
-  - [ ] Implementar transições entre estados
-  - [ ] Testar state transitions
+- [x] **State Management**
+  - [x] Criar classe abstrata ApplicationState
+  - [x] Implementar RunningState
+  - [x] Implementar EditState
+  - [x] Implementar transições entre estados
+  - [x] Testar state transitions
 
 ### 1.4 Layer 3: Presentation - Base
 

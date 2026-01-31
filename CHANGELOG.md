@@ -26,6 +26,8 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 - Documentação detalhada da API Widget (atributos e interface)
 - Testes unitários para `Widget` (100% cobertura)
 - Testes de edge cases para funções de normalização (NaN, Inf, tipos inválidos)
+- Sistema de State Management (`StateMachine`, `RunningState`, `EditState`)
+- Testes unitários para State Management (100% cobertura)
 
 ### Planejado
 
