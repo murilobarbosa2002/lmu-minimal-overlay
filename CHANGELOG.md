@@ -109,6 +109,20 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 - Implementação de widgets básicos
 - Sistema de configuração
 
+## [0.2.0] - 2026-01-31
+
+### Added
+- **Visuals**: Support for custom steering wheel image (`src/assets/images/wheel-mockup.png`).
+- **UI**: Percentage values added to the top of Throttle, Brake, and FFB bars (Size 16, Bold).
+
+### Changed
+- **Physics**: Improved steering simulation with reduced jitter, micro-corrections, and exponential smoothing.
+- **Visuals**: Implemented `rotozoom` for high-quality, anti-aliased steering wheel rotation.
+- **Visuals**: Increased Steering Indicator size (Radius 45px).
+- **Layout**: Centered Speed and Gear display perfectly (Vertically and Horizontally) within the DashboardCard.
+- **Layout**: Moved Indicator Bar labels (T, B, F) to the bottom for better readability.
+- **Layout**: Standardized vertical spacing (5px gaps) for Indicator Bars.
+
 ## [0.1.0] - 2026-01-31
 
 ### Adicionado
