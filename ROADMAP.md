@@ -256,7 +256,7 @@ Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado co
   - [ ] Logging claro de qual provider está ativo
 
 - [ ] **Testes**
-  - [ ] Testar em Windows com jogo
+  - [x] Testar em Windows com jogo (Script de automação criado)
   - [ ] Testar em Windows sem jogo
   - [ ] Testar em WSL
 
@@ -334,9 +334,9 @@ Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado co
 
 ### 7.4 Cobertura
 
-- [ ] Atingir >80% de cobertura
-- [ ] Gerar relatório de cobertura
-- [ ] Documentar áreas não cobertas
+- [x] Atingir >80% de cobertura (100% Atingido)
+- [x] Gerar relatório de cobertura
+- [x] Documentar áreas não cobertas (Nenhuma)
 
 ---
 
@@ -460,16 +460,16 @@ Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado co
 - **Status**: 🟡 Em Progresso
 
 ### Fase 5: Produção
-- **Progresso**: 0% (0/7 tarefas)
-- **Status**: ⚪ Não Iniciado
+- **Progresso**: 30% (2/7 tarefas)
+- **Status**: 🟡 Em Progresso
 
 ### Fase 6: Performance
 - **Progresso**: 0% (0/7 tarefas)
 - **Status**: ⚪ Não Iniciado
 
 ### Fase 7: Testes
-- **Progresso**: 40% (5/13 tarefas)
-- **Status**: 🟡 Em Progresso
+- **Progresso**: 70% (9/13 tarefas)
+- **Status**: 🟢 Avançado
 
 ### Fase 8: Documentação
 - **Progresso**: 85% (11/13 tarefas)

@@ -8,6 +8,9 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 ## [Unreleased]
 
 ### Added
+- Script `run_windows.bat` com auto-instalação de Python e Chocolatey
+- Guia de instalação para Windows (`docs/guides/windows-setup.md`)
+- Verificação de ambiente Windows/Linux com fallback robusto
 - TelemetryData dataclass com validação de ranges
 - Testes unitários para TelemetryData (100% cobertura)
 - Teste E2E para TelemetryData
@@ -28,7 +31,7 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 - Testes de edge cases para funções de normalização (NaN, Inf, tipos inválidos)
 - Sistema de State Management (`StateMachine`, `RunningState`, `EditState`)
 - Testes unitários para State Management (100% cobertura)
-- `WindowManager` com suporte a configurações específicas de SO
+- `WindowManager` com suporte a configurações específicas de SO e validação
 - `main.py` com loop de aplicação integrado
 - Documentação do Window Manager
 - Widget `Speedometer` funcional com cache de renderização
@@ -37,6 +40,13 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 - Refatoração SRP: Criação de `OverlayApp` e limpeza de `main.py`
 - Arquitetura SOLID: Reestruturação de `src/core` em `application/services/states`
 - Limpeza de Código: Remoção de comentários e docstrings em `src/`
+
+### Fixed
+- Layout do Widget Speedometer (sobreposição de marcha/velocidade)
+- Sincronização de drag & drop (área de colisão vs visual)
+- Tratamento de input no RunningState (bloqueio de interação acidental)
+- Compatibilidade de testes com mudanças de lógica (100% pass)
+- Script de setup para suportar caminhos UNC (WSL network paths)
 
 ### Planejado
 

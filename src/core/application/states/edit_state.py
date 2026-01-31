@@ -18,11 +18,17 @@ class EditState(IApplicationState):
     def handle_input(self, event: pygame.event.Event) -> bool:
         if event.type == pygame.MOUSEBUTTONDOWN:
             mouse_pos = event.pos
+            self.selected_widget = None
             for widget in self.widgets:
                 if widget.get_rect().collidepoint(mouse_pos):
                     self.selected_widget = widget
-                    return True
-        return False
+        
+        handled = False
+        for widget in self.widgets:
+            if widget.handle_input(event):
+                handled = True
+        
+        return handled
 
     def update(self, data: TelemetryData) -> None:
         pass

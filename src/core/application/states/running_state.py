@@ -9,9 +9,6 @@ class RunningState(IApplicationState):
         self.widgets = widgets
 
     def handle_input(self, event: pygame.event.Event) -> bool:
-        for widget in self.widgets:
-            if widget.handle_input(event):
-                return True
         return False
 
     def update(self, data: TelemetryData) -> None:

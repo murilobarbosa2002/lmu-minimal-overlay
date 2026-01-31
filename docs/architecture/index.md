@@ -73,20 +73,28 @@ Troque implementações sem afetar outras camadas.
 
 ## Estrutura de Diretórios
 
+## Estrutura de Diretórios
+
 ```
-lmu-minimal-overlay/
+src/
 ├── main.py (entry point)
-├── core/ (Layer 2: Domain)
-│   ├── telemetry.py
-│   ├── normalization.py
-│   └── state.py
-├── infra/ (Layer 1: Infrastructure)
-│   ├── memory_reader.py
-│   └── mock_provider.py
+├── core/
+│   ├── app.py (Application Orchestrator)
+│   ├── application/ (Layer 2b: Application Services)
+│   │   ├── services/ (StateMachine, InputHandler)
+│   │   ├── states/ (RunningState, EditState)
+│   │   └── interfaces/ (IApplicationState)
+│   ├── domain/ (Layer 2a: Domain Logic)
+│   │   ├── telemetry_data.py
+│   │   └── normalize.py
+│   └── providers/ (Layer 1: Infrastructure)
+│       ├── i_telemetry_provider.py
+│       ├── mock_telemetry_provider.py
+│       └── shared_memory_provider.py
 └── ui/ (Layer 3: Presentation)
-    ├── window_manager.py
-    ├── states.py
-    └── widgets/
+    ├── window.py (WindowManager)
+    ├── utils/ (Fonts)
+    └── widgets/ (Speedometer, etc.)
 ```
 
 ## Próximos Passos

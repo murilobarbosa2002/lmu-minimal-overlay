@@ -52,7 +52,7 @@ class Speedometer(Widget):
             font = FontManager.get_font(90, bold=True)
             self.speed_surf = font.render(f"{int(self.speed)}", True, self.text_color)
             
-        speed_rect = self.speed_surf.get_rect(center=(self.x + self.width // 2, self.y + self.height // 2 + 5))
+        speed_rect = self.speed_surf.get_rect(center=(self.x + self.width // 2, self.y + 95))
         surface.blit(self.speed_surf, speed_rect)
         
         if self.gear_surf is None:
@@ -60,7 +60,7 @@ class Speedometer(Widget):
             gear_str = "R" if self.gear == -1 else "N" if self.gear == 0 else str(self.gear)
             self.gear_surf = font.render(gear_str, True, self.gear_color)
             
-        gear_rect = self.gear_surf.get_rect(center=(self.x + self.width // 2, self.y + 35))
+        gear_rect = self.gear_surf.get_rect(center=(self.x + self.width // 2, self.y + 30))
         surface.blit(self.gear_surf, gear_rect)
 
     def handle_input(self, event: pygame.event.Event) -> bool:
@@ -80,8 +80,9 @@ class Speedometer(Widget):
         elif event.type == pygame.MOUSEMOTION:
             if self.is_dragging:
                 mouse_pos = event.pos
-                self.x = mouse_pos[0] + self.drag_offset[0]
-                self.y = mouse_pos[1] + self.drag_offset[1]
+                new_x = mouse_pos[0] + self.drag_offset[0]
+                new_y = mouse_pos[1] + self.drag_offset[1]
+                self.set_position(new_x, new_y)
                 return True
                 
         return False

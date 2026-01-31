@@ -1,4 +1,3 @@
-```python
 from abc import ABC, abstractmethod
 import pygame
 from src.core.domain.telemetry_data import TelemetryData

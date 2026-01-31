@@ -114,79 +114,60 @@ Gerencia estados da aplicação (Running, Edit).
 
 ### Arquivos
 
+### Arquivos
+
 ```
-core/
-├── __init__.py
-├── telemetry.py (ITelemetryProvider, TelemetryData)
-├── normalization.py (funções de normalização)
-└── state.py (RunningState, EditState)
+src/core/
+├── providers/
+│   ├── i_telemetry_provider.py
+│   ├── shared_memory_provider.py
+│   └── mock_telemetry_provider.py
+```
+
+## Layer 2: Application Core (Domain & Services)
+
+Contém lógica de negócio, modelos e serviços de aplicação.
+
+### Responsabilidades
+
+- Definir modelos de dados (Domain)
+- Normalizar valores raw (Domain)
+- Gerenciar estados da aplicação (Application Service)
+- Orquestrar ciclo de vida (Application Service)
+
+### Arquivos
+
+```
+src/core/
+├── domain/
+│   ├── telemetry_data.py
+│   └── normalize.py
+├── application/
+│   ├── services/
+│   │   ├── state_machine.py
+│   │   └── input_handler.py
+│   ├── states/
+│   │   ├── running_state.py
+│   │   └── edit_state.py
+│   └── interfaces/
+│       └── state.py
+└── app.py (OverlayApp)
 ```
 
 ## Layer 3: Presentation
 
 Gerencia renderização e interação com usuário.
 
-### Responsabilidades
-
-- Renderizar widgets com Pygame
-- Gerenciar janela e transparência
-- Capturar inputs do usuário
-- Drag & drop de widgets
-
-### Componentes
-
-#### Window Manager
-
-Controla janela e transparência:
-- pywin32 para transparência no Windows
-- Click-through no modo Running
-- Captura mouse no modo Edit
-
-#### Widget System
-
-Todos widgets herdam de `Widget` base:
-
-```python
-class Widget(ABC):
-    @abstractmethod
-    def draw(self, surface: pygame.Surface) -> None:
-        pass
-    
-    @abstractmethod
-    def update(self, data: TelemetryData) -> None:
-        pass
-    
-    @abstractmethod
-    def handle_input(self, event: pygame.event.Event) -> bool:
-        pass
-```
-
-Widgets disponíveis:
-- **Speedometer**: Velocidade e marcha
-- **Pedals**: Throttle, brake, clutch
-- **SteeringWheel**: Ângulo do volante
-- **FFBIndicator**: Force feedback com clipping
-
-#### States
-
-Implementa State Pattern:
-- **RunningState**: Overlay transparente, click-through
-- **EditState**: Fundo visível, drag & drop
-
 ### Arquivos
 
 ```
-ui/
-├── __init__.py
-├── window_manager.py
-├── states.py
+src/ui/
+├── window.py
+├── utils/
+│   └── fonts.py
 └── widgets/
-    ├── __init__.py
-    ├── base.py (Widget base)
-    ├── speedometer.py
-    ├── pedals.py
-    ├── steering_wheel.py
-    └── ffb_indicator.py
+    ├── widget.py (Abstract Base)
+    └── speedometer.py
 ```
 
 ## Comunicação Entre Camadas
