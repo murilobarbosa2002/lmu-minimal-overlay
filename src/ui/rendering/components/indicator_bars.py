@@ -8,6 +8,7 @@ class IndicatorBars :
         self .throttle_bar =Bar (label ="T",color =(0 ,255 ,0 ))
         self .brake_bar =Bar (label ="B",color =(255 ,0 ,0 ))
         self .ffb_bar =Bar (label ="F",color =(255 ,165 ,0 ))
+        self .ffb_bar.set_bidirectional(True)
 
     def render (
     self ,

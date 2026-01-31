@@ -55,10 +55,13 @@ class MockTelemetryProvider (ITelemetryProvider ):
         self .data .brake_pct =self ._physics .brake 
         self .data .steering_angle =self ._physics .steering *540.0 
 
-        g_force =abs (self ._physics .steering *self ._physics .speed *0.05 )
-        road_noise =random .random ()*0.05 
-        raw_ffb =(g_force *0.8 )+(2.0 if self ._physics .steering !=0 and 'CORNER'in segment .type else 0.0 )*0.1 
-        self .data .ffb_level =min (1.0 ,raw_ffb +road_noise )
+        lateral_g = self._physics.steering * (self._physics.speed / 100.0)
+        
+        road_noise = random.uniform(-0.05, 0.05)
+        if 'CORNER' in segment.type:
+             road_noise += random.uniform(-0.1, 0.1) * abs(self._physics.steering)
+             
+        self.data.ffb_level = max(-1.0, min(1.0, lateral_g + road_noise))
 
         self .data .timestamp =current_time -self ._start_time 
 
