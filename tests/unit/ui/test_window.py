@@ -42,6 +42,9 @@ def test_window_init_windows_os(mock_init, mock_set_mode):
     mock_win32con.WS_EX_LAYERED = 2
     mock_win32con.LWA_COLORKEY = 3
     mock_win32con.LWA_ALPHA = 4
+    mock_win32con.HWND_TOPMOST = -1
+    mock_win32con.SWP_NOMOVE = 2
+    mock_win32con.SWP_NOSIZE = 1
     
     # Configure GetWindowLong return value
     mock_win32gui.GetWindowLong.return_value = 0
@@ -67,6 +70,14 @@ def test_window_init_windows_os(mock_init, mock_set_mode):
             mock_win32api.RGB(255, 0, 128), 
             217, 
             7 # 3 | 4
+        )
+        
+        # Verify always-on-top call
+        mock_win32gui.SetWindowPos.assert_called_once_with(
+            12345,
+            -1,  # HWND_TOPMOST
+            0, 0, 0, 0,
+            3  # SWP_NOMOVE | SWP_NOSIZE (2 | 1)
         )
 
 @patch('pygame.display.set_mode')

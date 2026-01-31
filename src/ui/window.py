@@ -1,5 +1,6 @@
 import pygame 
 import sys 
+import os 
 from src .ui .interfaces .i_window_manager import IWindowManager 
 from src .ui .platform .transparency_handler import ITransparencyHandler ,Win32TransparencyHandler ,NullTransparencyHandler 
 
@@ -34,10 +35,12 @@ class WindowManager (IWindowManager ):
     def set_position (self ,x :int ,y :int )->None :
         self .x =x 
         self .y =y 
-        import os 
         os .environ ['SDL_VIDEO_WINDOW_POS']="%d,%d" %(x ,y )
 
     def init (self )->None :
+        if sys .platform !="win32":
+            os .environ ['SDL_VIDEO_WINDOW_ALWAYS_ON_TOP']='1'
+        
         pygame .init ()
         pygame .display .set_caption (self .title )
         flags =pygame .SRCALPHA |pygame .NOFRAME 

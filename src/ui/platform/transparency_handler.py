@@ -30,6 +30,14 @@ class Win32TransparencyHandler (ITransparencyHandler ):
             self .alpha ,
             win32con .LWA_COLORKEY |win32con .LWA_ALPHA 
             )
+            
+            # Set window to always-on-top
+            win32gui.SetWindowPos(
+                hwnd,
+                win32con.HWND_TOPMOST,
+                0, 0, 0, 0,
+                win32con.SWP_NOMOVE | win32con.SWP_NOSIZE
+            )
         except ImportError :
             pass 
 
