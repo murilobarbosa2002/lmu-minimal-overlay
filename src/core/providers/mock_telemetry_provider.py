@@ -7,45 +7,72 @@ from src.core.domain.telemetry_data import TelemetryData
 class MockTelemetryProvider(ITelemetryProvider):
     def __init__(self):
         self._start_time = time.time()
+        self._last_update = time.time()
+        self._state = 'ACCEL'
+        
+        self.data = TelemetryData(
+            speed=0.0,
+            rpm=0,
+            max_rpm=8000,
+            gear=1,
+            throttle_pct=0.0,
+            brake_pct=0.0,
+            clutch_pct=0.0,
+            steering_angle=0.0,
+            ffb_level=0.0,
+            timestamp=0.0
+        )
+
+    def _update_data(self) -> None:
+        current_time = time.time()
+        dt = current_time - self._last_update
+        self._last_update = current_time
+        
+        shift_points = {1: 70, 2: 120, 3: 160, 4: 200, 5: 240, 6: 285}
+        
+        current_speed = self.data.speed
+        current_gear = self.data.gear
+        
+        if self._state == 'ACCEL':
+            accel_rate = 30.0 * dt
+            current_speed += accel_rate
+            
+            if current_gear < 6:
+                if current_speed > shift_points.get(current_gear, 999):
+                    current_gear += 1
+            
+            if current_speed >= 280:
+                self._state = 'BRAKE'
+                
+        else:
+            decel_rate = 60.0 * dt
+            current_speed -= decel_rate
+            
+            if current_gear > 1:
+                prev_gear_max = shift_points.get(current_gear - 1, 0)
+                if current_speed < (prev_gear_max - 10):
+                    current_gear -= 1
+            
+            if current_speed <= 60:
+                self._state = 'ACCEL'
+                current_gear = 2
+                
+        current_speed = max(0, min(current_speed, 300))
+        
+        self.data.speed = current_speed
+        self.data.gear = int(current_gear)
+        
+        self.data.rpm = int(4000 + (current_speed % 40) * 100) 
+        
+        self.data.throttle_pct = 1.0 if self._state == 'ACCEL' else 0.0
+        self.data.brake_pct = 1.0 if self._state == 'BRAKE' else 0.0
+        
+        self.data.timestamp = current_time - self._start_time
 
     def get_data(self) -> TelemetryData:
-        t = time.time() - self._start_time
-        
-        speed = 100 + 100 * math.sin(t * 0.5)
-        rpm_base = 4500 + 3500 * math.sin(t * 0.7)
-        rpm = int(max(1000, min(8000, rpm_base)))
-        
-        if rpm < 2000:
-            gear = 1
-        elif rpm < 3000:
-            gear = 2
-        elif rpm < 4000:
-            gear = 3
-        elif rpm < 5000:
-            gear = 4
-        elif rpm < 6000:
-            gear = 5
-        else:
-            gear = 6
-        
-        throttle_pct = max(0.0, min(1.0, 0.5 + 0.5 * math.sin(t * 0.8)))
-        brake_pct = max(0.0, min(1.0, 0.5 - 0.5 * math.sin(t * 0.8)))
-        clutch_pct = 0.0
-        steering_angle = 450 * math.sin(t * 0.3)
-        ffb_level = 0.5 + 0.5 * abs(math.sin(t * 0.3))
-        
-        return TelemetryData(
-            speed=speed,
-            rpm=rpm,
-            max_rpm=8000,
-            gear=gear,
-            throttle_pct=throttle_pct,
-            brake_pct=brake_pct,
-            clutch_pct=clutch_pct,
-            steering_angle=steering_angle,
-            ffb_level=ffb_level,
-            timestamp=t
-        )
+        self._update_data()
+        from dataclasses import replace
+        return replace(self.data)
 
     def is_available(self) -> bool:
         return True
