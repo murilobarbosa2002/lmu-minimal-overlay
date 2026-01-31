@@ -3,8 +3,6 @@ from src .ui .utils .fonts import FontManager
 
 
 class SpeedGearDisplay :
-    """Component for displaying speed, unit, and gear"""
-
     def __init__ (self ):
         self .speed_surf :pygame .Surface |None =None 
         self .unit_surf :pygame .Surface |None =None 
@@ -23,7 +21,6 @@ class SpeedGearDisplay :
     text_color :tuple [int ,int ,int ],
     gear_color :tuple [int ,int ,int ]
     )->None :
-        """Render speed, unit, and gear centered in given area"""
         if self .speed_surf is None or int (speed )!=getattr (self ,'_cached_speed',None ):
             speed_font =FontManager .get_font (size =48 ,bold =True )
             self .speed_surf =speed_font .render (str (int (speed )),True ,text_color )
@@ -54,7 +51,6 @@ class SpeedGearDisplay :
         surface .blit (self .speed_surf ,(speed_x ,speed_y ))
 
     def invalidate_cache (self )->None :
-        """Clear cached surfaces"""
         self .speed_surf =None 
         self .unit_surf =None 
         self .gear_surf =None 

@@ -28,7 +28,6 @@ class OverlayApp :
         self .input_handler =None 
 
     def setup (self )->None :
-        # Apply window configuration
         win_cfg =self .config_manager .get_layout ("window",{})
         x =win_cfg .get ("x",0 )
         y =win_cfg .get ("y",0 )
@@ -37,16 +36,13 @@ class OverlayApp :
         self .window .init ()
         self .provider .connect ()
         
-        # Load widgets
         self .widgets =[]
         widgets_data =self .config_manager .get_layout ("widgets",[])
         
         if not widgets_data :
-            # Default setup
             default_widget =DashboardCard (x =1700 ,y =50 ,width =350 ,height =130 )
             self .widgets .append (default_widget )
             
-            # Save default layout
             new_widgets_data =[{
                 "type":"DashboardCard",
                 "x":1700 ,
@@ -88,7 +84,6 @@ class OverlayApp :
         self .window .update_display ()
 
     def save_state (self )->None :
-        # Save window position if available
         if hasattr (self .window ,'x')and hasattr (self .window ,'y'):
              win_cfg ={
                  "x":self .window .x ,
@@ -99,7 +94,6 @@ class OverlayApp :
              }
              self .config_manager .set_layout ("window",win_cfg )
 
-        # Save widgets
         widgets_data =[]
         for widget in self .widgets :
             w_data ={

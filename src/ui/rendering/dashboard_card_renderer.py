@@ -7,7 +7,6 @@ IndicatorBars
 
 
 class DashboardCardRenderer :
-    """Orchestrates rendering of dashboard card components"""
 
     def __init__ (self ):
         self .steering =SteeringIndicator (radius =30 )
@@ -32,7 +31,6 @@ class DashboardCardRenderer :
     text_color :tuple ,
     gear_color :tuple 
     )->None :
-        """Render complete dashboard card with all components"""
         bg_surface =pygame .Surface ((width ,height ),pygame .SRCALPHA )
 
         temp_surface =pygame .Surface ((width ,height ),pygame .SRCALPHA )

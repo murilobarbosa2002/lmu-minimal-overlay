@@ -3,8 +3,6 @@ from src .ui .utils .fonts import FontManager
 
 
 class Bar :
-    """Individual vertical bar component"""
-
     def __init__ (
     self ,
     label :str ,
@@ -25,7 +23,6 @@ class Bar :
     value :float ,
     text_color :tuple [int ,int ,int ]
     )->None :
-        """Render the bar at given position with value (0.0-1.0)"""
         value =max (0.0 ,min (1.0 ,value ))
 
         label_font =FontManager .get_font (size =14 ,bold =True )

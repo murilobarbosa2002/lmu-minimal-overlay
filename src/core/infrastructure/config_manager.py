@@ -27,7 +27,6 @@ class ConfigManager(IConfigManager):
         
         self._file_lock = threading.Lock()
         
-        # Default structures
         self._default_config = {
             "version": "1.0.0",
             "update_interval_ms": 16
@@ -49,7 +48,6 @@ class ConfigManager(IConfigManager):
         self.load_layout()
 
     def load_config(self) -> None:
-        """Loads configuration from disk."""
         with self._file_lock:
             if not os.path.exists(self._config_file):
                 self._config_data = self._default_config.copy()
@@ -59,17 +57,13 @@ class ConfigManager(IConfigManager):
                     with open(self._config_file, 'r') as f:
                         self._config_data = json.load(f)
                 except (json.JSONDecodeError, IOError):
-                    # Fallback to defaults on error, but don't overwrite immediately to prevent data loss
-                    # Ideally we might log this error
                     self._config_data = self._default_config.copy()
 
     def save_config(self) -> None:
-        """Saves current configuration to disk."""
         with self._file_lock:
             self._save_json(self._config_file, self._config_data)
 
     def load_layout(self) -> None:
-        """Loads layout from disk."""
         with self._file_lock:
             if not os.path.exists(self._layout_file):
                 self._layout_data = self._default_layout.copy()
@@ -82,30 +76,24 @@ class ConfigManager(IConfigManager):
                     self._layout_data = self._default_layout.copy()
 
     def save_layout(self) -> None:
-        """Saves current layout to disk."""
         with self._file_lock:
             self._save_json(self._layout_file, self._layout_data)
 
     def get_config(self, key: str, default: Any = None) -> Any:
-        """Retrieves a configuration value."""
         return self._config_data.get(key, default)
 
     def set_config(self, key: str, value: Any) -> None:
-        """Sets a configuration value."""
         self._config_data[key] = value
         self.save_config()
 
     def get_layout(self, key: str, default: Any = None) -> Any:
-        """Retrieves a layout value."""
         return self._layout_data.get(key, default)
 
     def set_layout(self, key: str, value: Any) -> None:
-        """Sets a layout value."""
         self._layout_data[key] = value
         self.save_layout()
 
     def _save_json(self, filename: str, data: Dict[str, Any]) -> None:
-        """Helper to save JSON safely."""
         try:
             with open(filename, 'w') as f:
                 json.dump(data, f, indent=4)

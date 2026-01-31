@@ -3,8 +3,6 @@ from src .ui .rendering .components .bar import Bar
 
 
 class IndicatorBars :
-    """Composite component managing 3 bars (throttle, brake, force feedback)"""
-
     def __init__ (self ,spacing :int =12 ):
         self .spacing =spacing 
         self .throttle_bar =Bar (label ="T",color =(0 ,255 ,0 ))
@@ -21,7 +19,6 @@ class IndicatorBars :
     ffb :float ,
     text_color :tuple [int ,int ,int ]
     )->None :
-        """Render all three bars horizontally"""
         current_x =x 
 
         self .throttle_bar .render (surface ,current_x ,y ,throttle ,text_color )
@@ -33,5 +30,4 @@ class IndicatorBars :
         self .ffb_bar .render (surface ,current_x ,y ,ffb ,text_color )
 
     def get_total_width (self )->int :
-        """Calculate total width needed for all bars"""
         return (self .throttle_bar .width *3 )+(self .spacing *2 )

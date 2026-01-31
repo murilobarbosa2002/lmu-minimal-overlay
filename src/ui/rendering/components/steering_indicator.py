@@ -3,8 +3,6 @@ import math
 
 
 class SteeringIndicator :
-    """Component for displaying steering wheel angle"""
-
     def __init__ (self ,radius :int =30 ):
         self .radius =radius 
 
@@ -16,7 +14,6 @@ class SteeringIndicator :
     angle :float ,
     color :tuple [int ,int ,int ]
     )->None :
-        """Render steering wheel indicator at center (cx, cy) with angle in degrees"""
         pygame .draw .circle (surface ,color ,(cx ,cy ),self .radius ,2 )
         pygame .draw .circle (surface ,color ,(cx ,cy ),3 )
 
