@@ -31,6 +31,10 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 - `WindowManager` com suporte a configurações específicas de SO
 - `main.py` com loop de aplicação integrado
 - Documentação do Window Manager
+- Widget `Speedometer` funcional com cache de renderização
+- Utilitário `FontManager`
+- Atualização em `main.py` para exibir o velocímetro
+- Testes unitários para Fonts e Speedometer (100% cobertura)
 
 ### Planejado
 

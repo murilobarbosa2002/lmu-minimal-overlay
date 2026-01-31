@@ -10,9 +10,23 @@ def main():
     window = WindowManager(title="LMU Telemetry Overlay", width=1280, height=720)
     window.init()
     provider = MockTelemetryProvider()
+from src.ui.widgets.speedometer import Speedometer
+
+def main():
+    window = WindowManager(title="LMU Telemetry Overlay", width=1280, height=720)
+    window.init()
+    provider = MockTelemetryProvider()
     state_machine = StateMachine()
-    running_state = RunningState(state_machine, widgets=[])
-    edit_state = EditState(state_machine, widgets=[])
+    
+    # Create Widgets
+    # Center screen
+    cx, cy = 1280 // 2, 720 // 2
+    speedometer = Speedometer(x=cx - 100, y=cy - 75)
+    
+    widgets = [speedometer]
+    
+    running_state = RunningState(state_machine, widgets=widgets)
+    edit_state = EditState(state_machine, widgets=widgets)
     state_machine.change_state(running_state)
     
     while window.is_running:

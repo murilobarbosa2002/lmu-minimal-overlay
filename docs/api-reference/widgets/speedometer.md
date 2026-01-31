@@ -1,24 +1,38 @@
-# Speedometer Widget
+# Speedometer
 
-Velocímetro digital.
+Widget principal para exibição de velocidade e marcha.
 
-## Dados Utilizados
+## Features
 
-- `speed`: km/h ou mph
-- `gear`: Marcha atual
+- Exibe velocidade atual (km/h) centralizada com fonte grande.
+- Exibe marcha engatada logo acima da velocidade.
+- Exibe unidade ("km/h") abaixo da velocidade.
+- Renderização otimizada (cache de texturas) para evitar recrio de fontes a cada frame.
 
-## Visualização
+## Detalhes de Implementação
 
-- Velocidade em números grandes
-- Indicador de marcha
-- Unidade configurável
+- **Classe**: `src.ui.widgets.speedometer.Speedometer`
+- **Herança**: `src.ui.widgets.widget.Widget`
+- **Dependências**: `src.ui.utils.fonts.FontManager`
 
-## Exemplo
+### Estrutura Visual
 
-```python
-speedometer = Speedometer(x=100, y=100)
-speedometer.update(data)
-speedometer.draw(surface)
+```
+    [ R / N / 1..6 ]   <- Gear (Amber Color)
+        [ 120 ]        <- Speed (White, Large)
+         km/h          <- Unit (Grey, Small)
 ```
 
-Veja [Widget Base](base-widget.md).
+### Configuração Padrão
+
+- **Tamanho**: 200x150
+- **Cores**:
+  - Texto: Branco (255, 255, 255)
+  - Gear: Amarelo (255, 200, 0)
+  - Background: Preto Semitransparente
+
+## Interação
+
+- **Drag & Drop**: Clique e arraste para reposicionar o widget.
+- **Unidades**: Suporte para alternar entre "km/h" (padrão) e "mph" via método `set_unit(unit: str)`.
+

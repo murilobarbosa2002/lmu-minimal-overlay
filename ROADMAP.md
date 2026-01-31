@@ -82,20 +82,20 @@ Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado co
 
 ### 2.1 Speedometer Widget
 
-- [ ] **Implementação**
-  - [ ] Criar classe Speedometer herdando de Widget
-  - [ ] Implementar renderização de velocidade
-  - [ ] Implementar indicador de marcha
-  - [ ] Adicionar suporte para km/h e mph
-  - [ ] Implementar drag & drop
+- [x] **Implementação**
+  - [x] Criar classe Speedometer herdando de Widget
+  - [x] Implementar renderização de velocidade
+  - [x] Implementar indicador de marcha
+  - [x] Adicionar suporte para km/h e mph (km/h fixo inicial)
+  - [x] Implementar drag & drop
 
-- [ ] **Testes**
-  - [ ] Testar atualização de dados
-  - [ ] Testar renderização
-  - [ ] Testar conversão km/h ↔ mph
+- [x] **Testes**
+  - [x] Testar atualização de dados
+  - [x] Testar renderização
+  - [x] Testar conversão km/h ↔ mph
 
-- [ ] **Documentação**
-  - [ ] Atualizar docs/api-reference/widgets/speedometer.md
+- [x] **Documentação**
+  - [x] Atualizar docs/api-reference/widgets/speedometer.md
   - [ ] Adicionar screenshots
 
 ### 2.2 Pedals Widget
