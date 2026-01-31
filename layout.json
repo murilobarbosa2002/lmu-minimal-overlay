@@ -9,8 +9,8 @@
     "widgets": [
         {
             "type": "DashboardCard",
-            "x": 993,
-            "y": 692,
+            "x": 454,
+            "y": 701,
             "width": 350,
             "height": 130
         }
