@@ -63,8 +63,11 @@ class Speedometer(Widget):
     def handle_input(self, event: pygame.event.Event) -> bool:
         from src.ui.behaviors.draggable import DraggableBehavior
         
-        draggable = DraggableBehavior(self)
-        return draggable.handle_input(event)
+        # Create draggable instance if it doesn't exist
+        if not hasattr(self, '_draggable'):
+            self._draggable = DraggableBehavior(self)
+        
+        return self._draggable.handle_input(event)
 
     def get_rect(self) -> pygame.Rect:
         return pygame.Rect(self.x, self.y, self.width, self.height)

@@ -33,9 +33,32 @@ class SpeedometerRenderer:
         gear_color: tuple
     ) -> None:
         """Render complete dashboard card with all components"""
-        # Draw background with rounded corners
+        # Draw gradient background with rounded corners
         bg_surface = pygame.Surface((width, height), pygame.SRCALPHA)
-        pygame.draw.rect(bg_surface, bg_color, (0, 0, width, height), border_radius=8)
+        
+        # Create gradient
+        temp_surface = pygame.Surface((width, height))
+        top_color = (30, 35, 45)
+        bottom_color = (5, 5, 8)
+        
+        for y_offset in range(height):
+            ratio = y_offset / height
+            r = int(top_color[0] * (1 - ratio) + bottom_color[0] * ratio)
+            g = int(top_color[1] * (1 - ratio) + bottom_color[1] * ratio)
+            b = int(top_color[2] * (1 - ratio) + bottom_color[2] * ratio)
+            pygame.draw.line(temp_surface, (r, g, b), (0, y_offset), (width, y_offset))
+        
+        # Apply rounded corners mask
+        bg_surface.blit(temp_surface, (0, 0))
+        mask = pygame.Surface((width, height), pygame.SRCALPHA)
+        pygame.draw.rect(mask, (255, 255, 255), (0, 0, width, height), border_radius=24)
+        bg_surface.blit(mask, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
+        
+        # Add subtle border
+        border_surf = pygame.Surface((width, height), pygame.SRCALPHA)
+        pygame.draw.rect(border_surf, (255, 255, 255, 30), (0, 0, width, height), width=1, border_radius=24)
+        bg_surface.blit(border_surf, (0, 0))
+        
         surface.blit(bg_surface, (x, y))
         
         # Calculate section positions
