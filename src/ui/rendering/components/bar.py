@@ -33,21 +33,25 @@ class Bar :
         else:
             value =max (-1.0 ,min (1.0 ,value ))
 
-        # Percentage Value (Top)
         pct_value = int(abs(value) * 100)
         value_str = f"{pct_value}%"
-        value_font = FontManager.get_font(size=10, bold=True) 
+        # Increased font size for better readability
+        value_font = FontManager.get_font(size=12, bold=True) 
         value_surf = value_font.render(value_str, True, text_color)
         value_x = x + self.width // 2 - value_surf.get_width() // 2
         surface.blit(value_surf, (value_x, y))
 
-        bar_y = y + 20
+        padding = 5 # Equal spacing top and bottom
+        
+        # Calculate bar Y based on text height + padding
+        bar_y = y + value_surf.get_height() + padding
 
-        # Label (Bottom) - Prepared for later use
         label_font = FontManager.get_font(size=14, bold=True)
         label_surf = label_font.render(self.label, True, text_color)
         label_x = x + self.width // 2 - label_surf.get_width() // 2
-        label_y = bar_y + self.height + 4 
+        
+        # Calculate label Y based on bar Y + height + padding
+        label_y = bar_y + self.height + padding 
         surface.blit(label_surf, (label_x, label_y))
 
  
