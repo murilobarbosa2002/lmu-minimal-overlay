@@ -16,7 +16,7 @@ class DashboardCard (Widget ):
         self .is_dragging =False 
         self .drag_offset =(0 ,0 )
 
-        self .bg_color =(0 ,0 ,0 ,180 )
+        self .bg_color =(10 ,20 ,30 ,220 )
         self .text_color =(255 ,255 ,255 )
         self .gear_color =(255 ,200 ,0 )
 

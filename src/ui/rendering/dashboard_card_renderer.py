@@ -36,9 +36,9 @@ class DashboardCardRenderer :
         bg_surface =pygame .Surface ((width ,height ),pygame .SRCALPHA )
 
         temp_surface =pygame .Surface ((width ,height ),pygame .SRCALPHA )
-        top_color =(30 ,35 ,45 )
-        bottom_color =(5 ,5 ,8 )
-        alpha =242 
+        top_color =(15 ,25 ,45 )
+        bottom_color =(5 ,10 ,20 )
+        alpha =250 
 
         for y_offset in range (height ):
             ratio =y_offset /height 
