@@ -73,11 +73,12 @@ def test_window_init_windows_os(mock_init, mock_set_mode):
 @patch('pygame.init')
 def test_window_init_windows_os_import_error(mock_init, mock_set_mode):
     with patch('sys.platform', 'win32'):
-        # Just ensure that if import fails, the code doesn't crash.
-        # We rely on the fact that on Linux, importing win32gui fails safely within the try/except block
-        wm = WindowManager()
-        wm.init()
-        assert wm.is_running is True
+        with patch('pygame.display.get_wm_info', return_value={'window': 12345}):
+            # Just ensure that if import fails, the code doesn't crash.
+            # We rely on the fact that on Linux, importing win32gui fails safely within the try/except block
+            wm = WindowManager()
+            wm.init()
+            assert wm.is_running is True
 
 @patch('pygame.display.flip')
 def test_update_display(mock_flip):
@@ -98,13 +99,13 @@ def test_close(mock_quit):
 
 def test_clear_screen():
     wm = WindowManager()
-    wm.surface = Mock()
+    wm._surface = Mock()
     wm.clear()
     
-    wm.surface.fill.assert_called_once_with((255, 0, 128))
+    wm._surface.fill.assert_called_once_with((255, 0, 128))
 
 def test_clear_screen_no_surface():
     wm = WindowManager()
-    wm.surface = None
+    wm._surface = None
     # Should not raise exception
     wm.clear()
