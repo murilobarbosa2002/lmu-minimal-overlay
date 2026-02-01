@@ -206,8 +206,8 @@ def test_drag_miss():
 def test_get_rect():
     dashboard_card = DashboardCard(position_x=100, position_y=200, width=400, height=130)
     rect = dashboard_card.get_rect()
-    assert rect.position_x == 100
-    assert rect.position_y == 200
+    assert rect.x == 100
+    assert rect.y == 200
     assert rect.width == 400
     assert rect.height == 130
 

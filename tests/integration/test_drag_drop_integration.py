@@ -25,7 +25,7 @@ class TestDragDropIntegration:
         
         # Configure ConfigManager to return one widget
         mock_config_manager.get_layout.side_effect = lambda key, default=None: [
-            {"type": "DashboardCard", "x": 100, "y": 100, "width": 300, "height": 100}
+            {"type": "DashboardCard", "position_x": 100, "position_y": 100, "width": 300, "height": 100}
         ] if key == "widgets" else {}
 
         # Configure WidgetFactory to return a real-ish widget (or a mock that behaves like one)
@@ -111,8 +111,8 @@ class TestDragDropIntegration:
         # So expected pos is 150, 150.
         
         widget = app.widgets[0]
-        assert widget.x == 150
-        assert widget.y == 150
+        assert widget.position_x == 150
+        assert widget.position_y == 150
         
         # 4. Save State
         app.save_state()
@@ -121,5 +121,5 @@ class TestDragDropIntegration:
         args = app.config_manager.set_layout.call_args_list
         # Find call for "widgets"
         widget_call = next(call for call in args if call[0][0] == "widgets")
-        assert widget_call[0][1][0]["x"] == 150
-        assert widget_call[0][1][0]["y"] == 150
+        assert widget_call[0][1][0]["position_x"] == 150
+        assert widget_call[0][1][0]["position_y"] == 150

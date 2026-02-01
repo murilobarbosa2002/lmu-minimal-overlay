@@ -12,27 +12,27 @@ def test_widget_factory_initialization():
 
 def test_default_widgets_registered():
     factory = WidgetFactory()
-    widget_data = {"type": "DashboardCard", "x": 100, "y": 200}
+    widget_data = {"type": "DashboardCard", "position_x": 100, "position_y": 200}
     widget = factory.create_widget(widget_data)
     
     assert isinstance(widget, DashboardCard)
-    assert widget.x == 100
-    assert widget.y == 200
+    assert widget.position_x == 100
+    assert widget.position_y == 200
 
 
 def test_create_widget_with_all_parameters():
     factory = WidgetFactory()
     widget_data = {
         "type": "DashboardCard",
-        "x": 500,
-        "y": 300,
+        "position_x": 500,
+        "position_y": 300,
         "width": 400,
         "height": 150
     }
     widget = factory.create_widget(widget_data)
     
-    assert widget.x == 500
-    assert widget.y == 300
+    assert widget.position_x == 500
+    assert widget.position_y == 300
     assert widget.width == 400
     assert widget.height == 150
 
@@ -42,8 +42,8 @@ def test_create_widget_with_default_values():
     widget_data = {"type": "DashboardCard"}
     widget = factory.create_widget(widget_data)
     
-    assert widget.x == 0
-    assert widget.y == 0
+    assert widget.position_x == 0
+    assert widget.position_y == 0
     assert widget.width == 350
     assert widget.height == 130
 
@@ -59,7 +59,7 @@ def test_unknown_widget_type_raises_error():
 def test_register_custom_widget():
     class CustomWidget(Widget):
         def __init__(self, position_x=0, position_y=0, width=100, height=100):
-            super().__init__(x, y, width, height)
+            super().__init__(position_x, position_y, width, height)
         
         def draw(self, surface):
             pass
@@ -73,9 +73,9 @@ def test_register_custom_widget():
     factory = WidgetFactory()
     factory.register("CustomWidget", CustomWidget)
     
-    widget_data = {"type": "CustomWidget", "x": 50, "y": 75}
+    widget_data = {"type": "CustomWidget", "position_x": 50, "position_y": 75}
     widget = factory.create_widget(widget_data)
     
     assert isinstance(widget, CustomWidget)
-    assert widget.x == 50
-    assert widget.y == 75
+    assert widget.position_x == 50
+    assert widget.position_y == 75

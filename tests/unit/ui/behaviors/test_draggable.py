@@ -7,8 +7,8 @@ from src.ui.behaviors.draggable import DraggableBehavior
 class TestDraggableBehavior:
     def setup_method(self):
         self.mock_widget = Mock()
-        self.mock_widget.x = 100
-        self.mock_widget.y = 100
+        self.mock_widget.position_x = 100
+        self.mock_widget.position_y = 100
         self.mock_widget.get_rect.return_value = pygame.Rect(100, 100, 50, 50)
         self.behavior = DraggableBehavior(self.mock_widget)
 
