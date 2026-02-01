@@ -1,5 +1,5 @@
 import pytest
-from src.core.infrastructure.widget_factory import WidgetFactory
+from src.ui.factories.widget_factory import WidgetFactory
 from src.ui.widgets.dashboard_card import DashboardCard
 from src.ui.widgets.widget import Widget
 

@@ -8,7 +8,7 @@ from src .core .application .states .running_state import RunningState
 from src .core .application .states .edit_state import EditState 
 from src .core .providers .i_telemetry_provider import ITelemetryProvider 
 from src .core .interfaces .i_config_manager import IConfigManager 
-from src .core .infrastructure .widget_factory import WidgetFactory 
+from src .ui .factories .widget_factory import WidgetFactory 
 
 
 class OverlayApp :

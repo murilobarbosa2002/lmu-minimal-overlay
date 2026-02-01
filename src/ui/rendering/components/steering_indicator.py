@@ -32,6 +32,9 @@ class SteeringIndicator :
                 raw_img = pygame.image.load(img_path)
                 diameter = self.radius * 2
                 self.wheel_image = pygame.transform.smoothscale(raw_img, (diameter, diameter))
+                
+                self._cached_angle = 0.0
+                self._cached_rotated_image = self.wheel_image.copy()
             except Exception:
                 pass 
 
