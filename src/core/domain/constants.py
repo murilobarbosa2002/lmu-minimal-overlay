@@ -67,3 +67,21 @@ ROAD_NOISE_MIN = -0.05
 ROAD_NOISE_MAX = 0.05
 CORNER_NOISE_MIN = -0.1
 CORNER_NOISE_MAX = 0.1
+
+# System / Platform Constants
+PLATFORM_WIN32 = "win32"
+ENV_SDL_VIDEO_WINDOW_POS = "SDL_VIDEO_WINDOW_POS"
+
+# Window Management Constants
+OFFSCREEN_COORD = -32000
+DWM_SYNC_DELAY = 0.1  # Seconds to wait for DWM transparency sync
+WINDOW_FLUSH_CYCLES = 2  # Number of flip() calls to clear buffer
+
+# Default Window Configuration
+DEFAULT_WINDOW_TITLE = "LMU Overlay"
+DEFAULT_WINDOW_WIDTH = 800
+DEFAULT_WINDOW_HEIGHT = 600
+DEFAULT_WINDOW_FPS = 60
+DEFAULT_WINDOW_X = 100
+DEFAULT_WINDOW_Y = 100
+
