@@ -2,6 +2,7 @@ import pytest
 from unittest.mock import Mock, MagicMock, patch
 import pygame
 from src.core.app import OverlayApp
+from src.core.domain.telemetry_data import TelemetryData
 
 class TestDragDropIntegration:
     @pytest.fixture
@@ -13,6 +14,11 @@ class TestDragDropIntegration:
         mock_window.handle_events.return_value = [] # Default no events
         
         mock_provider = Mock()
+        mock_provider.get_data.return_value = TelemetryData(
+            speed=0.0, rpm=0, max_rpm=8000, gear=0,
+            throttle_pct=0.0, brake_pct=0.0, clutch_pct=0.0,
+            steering_angle=0.0, ffb_level=0.0, timestamp=0.0
+        )
         mock_font_provider = Mock()
         mock_config_manager = Mock()
         mock_widget_factory = Mock()

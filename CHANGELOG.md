@@ -7,7 +7,50 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
 ## [Unreleased]
 
-### Changed
+### Changed - Centralização Completa de Configuração (2026-02-01)
+
+#### **Zero Valores Hardcoded Alcançado** 🎯
+- **Refatoração Completa**: Eliminados TODOS os 31+ valores hardcoded do código de produção
+- **100% Configurável**: Todos os parâmetros visuais agora controlados via `config.json`
+- **Sistema de Temas Pronto**: Suporte completo para esquemas de cores e presets visuais personalizados
+
+#### **Schema Estendido do ConfigManager**
+- Adicionada seção `window`: título, dimensões padrão
+- Adicionado tema `steering_indicator`: cores (aro, marcador, centro), raio, parâmetros de marcação
+- Adicionado tema `bar`: dimensões, cores, padding, tamanhos de fonte, border radius
+- Adicionado tema `indicator_bars`: espaçamento, cores throttle/brake/FFB
+- Adicionado tema `edit_mode`: cor de seleção, propriedades de borda, ranges de animação
+- Aprimorado tema `dashboard_card`: cores de borda, cor de máscara, padding lateral
+
+#### **Refatoração de Componentes** (6 componentes, 31+ valores)
+1. **SteeringIndicator** (7 valores)
+   - Cores: aro, marcador, centro
+   - Dimensões: raio
+   - Ranges de marcação: início, fim, passo
+   
+2. **Bar** (8 valores)
+   - Dimensões: largura, altura
+   - Cores: fundo, linha central
+   - Estilo: border_radius, padding
+   - Fontes: tamanho do valor, tamanho do label
+
+3. **IndicatorBars** (4 valores)
+   - Layout: espaçamento
+   - Cores: throttle, brake, FFB
+
+4. **DashboardCardRenderer** (4 valores)
+   - Estilo: border_radius, lateral_padding
+   - Cores: border_color, mask_color
+
+5. **EditState** (5 valores)
+   - Cores: selection_color
+   - Estilo: border_width, border_radius
+   - Animação: padding_min, padding_max
+
+6. **WindowManager** (3 valores)
+   - Janela: título, largura_padrão, altura_padrão
+
+### Changed - Atualizações Anteriores
 - **Config System**: Implemented full configuration management system (`ConfigManager`).
 - **Persistence**: Window position, size, and widget layout are now persisted in `config.json` and `layout.json`.
 - **UI**: DashboardCard background updated to deep blue for better aesthetics.
@@ -122,6 +165,9 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
   - **Dragging**: Card becomes semi-transparent (180/255 opacity).
 
 ### Fixed
+- **Opacity**: Fixed bug where card content inherited background transparency. Background now respects `bg_color` alpha independently.
+- **Colors**: Refined card background to match user preference (Dark Bluish-Black) and dynamic gradient based on input color.
+- **Drag Color**: Changed drag feedback color to `(25, 35, 50, 180)` to avoid pinkish hue.
 - **Edit Mode**: Widgets now continue to update/render telemetry data while in Edit Mode (previously paused).
 - **Tests**: Achieved 100% test coverage including new integration tests and edge cases for DashboardCard.
 - **Roadmap**: Detailed plan for `InputCard` refactoring and new widgets.

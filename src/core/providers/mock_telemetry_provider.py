@@ -5,6 +5,7 @@ from src .core .providers .i_telemetry_provider import ITelemetryProvider
 from src .core .domain .telemetry_data import TelemetryData 
 from src .core .domain .simulation .physics_engine import PhysicsEngine 
 from src .core .domain .simulation .track_generator import TrackGenerator 
+from src.core.infrastructure.config_manager import ConfigManager
 
 
 class MockTelemetryProvider (ITelemetryProvider ):
@@ -18,16 +19,19 @@ class MockTelemetryProvider (ITelemetryProvider ):
         self ._segment_index =0 
         self ._segment_start_time =time .time ()
 
+        config = ConfigManager()
+        defaults = config.get_defaults("telemetry")
+
         self .data =TelemetryData (
-        speed =0.0 ,
-        rpm =0 ,
-        max_rpm =8000 ,
-        gear =1 ,
-        throttle_pct =0.0 ,
-        brake_pct =0.0 ,
-        clutch_pct =0.0 ,
-        steering_angle =0.0 ,
-        ffb_level =0.0 ,
+        speed =defaults.get("speed", 0.0),
+        rpm =defaults.get("rpm", 0),
+        max_rpm =defaults.get("max_rpm", 8000),
+        gear =1,
+        throttle_pct =defaults.get("throttle_pct", 0.0),
+        brake_pct =defaults.get("brake_pct", 0.0),
+        clutch_pct =defaults.get("clutch_pct", 0.0),
+        steering_angle =defaults.get("steering_angle", 0.0),
+        ffb_level =defaults.get("ffb_level", 0.0),
         timestamp =0.0 
         )
 

@@ -1,11 +1,22 @@
 import pygame
 import math
 import os
+from src.core.infrastructure.config_manager import ConfigManager
 
 class SteeringIndicator :
-    def __init__ (self ,radius :int =30 ):
-        self .radius =radius 
+    def __init__ (self ,radius :int =None ):
+        config = ConfigManager()
+        theme = config.get_theme("steering_indicator")
+        
+        self .radius = radius if radius is not None else theme.get("radius", 30)
         self .wheel_image =None
+        
+        self._color_rim = tuple(theme.get("color_rim", [30, 30, 30]))
+        self._color_marker = tuple(theme.get("color_marker", [255, 200, 0]))
+        self._color_center = tuple(theme.get("color_center", [50, 50, 50]))
+        self._tick_start = theme.get("tick_start", 30)
+        self._tick_end = theme.get("tick_end", 150)
+        self._tick_step = theme.get("tick_step", 10)
         
         img_path = "src/assets/images/wheel-mockup.png"
         if not os.path.exists(img_path):
@@ -45,7 +56,6 @@ class SteeringIndicator :
     color :tuple [int ,int ,int ]
     )->None :
         if self.wheel_image:
-            # rotozoom provides filtered rotation (smoother)
             rotated_img = pygame.transform.rotozoom(self.wheel_image, -angle, 1.0)
             new_rect = rotated_img.get_rect(center=(cx, cy))
             surface.blit(rotated_img, new_rect)
@@ -53,14 +63,11 @@ class SteeringIndicator :
 
         r = self.radius
         
-        color_rim = (30, 30, 30) 
-        color_marker = (255, 200, 0)
-        
         
         rim_points = []
         thickness = 6
         
-        vals = range(30, 151, 10) 
+        vals = range(self._tick_start, self._tick_end + 1, self._tick_step) 
         
         arc_start = 145
         arc_end = 395 
@@ -77,27 +84,26 @@ class SteeringIndicator :
         if len(screen_rim_points) > 1:
             pygame.draw.lines(surface, color, False, screen_rim_points, thickness)
         
-        pygame.draw.line(surface, color, screen_rim_points[-1], screen_rim_points[0], thickness)
-        
-        
-        p1 = self._rotate_point((r*0.2, 0), angle, cx, cy) 
-        p2 = self._rotate_point((r-2, 0), angle, cx, cy)   
-        pygame.draw.line(surface, color, p1, p2, 5) 
-        
-        p3 = self._rotate_point((-r*0.2, 0), angle, cx, cy) 
-        p4 = self._rotate_point((-r+2, 0), angle, cx, cy)
-        pygame.draw.line(surface, color, p3, p4, 5) 
+        for v in vals:
+            angle_deg = -v
+            px = r * math.cos(math.radians(angle_deg))
+            py = r * math.sin(math.radians(angle_deg))
+            rim_points.append((px, py))
 
-        p5 = self._rotate_point((0, 0), angle, cx, cy) 
-        p6 = self._rotate_point((0, r-4), angle, cx, cy) 
-        pygame.draw.line(surface, color, p5, p6, 8) 
-        
-        pygame.draw.circle(surface, (50, 50, 50), (cx, cy), 6)
+        for px, py in rim_points:
+            rx, ry = self._rotate_point((px, py), angle, cx, cy)
+            pygame.draw.circle(surface, self._color_rim, (rx, ry), 2)
+
+        marker_angle_deg = 0
+        marker_x = (r - 10) * math.cos(math.radians(marker_angle_deg))
+        marker_y = (r - 10) * math.sin(math.radians(marker_angle_deg))
+        mx, my = self._rotate_point((marker_x, marker_y), angle, cx, cy)
+        pygame.draw.circle(surface, self._color_marker, (mx, my), 4)
+
+        pygame.draw.circle(surface, self._color_center, (cx, cy), 6)
         
         marker_top = (0, -r)
         marker_bottom = (0, -r + 8)
-        
-        m_start = self._rotate_point(marker_top, angle, cx, cy)
-        m_end = self._rotate_point(marker_bottom, angle, cx, cy)
-        
-        pygame.draw.line(surface, color_marker, m_start, m_end, 7)
+        top_rotated = self._rotate_point(marker_top, angle, cx, cy)
+        bottom_rotated = self._rotate_point(marker_bottom, angle, cx, cy)
+        pygame.draw.line(surface, self._color_marker, top_rotated, bottom_rotated, 3)

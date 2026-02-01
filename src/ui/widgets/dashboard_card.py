@@ -1,24 +1,35 @@
 import pygame 
 from src .ui .widgets .widget import Widget 
+from src.core.infrastructure.config_manager import ConfigManager
 from src .core .domain .telemetry_data import TelemetryData 
 
 
 class DashboardCard (Widget ):
-    def __init__ (self ,x :int ,y :int ,width :int =350 ,height :int =130 ):
-        super ().__init__ (x ,y ,width ,height )
-        self .speed =0.0 
-        self .gear =0 
-        self .unit ="km/h"
-        self .steering_angle =0.0 
-        self .throttle_pct =0.0 
-        self .brake_pct =0.0 
-        self .ffb_level =0.0 
+    def __init__ (self ,x :int ,y :int ,width :int =None ,height :int =None ):
+        config = ConfigManager()
+        theme = config.get_theme("dashboard_card")
+        defaults = config.get_defaults("telemetry")
+        
+        self .x =x 
+        self .y =y 
+        self .width = width if width is not None else theme.get("width", 350)
+        self .height = height if height is not None else theme.get("height", 130)
+        super ().__init__ (self.x ,self.y ,self.width ,self.height )
+        
+        self .speed = defaults.get("speed", 0.0)
+        self .gear = defaults.get("gear", 0)
+        self .unit = defaults.get("unit", "km/h")
+        self .steering_angle = defaults.get("steering_angle", 0.0)
+        self .throttle_pct = defaults.get("throttle_pct", 0.0)
+        self .brake_pct = defaults.get("brake_pct", 0.0)
+        self .ffb_level = defaults.get("ffb_level", 0.0)
         self .is_dragging =False 
         self .drag_offset =(0 ,0 )
 
-        self .bg_color =(10 ,20 ,30 ,220 )
-        self .text_color =(255 ,255 ,255 )
-        self .gear_color =(255 ,200 ,0 )
+        self .bg_color = tuple(theme.get("bg_color", [10, 20, 30, 242]))
+        self .text_color = tuple(theme.get("text_color", [255, 255, 255]))
+        self .gear_color = tuple(theme.get("gear_color", [255, 200, 0]))
+        self ._drag_color = tuple(theme.get("bg_color_dragging", [25, 35, 50, 180]))
 
     def set_unit (self ,unit :str )->None :
         if unit in ["km/h","mph"]:
@@ -44,7 +55,7 @@ class DashboardCard (Widget ):
 
         current_bg_color = self.bg_color
         if hasattr(self, '_draggable') and self._draggable.is_dragging:
-            current_bg_color = (60, 70, 80, 180)
+            current_bg_color = self._drag_color
 
         self ._renderer .render (
         surface =surface ,

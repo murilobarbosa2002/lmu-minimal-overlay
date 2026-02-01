@@ -37,7 +37,6 @@ class SpeedGearDisplay :
             self .gear_surf =gear_font .render (gear_text ,True ,gear_color )
             self ._cached_gear =gear 
 
-        # Calculate total height of the content stack
         gap = 3
         total_content_height = (
             self.gear_surf.get_height() + 
@@ -47,7 +46,6 @@ class SpeedGearDisplay :
             self.speed_surf.get_height()
         )
 
-        # Calculate starting Y position to center vertically
         start_y = y + (height - total_content_height) // 2
 
         gear_x =x +width //2 -self .gear_surf .get_width ()//2 
