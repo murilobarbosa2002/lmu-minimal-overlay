@@ -6,14 +6,12 @@ class CardBackground:
         self,
         border_radius: int,
         border_color: tuple,
-        mask_color: tuple,
         gradient_top_multiplier: float,
         gradient_bottom_multiplier: float,
         default_alpha: int,
     ):
         self._border_radius = border_radius
         self._border_color = border_color
-        self._mask_color = mask_color
         self._gradient_top_multiplier = gradient_top_multiplier
         self._gradient_bottom_multiplier = gradient_bottom_multiplier
         self._default_alpha = default_alpha
@@ -60,13 +58,23 @@ class CardBackground:
         bg_surface.blit(temp_surface, (0, 0))
 
         mask = pygame.Surface((width, height), pygame.SRCALPHA)
+        mask.fill((0, 0, 0, 0))
         pygame.draw.rect(
             mask,
-            self._mask_color,
+            (255, 255, 255, 255),
             (0, 0, width, height),
             border_radius=self._border_radius,
         )
-        bg_surface.blit(mask, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
+
+        final_surface = pygame.Surface((width, height), pygame.SRCALPHA)
+        final_surface.fill((0, 0, 0, 0))
+
+        for y in range(height):
+            for x in range(width):
+                mask_alpha = mask.get_at((x, y))[3]
+                if mask_alpha > 128:
+                    pixel = bg_surface.get_at((x, y))
+                    final_surface.set_at((x, y), (pixel[0], pixel[1], pixel[2], 255))
 
         border_surf = pygame.Surface((width, height), pygame.SRCALPHA)
         pygame.draw.rect(
@@ -76,6 +84,6 @@ class CardBackground:
             width=1,
             border_radius=self._border_radius,
         )
-        bg_surface.blit(border_surf, (0, 0))
+        final_surface.blit(border_surf, (0, 0))
 
-        surface.blit(bg_surface, (position_x, position_y))
+        surface.blit(final_surface, (position_x, position_y))

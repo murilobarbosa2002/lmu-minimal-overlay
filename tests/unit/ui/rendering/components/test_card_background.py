@@ -10,7 +10,6 @@ class TestCardBackground:
         self.background = CardBackground(
             border_radius=20,
             border_color=(255, 255, 255, 50),
-            mask_color=(255, 255, 255),
             gradient_top_multiplier=1.2,
             gradient_bottom_multiplier=0.8,
             default_alpha=200,

@@ -69,7 +69,7 @@ class EditState(IApplicationState):
 
             pygame.draw.rect(
                 surface,
-                self._selection_color,
+                (*self._selection_color, 255),
                 selection_rect,
                 self._selection_border_width,
                 border_radius=self._selection_border_radius,

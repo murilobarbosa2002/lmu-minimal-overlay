@@ -85,8 +85,8 @@ class TestEditState:
         mock_draw_rect.assert_called_once()
         args = mock_draw_rect.call_args
 
-        # Color should be Cyan (0, 255, 255)
-        assert args[0][1] == (0, 255, 255)
+        # Color should be Electric Blue (30, 144, 255) with full alpha (255)
+        assert args[0][1] == (30, 144, 255, 255)
 
         # Rect should be inflated. Base is 10px padding, but it oscillates.
         # Initial time is 0, so sin(0) = 0. Padding = 10.

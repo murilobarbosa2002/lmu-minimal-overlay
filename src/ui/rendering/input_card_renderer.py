@@ -17,7 +17,6 @@ class InputCardRenderer:
 
         self._border_radius = theme.get("border_radius", 24)
         self._border_color = tuple(theme.get("border_color", [255, 255, 255, 30]))
-        self._mask_color = tuple(theme.get("mask_color", [255, 255, 255]))
         self._lateral_padding = theme.get("lateral_padding", 20)
         self._gradient_top_multiplier = theme.get("gradient_top_multiplier", 1.2)
         self._gradient_bottom_multiplier = theme.get("gradient_bottom_multiplier", 0.8)
@@ -26,7 +25,6 @@ class InputCardRenderer:
         self.background = CardBackground(
             border_radius=self._border_radius,
             border_color=self._border_color,
-            mask_color=self._mask_color,
             gradient_top_multiplier=self._gradient_top_multiplier,
             gradient_bottom_multiplier=self._gradient_bottom_multiplier,
             default_alpha=self._default_alpha,

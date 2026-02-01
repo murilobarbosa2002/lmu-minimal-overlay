@@ -10,8 +10,8 @@
   
   "theme": {
     "dashboard_card": {
-      "bg_color": [10, 20, 30, 242],
-      "bg_color_dragging": [25, 35, 50, 180],
+      "bg_color": [0, 12, 51, 242],
+      "bg_color_dragging": [0, 15, 60, 200],
       "text_color": [255, 255, 255],
       "gear_color": [255, 200, 0],
       "rpm_color": [200, 200, 200],
@@ -20,8 +20,8 @@
       "border_color": [255, 255, 255, 30],
       "mask_color": [255, 255, 255],
       "lateral_padding": 20,
-      "gradient_top_multiplier": 1.2,
-      "gradient_bottom_multiplier": 0.8,
+      "gradient_top_multiplier": 1.0,
+      "gradient_bottom_multiplier": 0.3,
       "default_alpha": 240,
       "speed_gear_left_margin": 10,
       "speed_gear_horizontal_margin": 20,
@@ -60,7 +60,7 @@
     },
     
     "edit_mode": {
-      "selection_color": [0, 255, 255],
+      "selection_color": [30, 144, 255],
       "selection_border_width": 2,
       "selection_border_radius": 8,
       "padding_min": 8,
