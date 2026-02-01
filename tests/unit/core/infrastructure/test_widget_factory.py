@@ -1,6 +1,6 @@
 import pytest
 from src.ui.factories.widget_factory import WidgetFactory
-from src.ui.widgets.dashboard_card import DashboardCard
+from src.ui.widgets.input_card import InputCard
 from src.ui.widgets.widget import Widget
 
 
@@ -12,10 +12,10 @@ def test_widget_factory_initialization():
 
 def test_default_widgets_registered():
     factory = WidgetFactory()
-    widget_data = {"type": "DashboardCard", "position_x": 100, "position_y": 200}
+    widget_data = {"type": "InputCard", "position_x": 100, "position_y": 200}
     widget = factory.create_widget(widget_data)
     
-    assert isinstance(widget, DashboardCard)
+    assert isinstance(widget, InputCard)
     assert widget.position_x == 100
     assert widget.position_y == 200
 
@@ -23,7 +23,7 @@ def test_default_widgets_registered():
 def test_create_widget_with_all_parameters():
     factory = WidgetFactory()
     widget_data = {
-        "type": "DashboardCard",
+        "type": "InputCard",
         "position_x": 500,
         "position_y": 300,
         "width": 400,
@@ -39,7 +39,7 @@ def test_create_widget_with_all_parameters():
 
 def test_create_widget_with_default_values():
     factory = WidgetFactory()
-    widget_data = {"type": "DashboardCard"}
+    widget_data = {"type": "InputCard"}
     widget = factory.create_widget(widget_data)
     
     assert widget.position_x == 0

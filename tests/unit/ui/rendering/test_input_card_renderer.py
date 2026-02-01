@@ -1,13 +1,13 @@
 import pytest
 import pygame
 from unittest.mock import Mock, MagicMock
-from src.ui.rendering.dashboard_card_renderer import DashboardCardRenderer
+from src.ui.rendering.input_card_renderer import InputCardRenderer
 
 
-class TestDashboardCardRenderer:
+class TestInputCardRenderer:
     def setup_method(self):
         pygame.init()
-        self.renderer = DashboardCardRenderer()
+        self.renderer = InputCardRenderer()
         self.surface = pygame.Surface((800, 600))
     
     def test_initialization(self):

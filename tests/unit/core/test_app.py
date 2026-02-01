@@ -119,7 +119,7 @@ class TestOverlayApp:
     def test_setup_loads_widgets_from_config(self, app):
         # Setup mock config to return valid widget data
         app.config_manager.get_layout.side_effect = lambda key, default=None: [
-            {"type": "DashboardCard", "x": 100, "y": 200, "width": 300, "height": 100}
+            {"type": "InputCard", "x": 100, "y": 200, "width": 300, "height": 100}
         ] if key == "widgets" else {}
         
         # Setup widget factory to return a widget-like mock
@@ -134,10 +134,31 @@ class TestOverlayApp:
         assert app.widgets[0].x == 100
         assert app.widgets[0].y == 200
 
+    def test_setup_loads_multiple_widgets_from_config(self, app):
+        # Setup mock config to return multiple valid widgets
+        app.config_manager.get_layout.side_effect = lambda key, default=None: [
+            {"type": "InputCard", "x": 100, "y": 200},
+            {"type": "InputCard", "x": 500, "y": 200}
+        ] if key == "widgets" else {}
+        
+        # Setup widget factory to return different mocks
+        mock_widget1 = Mock()
+        mock_widget1.x = 100
+        mock_widget2 = Mock()
+        mock_widget2.x = 500
+        
+        app.widget_factory.create_widget.side_effect = [mock_widget1, mock_widget2]
+        
+        app.setup()
+        
+        assert len(app.widgets) == 2
+        assert app.widgets[0].x == 100
+        assert app.widgets[1].x == 500
+
     def test_setup_handles_invalid_widgets(self, app):
         # Setup config with one valid and one invalid widget
         app.config_manager.get_layout.side_effect = lambda key, default=None: [
-            {"type": "DashboardCard", "x": 100, "y": 200},
+            {"type": "InputCard", "x": 100, "y": 200},
             {"type": "UnknownWidget", "x": 0, "y": 0}
         ] if key == "widgets" else {}
         
@@ -167,10 +188,10 @@ class TestOverlayApp:
         mock_widget.width = 350
         mock_widget.height = 130
         # Mock class name for serialization
-        mock_widget.__class__.__name__ = "DashboardCard"
+        mock_widget.__class__.__name__ = "InputCard"
         
         app.config_manager.get_layout.side_effect = lambda key, default=None: [
-            {"type": "DashboardCard", "x": 100, "y": 200}
+            {"type": "InputCard", "x": 100, "y": 200}
         ] if key == "widgets" else {}
         
         app.widget_factory.create_widget.return_value = mock_widget
@@ -195,7 +216,7 @@ class TestOverlayApp:
         args = app.config_manager.set_layout.call_args_list[-1]
         assert args[0][0] == "widgets"
         assert len(args[0][1]) == 1
-        assert args[0][1][0]["type"] == "DashboardCard"
+        assert args[0][1][0]["type"] == "InputCard"
 
     @patch('sys.exit')
     def test_run_saves_state_on_exit(self, mock_exit, app):

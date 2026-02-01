@@ -25,7 +25,7 @@ class TestDragDropIntegration:
         
         # Configure ConfigManager to return one widget
         mock_config_manager.get_layout.side_effect = lambda key, default=None: [
-            {"type": "DashboardCard", "position_x": 100, "position_y": 100, "width": 300, "height": 100}
+            {"type": "InputCard", "position_x": 100, "position_y": 100, "width": 300, "height": 100}
         ] if key == "widgets" else {}
 
         # Configure WidgetFactory to return a real-ish widget (or a mock that behaves like one)
@@ -37,12 +37,12 @@ class TestDragDropIntegration:
         # and assume headless pygame works (which it usually does for logic).
         
         # Let's try inserting a real DashboardCard but mocking its dependencies
-        from src.ui.widgets.dashboard_card import DashboardCard
+        from src.ui.widgets.input_card import InputCard
         
-        # We need to mock DashboardCardRenderer inside DashboardCard or it will try to load images/fonts
+        # We need to mock InputCardRenderer inside InputCard or it will try to load images/fonts
         # We can do this by patching the import in test setup or mocking the _renderer attribute
         
-        real_widget = DashboardCard(position_x=100, position_y=100)
+        real_widget = InputCard(position_x=100, position_y=100)
         # Prevent renderer instantiation
         real_widget._renderer = Mock() 
         # Just in case
