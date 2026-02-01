@@ -106,9 +106,9 @@ src/
     ├── window.py (WindowManager)
     ├── utils/ (Fonts)
     ├── rendering/
-    │   ├── dashboard_card_renderer.py
+    │   ├── input_card_renderer.py
     │   └── components/ (Bar, IndicatorBars, etc.)
-    └── widgets/ (DashboardCard, etc.)
+    └── widgets/ (InputCard, etc.)
 ```
 
 ## Próximos Passos

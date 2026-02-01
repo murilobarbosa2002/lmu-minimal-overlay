@@ -17,7 +17,7 @@ Sistema de componentes visuais.
 
 - [Overview](widgets/index.md)
 - [Widget Base](widgets/base-widget.md)
-- [DashboardCard](widgets/dashboard-card.md)
+- [InputCard](widgets/input-card.md)
 - [Criando Widgets](widgets/creating-widgets.md)
 
 
