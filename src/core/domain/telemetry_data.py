@@ -35,7 +35,8 @@ class TelemetryData:
             )
         if not STEERING_ANGLE_MIN <= self.steering_angle <= STEERING_ANGLE_MAX:
             raise ValueError(
-                f"steering_angle deve estar entre {STEERING_ANGLE_MIN} e {STEERING_ANGLE_MAX}, recebido: {self.steering_angle}"
+                f"steering_angle deve estar entre {STEERING_ANGLE_MIN} e {STEERING_ANGLE_MAX}, "
+                f"recebido: {self.steering_angle}"
             )
 
     def __str__(self) -> str:

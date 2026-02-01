@@ -22,22 +22,22 @@ class IndicatorBars:
     def render(
         self,
         surface: pygame.Surface,
-        x: int,
-        y: int,
+        position_x: int,
+        position_y: int,
         throttle: float,
         brake: float,
         ffb: float,
         text_color: tuple[int, int, int],
     ) -> None:
-        current_x = x
+        current_x = position_x
 
-        self.throttle_bar.render(surface, current_x, y, throttle, text_color)
+        self.throttle_bar.render(surface, current_x, position_y, throttle, text_color)
         current_x += self.throttle_bar.width + self.spacing
 
-        self.brake_bar.render(surface, current_x, y, brake, text_color)
+        self.brake_bar.render(surface, current_x, position_y, brake, text_color)
         current_x += self.brake_bar.width + self.spacing
 
-        self.ffb_bar.render(surface, current_x, y, ffb, text_color)
+        self.ffb_bar.render(surface, current_x, position_y, ffb, text_color)
 
     def get_total_width(self) -> int:
         return (self.throttle_bar.width * 3) + (self.spacing * 2)

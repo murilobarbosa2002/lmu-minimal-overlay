@@ -18,8 +18,8 @@ class SpeedGearDisplay:
     def render(
         self,
         surface: pygame.Surface,
-        x: int,
-        y: int,
+        position_x: int,
+        position_y: int,
         width: int,
         height: int,
         speed: float,
@@ -63,18 +63,18 @@ class SpeedGearDisplay:
             + self.rpm_surf.get_height()
         )
 
-        start_y = y + (height - total_content_height) // 2
+        start_y = position_y + (height - total_content_height) // 2
 
-        gear_x = x + width // 2 - self.gear_surf.get_width() // 2
+        gear_x = position_x + width // 2 - self.gear_surf.get_width() // 2
         gear_y = start_y
 
-        unit_x = x + width // 2 - self.unit_surf.get_width() // 2
+        unit_x = position_x + width // 2 - self.unit_surf.get_width() // 2
         unit_y = gear_y + self.gear_surf.get_height() + gap
 
-        speed_x = x + width // 2 - self.speed_surf.get_width() // 2
+        speed_x = position_x + width // 2 - self.speed_surf.get_width() // 2
         speed_y = unit_y + self.unit_surf.get_height() + gap
 
-        rpm_x = x + width // 2 - self.rpm_surf.get_width() // 2
+        rpm_x = position_x + width // 2 - self.rpm_surf.get_width() // 2
         rpm_y = speed_y + self.speed_surf.get_height() + gap
 
         surface.blit(self.gear_surf, (gear_x, gear_y))
