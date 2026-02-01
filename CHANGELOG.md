@@ -51,59 +51,59 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
    - Janela: título, largura_padrão, altura_padrão
 
 ### Changed - Atualizações Anteriores
-- **Config System**: Implemented full configuration management system (`ConfigManager`).
-- **Persistence**: Window position, size, and widget layout are now persisted in `config.json` and `layout.json`.
-- **UI**: DashboardCard background updated to deep blue for better aesthetics.
-- **Maintenance**: Strict code cleanup - removed all comments and docstrings from `src/` directory.
-- **Tests**: Achieved 100% test coverage across all codebase.
+- **Sistema de Configuração**: Implementado sistema completo de gerenciamento de configuração (`ConfigManager`).
+- **Persistência**: Posição da janela, tamanho e layout de widgets agora persistidos em `config.json` e `layout.json`.
+- **UI**: Background do DashboardCard atualizado para azul profundo para melhor estética.
+- **Manutenção**: Limpeza rigorosa de código - removidos todos comentários e docstrings do diretório `src/`.
+- **Testes**: Alcançada cobertura de 100% em toda a base de código.
 
 ### Added
-- `src/core/infrastructure/config_manager.py`: Singleton configuration manager.
-- `src/core/interfaces/i_config_manager.py`: Interface for config manager.
-- Unit tests for Config System.
-- `docs/testing/unit-testing.md`: Documentation on testing standards.
+- `src/core/infrastructure/config_manager.py`: Gerenciador de configuração singleton.
+- `src/core/interfaces/i_config_manager.py`: Interface para gerenciador de configuração.
+- Testes unitários para Sistema de Configuração.
+- `docs/testing/unit-testing.md`: Documentação sobre padrões de testes.
+- `docs/guides/user-guide/configuration-complete.md`: Guia completo de configuração.
 
 ### Fixed
-- **Fonts**: Fixed "Passed a NULL pointer" error on Wine/Proton by using `io.BytesIO` streams for font loading.
-- **Fonts**: Suppressed Pygame welcome message at startup.
-- **Fixed**: Reddish tint in DashboardCard gradient.
-- **Config**: ConfigManager handles missing or corrupted JSON files gracefully.
+- **Fontes**: Corrigido erro "Passed a NULL pointer" no Wine/Proton usando streams `io.BytesIO` para carregamento de fontes.
+- **Fontes**: Suprimida mensagem de boas-vindas do Pygame na inicialização.
+- **Corrigido**: Tonalidade avermelhada no gradiente do DashboardCard.
+- **Config**: ConfigManager trata arquivos JSON ausentes ou corrompidos graciosamente.
 
-### Added
-- `src/core/infrastructure/config_manager.py`: Singleton configuration manager.
-- `src/core/interfaces/i_config_manager.py`: Interface for config manager.
-- `tests/unit/ui/utils/test_fonts.py`: Comprehensive tests for FontManager static class (100% coverage).
-- Unit tests for Config System.
-- `docs/testing/unit-testing.md`: Documentation on testing standards.
-- **BREAKING**: Removed `Pedals` widget (functionality integrated into `DashboardCard`)
-- **BREAKING**: `OverlayApp` now requires dependencies via constructor injection (use `AppFactory.create()` instead of direct instantiation)
-- **Architecture**: Comprehensive SOLID and Clean Architecture refactoring
-- **Layout**: New compact DashboardCard (350px width) with symmetric spacing (20px) and gradient background (95% opacity)
-- **Architecture**: Comprehensive SOLID and Clean Architecture refactoring across 5 phases
-  - Implemented dependency injection container (`SimpleDIContainer`)
-  - Extracted interfaces: `IWindowManager`, `IFontProvider`, `ITelemetryProvider`
-  - Created platform-specific handlers (`Win32TransparencyHandler`, `NullTransparencyHandler`)
-  - Extracted Speedometer components: `SpeedometerRenderer`, `DraggableBehavior`, `unit_converter`
-  - Removed singleton pattern from `FontManager`, replaced with injectable `PygameFontProvider`
-  - Created `AppFactory` for dependency wiring
-- Removed all comments from production code (maintained only in tests and docs)
+### Added (Continuação)
+- `src/core/infrastructure/config_manager.py`: Gerenciador de configuração singleton.
+- `src/core/interfaces/i_config_manager.py`: Interface para gerenciador de configuração.
+- `tests/unit/ui/utils/test_fonts.py`: Testes abrangentes para classe estática FontManager (100% cobertura).
+- Testes unitários para Sistema de Configuração.
+- `docs/testing/unit-testing.md`: Documentação sobre padrões de testes.
+- **BREAKING**: Removido widget `Pedals` (funcionalidade integrada ao `DashboardCard`)
+- **BREAKING**: `OverlayApp` agora requer dependências via injeção de construtor (use `AppFactory.create()` ao invés de instanciação direta)
+- **Arquitetura**: Refatoração abrangente SOLID e Clean Architecture em 5 fases
+  - Implementado container de injeção de dependência (`SimpleDIContainer`)
+  - Extraídas interfaces: `IWindowManager`, `IFontProvider`, `ITelemetryProvider`
+  - Criados handlers específicos de plataforma (`Win32TransparencyHandler`, `NullTransparencyHandler`)
+  - Extraídos componentes do Speedometer: `SpeedometerRenderer`, `DraggableBehavior`, `unit_converter`
+  - Removido padrão singleton do `FontManager`, substituído por `PygameFontProvider` injetável
+  - Criado `AppFactory` para conexão de dependências
+- **Layout**: Novo DashboardCard compacto (350px largura) com espaçamento simétrico (20px) e background gradiente (95% opacidade)
+- Removidos todos comentários do código de produção (mantidos apenas em testes e docs)
 
-### Added
-- `src/core/infrastructure/di_container.py`: Dependency injection container
-- `src/core/infrastructure/app_factory.py`: Application factory for DI wiring
-- `src/ui/interfaces/`: Interface definitions (IWindowManager, IFontProvider)
-- `src/ui/platform/transparency_handler.py`: Platform-specific transparency handling
-- `src/ui/behaviors/draggable.py`: Reusable drag-and-drop behavior
-- `src/ui/rendering/speedometer_renderer.py`: Speedometer visual rendering
-- `src/core/domain/unit_converter.py`: Pure unit conversion functions
-- `src/ui/utils/pygame_font_provider.py`: Injectable font provider
-- 44 new comprehensive tests (100% coverage for new modules)
+### Added (Módulos de Infraestrutura)
+- `src/core/infrastructure/di_container.py`: Container de injeção de dependência
+- `src/core/infrastructure/app_factory.py`: Factory de aplicação para conexão DI
+- `src/ui/interfaces/`: Definições de interface (IWindowManager, IFontProvider)
+- `src/ui/platform/transparency_handler.py`: Tratamento de transparência específico de plataforma
+- `src/ui/behaviors/draggable.py`: Comportamento de drag-and-drop reutilizável
+- `src/ui/rendering/speedometer_renderer.py`: Renderização visual do velocímetro
+- `src/core/domain/unit_converter.py`: Funções puras de conversão de unidades
+- `src/ui/utils/pygame_font_provider.py`: Provedor de fontes injetável
+- 44 novos testes abrangentes (100% cobertura para novos módulos)
 
-### Fixed
-- Test coverage improved from 98% to 99% (144 tests passing)
-- Window property access in tests (changed from direct `surface` to `_surface`)
+### Fixed (Melhorias de Testes e Compatibilidade)
+- Cobertura de testes melhorada de 98% para 99% (144 testes passando)
+- Acesso a propriedades de janela em testes (mudado de `surface` direto para `_surface`)
 
-### Added
+### Added (Funcionalidades Iniciais)
 - Script `run_windows.bat` com auto-instalação de Python e Chocolatey
 - Guia de instalação para Windows (`docs/guides/windows-setup.md`)
 - Verificação de ambiente Windows/Linux com fallback robusto
@@ -137,7 +137,7 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 - Arquitetura SOLID: Reestruturação de `src/core` em `application/services/states`
 - Limpeza de Código: Remoção de comentários e docstrings em `src/`
 
-### Fixed
+### Fixed (Correções de Layout e Compatibilidade)
 - Layout do Widget Speedometer (sobreposição de marcha/velocidade)
 - Sincronização de drag & drop (área de colisão vs visual)
 - Tratamento de input no RunningState (bloqueio de interação acidental)
@@ -147,6 +147,92 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 ### Planejado
 
 - Implementação de ITelemetryProvider
+
+---
+
+## [0.4.0] - 2026-02-01
+
+### Added
+- **UI**: Sistema completo de Drag & Drop com feedback visual (mudança de transparência ao arrastar).
+- **Controle**: Alternar Modo de Edição com `F1`.
+- **Integração**: Testes de integração abrangentes para fluxo de drag & drop e persistência.
+- **Assets**: Imagens de referência para HUD original do LMU (`src/assets/images/hud-default-lmu*.png`).
+- **Roadmap**: Completada Fase 4 (Drag & Drop) e adicionada Fase 5 (Expansão HUD).
+- **Visuais**: Visuais premium de edição:
+  - **Seleção**: Borda arredondada ciano com **animação de respiração dinâmica** (padding pulsante).
+  - **Arrastando**: Card fica semi-transparente (180/255 opacidade).
+
+### Fixed
+- **Opacidade**: Corrigido bug onde conteúdo do card herdava transparência do background. Background agora respeita alpha do `bg_color` independentemente.
+- **Cores**: Refinado background do card para corresponder preferência do usuário (Azul-Preto Escuro) e gradiente dinâmico baseado na cor de entrada.
+- **Cor de Arrasto**: Mudada cor de feedback de arrasto para `(25, 35, 50, 180)` para evitar tonalidade rosada.
+- **Modo de Edição**: Widgets agora continuam a atualizar/renderizar dados de telemetria enquanto no Modo de Edição (anteriormente pausado).
+- **Testes**: Alcançada cobertura de 100% incluindo novos testes de integração e casos extremos para DashboardCard.
+- **Roadmap**: Plano detalhado para refatoração de `InputCard` e novos widgets.
+
+## [0.3.0] - 2026-01-31
+
+### Added
+- **Janela**: Funcionalidade always-on-top para Windows (`SetWindowPos` com `HWND_TOPMOST`) e Linux (`SDL_VIDEO_WINDOW_ALWAYS_ON_TOP`).
+- **Testes**: Adicionado `test_physics_engine_corner_entry` para alcançar 100% de cobertura no motor de física.
+
+### Changed
+- **Física**: Implementado modelo de direção "Mão Humana" com limitação de taxa (máx 2.5 unidades/segundo).
+- **Física**: Refinado amortecimento usando média móvel exponencial para direção mais suave e realista.
+- **Física**: Micro-correções agora ativam apenas sob alta carga (Velocidade > 40 + Direção > 0.1).
+- **Config**: Adicionado `layout.json` ao `.gitignore` (posições de janela específicas do usuário).
+
+### Fixed
+- **Física**: Eliminada "rotação completa" irrealista na inicialização.
+- **Testes**: Atualizado `test_window_init_windows_os` para incluir verificação de mock `SetWindowPos`.
+
+## [0.2.0] - 2026-01-31
+
+### Added
+- **Visuais**: Suporte para imagem personalizada de volante (`src/assets/images/wheel-mockup.png`).
+- **UI**: Valores percentuais adicionados ao topo das barras de Throttle, Brake e FFB (Tamanho 16, Negrito).
+
+### Changed
+- **Física**: Simulação de direção melhorada com jitter reduzido, micro-correções e suavização exponencial.
+- **Visuais**: Implementado `rotozoom` para rotação de volante de alta qualidade e anti-aliasing.
+- **Visuais**: Aumentado tamanho do Indicador de Direção (Raio 45px).
+- **Layout**: Centralizado display de Velocidade e Marcha perfeitamente (Vertical e Horizontalmente) dentro do DashboardCard.
+- **Layout**: Movidos labels das Barras Indicadoras (T, B, F) para baixo para melhor legibilidade.
+- **Layout**: Padronizado espaçamento vertical (gaps de 5px) para Barras Indicadoras.
+
+### Added (Arquitetura e Infraestrutura)
+- `src/core/infrastructure/config_manager.py`: Gerenciador de configuração singleton.
+- `src/core/interfaces/i_config_manager.py`: Interface para gerenciador de configuração.
+- `tests/unit/ui/utils/test_fonts.py`: Testes abrangentes para classe estática FontManager (100% cobertura).
+- Testes unitários para Sistema de Configuração.
+- `docs/testing/unit-testing.md`: Documentação sobre padrões de testes.
+- **BREAKING**: Removido widget `Pedals` (funcionalidade integrada ao `DashboardCard`)
+- **BREAKING**: `OverlayApp` agora requer dependências via injeção de construtor (use `AppFactory.create()` ao invés de instanciação direta)
+- **Arquitetura**: Refatoração abrangente SOLID e Clean Architecture
+- **Layout**: Novo DashboardCard compacto (350px largura) com espaçamento simétrico (20px) e background gradiente (95% opacidade)
+- **Arquitetura**: Refatoração abrangente SOLID e Clean Architecture em 5 fases
+  - Implementado container de injeção de dependência (`SimpleDIContainer`)
+  - Extraídas interfaces: `IWindowManager`, `IFontProvider`, `ITelemetryProvider`
+  - Criados handlers específicos de plataforma (`Win32TransparencyHandler`, `NullTransparencyHandler`)
+  - Extraídos componentes do Speedometer: `SpeedometerRenderer`, `DraggableBehavior`, `unit_converter`
+  - Removido padrão singleton do `FontManager`, substituído por `PygameFontProvider` injetável
+  - Criado `AppFactory` para conexão de dependências
+- Removidos todos comentários do código de produção (mantidos apenas em testes e docs)
+
+### Added (Novos Módulos)
+- `src/core/infrastructure/di_container.py`: Container de injeção de dependência
+- `src/core/infrastructure/app_factory.py`: Factory de aplicação para conexão DI
+- `src/ui/interfaces/`: Definições de interface (IWindowManager, IFontProvider)
+- `src/ui/platform/transparency_handler.py`: Tratamento de transparência específico de plataforma
+- `src/ui/behaviors/draggable.py`: Comportamento de drag-and-drop reutilizável
+- `src/ui/rendering/speedometer_renderer.py`: Renderização visual do velocímetro
+- `src/core/domain/unit_converter.py`: Funções puras de conversão de unidades
+- `src/ui/utils/pygame_font_provider.py`: Provedor de fontes injetável
+- 44 novos testes abrangentes (100% cobertura para novos módulos)
+
+### Fixed
+- Cobertura de testes melhorada de 98% para 99% (144 testes passando)
+- Acesso a propriedades de janela em testes (mudado de `surface` direto para `_surface`)
 - Implementação de TelemetryData
 - Implementação de MockTelemetryProvider
 - Implementação de widgets básicos
