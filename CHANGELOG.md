@@ -7,7 +7,28 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR
 
 ---
 
-## [0.6.0] - 2026-02-01
+## [0.8.0] - 2026-02-01
+
+### Changed - Clean Code & Strict Test Isolation ✅
+
+#### **Refatoração Clean Code Completa** 🧹
+- **Renomeação de Variáveis**: Eliminados nomes curtos (`x`, `y`) em favor de descritivos (`position_x`, `position_y`) em todos os widgets e renderizadores.
+- **Arquitetura**: `WidgetFactory` movido para `src/ui/factories/` respeitando Clean Architecture/Dependency Rule.
+- **Padronização**: Todos os arquivos aderentes a PEP8 (Black + Flake8) com zero violações.
+
+#### **Qualidade de Testes** 🧪
+- **Isolamento Estrito**: Testes garantidamente desacoplados de `config.json` e `constants.py` reais.
+- **Mocking de I/O**: `ConfigManager` e acessos a arquivo totalmente mockados (`mock_open`).
+- **Correção de Integração**: Resolvido bug em `test_drag_and_drop_flow` causado pela renomeação de atributos de widget.
+- **Metria**: 100% de cobertura mantida com 217 testes passando.
+
+### Fixed
+- **Integration Test**: Atualizado `test_drag_drop_integration.py` para usar novos nomes de atributos (`position_x/y`).
+- **Core App**: Atualizado `app.save_state()` para salvar corretamente usando novos atributos.
+
+---
+
+## [0.7.0] - 2026-02-01
 
 ### Adicionado
 - **Display de RPM**: RPM agora exibido abaixo da velocidade com fonte e cor configuráveis

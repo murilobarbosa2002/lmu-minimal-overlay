@@ -22,6 +22,12 @@ O projeto adota padrões rigorosos de qualidade de código e testes para garanti
 - Mocking extensivo para isolar unidades com `unittest.mock`.
 - Testes unitários focam em comportamento e estados.
 
+## Isolamento de Testes
+
+- **Zero Dependências Externas**: Testes NÃO devem depender de arquivos de configuração reais (`config.json`, `layout.json`).
+- **Mocking de I/O**: Use `unittest.mock.mock_open` para simular leitura/escrita de arquivos.
+- **Constantes**: Evite importar `src.core.domain.constants`. Mocke valores constantes se necessário, ou use valores literais nos testes para garantir independência.
+
 ## Testes de Integração
 
 - Localizados em `tests/integration/`.

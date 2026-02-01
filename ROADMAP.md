@@ -2,7 +2,7 @@
 
 Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado continuamente conforme o progresso.
 
-**Última atualização**: 2026-02-01 (v0.7.0 - Zero Magic Numbers Achieved)
+**Última atualização**: 2026-02-01 (v0.8.0 - Clean Code & Strict Isolation)
 
 ---
 
@@ -329,10 +329,10 @@ Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado co
 
 ### 7.2 Testes de Integração
 
-- [ ] Testar fluxo completo de telemetria
-- [ ] Testar persistência de configurações
-- [ ] Testar drag & drop end-to-end
-- [ ] Testar transições de estado
+- [x] Testar fluxo completo de telemetria
+- [x] Testar persistência de configurações
+- [x] Testar drag & drop end-to-end
+- [x] Testar transições de estado
 
 ### 7.3 Testes E2E
 
@@ -475,12 +475,12 @@ Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado co
 - **Status**: ⚪ Não Iniciado
 
 ### Fase 7: Testes
-- **Progresso**: 90% (12/13 tarefas)
-- **Status**: 🟢 Avançado
+- **Progresso**: 100% (13/13 tarefas)
+- **Status**: 🟢 Completo
 
 ### Fase 8: Documentação
-- **Progresso**: 92% (12/13 tarefas)
-- **Status**: 🟡 Em Progresso
+- **Progresso**: 100% (13/13 tarefas)
+- **Status**: 🟢 Completo
 
 ### Fase 9: Deploy
 - **Progresso**: 0% (0/7 tarefas)
