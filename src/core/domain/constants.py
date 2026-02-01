@@ -58,3 +58,13 @@ MINIMUM_SPEED_THRESHOLD = 0.1  # m/s - below this is considered stopped
 # Default fallback values
 DEFAULT_GEAR_RATIO = 1.0
 
+# FFB (Force Feedback) limits
+FFB_MIN = -1.0
+FFB_MAX = 1.0
+
+# Simulation noise ranges
+ROAD_NOISE_MIN = -0.05
+ROAD_NOISE_MAX = 0.05
+CORNER_NOISE_MIN = -0.1
+CORNER_NOISE_MAX = 0.1
+

@@ -11,7 +11,13 @@ from src.core.domain.constants import (
     INITIAL_INDEX,
     INITIAL_PROGRESS,
     INITIAL_TIMESTAMP,
-    LERP_MAX
+    LERP_MAX,
+    FFB_MIN,
+    FFB_MAX,
+    ROAD_NOISE_MIN,
+    ROAD_NOISE_MAX,
+    CORNER_NOISE_MIN,
+    CORNER_NOISE_MAX
 )
 
 
@@ -73,11 +79,11 @@ class MockTelemetryProvider (ITelemetryProvider ):
 
         lateral_g = self._physics.steering * (self._physics.speed / self._lateral_g_speed_divisor)
         
-        road_noise = random.uniform(-0.05, 0.05)
+        road_noise = random.uniform(ROAD_NOISE_MIN, ROAD_NOISE_MAX)
         if 'CORNER' in segment.type:
-             road_noise += random.uniform(-0.1, 0.1) * abs(self._physics.steering)
+             road_noise += random.uniform(CORNER_NOISE_MIN, CORNER_NOISE_MAX) * abs(self._physics.steering)
              
-        self.data.ffb_level = max(-1.0, min(1.0, lateral_g + road_noise))
+        self.data.ffb_level = max(FFB_MIN, min(FFB_MAX, lateral_g + road_noise))
 
         self .data .timestamp =current_time -self ._start_time 
 

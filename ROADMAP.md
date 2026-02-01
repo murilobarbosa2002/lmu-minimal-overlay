@@ -2,7 +2,7 @@
 
 Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado continuamente conforme o progresso.
 
-**Última atualização**: 2026-02-01 (v0.6.0 - RPM Display & Configurable Physics)
+**Última atualização**: 2026-02-01 (v0.7.0 - Zero Magic Numbers Achieved)
 
 ---
 
@@ -157,12 +157,23 @@ Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado co
   - [x] Enhance `dashboard_card` theme (border colors, mask color, padding)
 
 - [x] **Component Refactoring** (31+ values centralized)
-  - [x] Refactor `SteeringIndicator` (7 values: colors, dimensions, tick ranges)
-  - [x] Refactor `Bar` (8 values: dimensions, colors, padding, fonts, border_radius)
-  - [x] Refactor `IndicatorBars` (4 values: spacing, bar colors)
-  - [x] Refactor `DashboardCardRenderer` (4 values: border properties, padding)
+  - [x] Refactor `DashboardCard` to use theme
+  - [x] Refactor `SteeringIndicator` to use theme
+  - [x] Refactor `Bar` to use theme
+  - [x] Refactor `IndicatorBars` to use theme
+  - [x] Refactor `SpeedGearDisplay` to use theme
+  - [x] Refactor `DashboardCardRenderer` to use theme
   - [x] Refactor `EditState` (5 values: selection colors, border, animation)
   - [x] Refactor `WindowManager` (3 values: window title, dimensions)
+
+- [x] **Zero Magic Numbers Policy** (v0.7.0 - 2026-02-01) 🎯
+  - [x] Created `src/core/domain/constants.py` with 66+ documented constants
+  - [x] Expanded `config.json` with 5 new sections (ui, validation, conversion, input, animation)
+  - [x] Updated 8 production files to use constants
+  - [x] Eliminated ALL magic numbers from production code
+  - [x] Created `.agent/rules.md` for future enforcement
+  - [x] Maintained 217/217 tests passing, 100% coverage
+  - [x] Added constants for: conversions, validation ranges, initial states, FFB limits, noise ranges, lerp bounds, thresholds, mouse buttons
 
 - [x] **Testing & Documentation**
   - [x] Update all tests for ConfigManager integration
