@@ -2,7 +2,7 @@
 
 Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado continuamente conforme o progresso.
 
-**Última atualização**: 2026-02-01 (v0.8.0 - Clean Code & Strict Isolation)
+**Última atualização**: 2026-02-01 (v0.9.0 - Widget Expansion & Stability)
 
 ---
 
@@ -80,10 +80,10 @@ Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado co
 
 ## Fase 2: Widgets Básicos
 
-### 2.1 DashboardCard (antigo Speedometer)
+### 2.1 InputCard (antigo Speedometer)
 
 - [x] **Implementação**
-  - [x] Criar classe DashboardCard herdando de Widget
+  - [x] Criar classe InputCard herdando de Widget
   - [x] Integrar Speed, Gear, Steering, Pedals, FFB
   - [x] Implementar layout simétrico e compacto (350px)
   - [x] Implementar drag & drop
@@ -99,15 +99,15 @@ Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado co
 
 ### 2.2 Pedals Widget (Removido)
 
-- [x] **Status**: Integrado ao DashboardCard para design mais limpo e compacto.
+- [x] **Status**: Integrado ao InputCard para design mais limpo e compacto.
 
 ### 2.3 Steering Wheel Widget (Integrado)
 
-- [x] **Status**: Integrado ao DashboardCard.
+- [x] **Status**: Integrado ao InputCard.
 
 ### 2.4 FFB Indicator Widget (Integrado)
 
-- [x] **Status**: Integrado ao DashboardCard.
+- [x] **Status**: Integrado ao InputCard.
 
 ---
 
@@ -157,12 +157,12 @@ Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado co
   - [x] Enhance `dashboard_card` theme (border colors, mask color, padding)
 
 - [x] **Component Refactoring** (31+ values centralized)
-  - [x] Refactor `DashboardCard` to use theme
+  - [x] Refactor `InputCard` to use theme
   - [x] Refactor `SteeringIndicator` to use theme
   - [x] Refactor `Bar` to use theme
   - [x] Refactor `IndicatorBars` to use theme
   - [x] Refactor `SpeedGearDisplay` to use theme
-  - [x] Refactor `DashboardCardRenderer` to use theme
+  - [x] Refactor `InputCardRenderer` to use theme
   - [x] Refactor `EditState` (5 values: selection colors, border, animation)
   - [x] Refactor `WindowManager` (3 values: window title, dimensions)
 
@@ -226,9 +226,14 @@ Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado co
 
 ### 4.4 Expansão de Widgets
 - [ ] **Refatoração UI**
-  - [ ] Renomear `DashboardCard` para `InputCard`
-  - [ ] Renomear `DashboardCardRenderer` para `InputCardRenderer`
-  - [ ] Criar sistema de cards múltiplos
+  - [x] Renomear `DashboardCard` para `InputCard`
+  - [x] Renomear `DashboardCardRenderer` para `InputCardRenderer`
+  - [x] Criar sistema de cards múltiplos
+  - [x] Extrair `CardBackground` component
+- [x] **Estabilidade & Polish**
+  - [x] Corrigir bug de opacidade global no Windows (remover LWA_ALPHA)
+  - [x] Corrigir flash preto na inicialização (Hidden Startup)
+  - [x] Ajustar clear color para Linux (Transparente) vs Windows (Magenta)
 - [ ] **Novos Widgets**
   - [ ] **Fuel & Energy Card**: Barra de Combustível, Energia (ERS/Bateria)
   - [ ] **Car Status Card**: Óleo, Água, Pneus (4x), Freios
@@ -463,8 +468,8 @@ Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado co
 - **Status**: 🟢 Completo
 
 ### Fase 4: Integração
-- **Progresso**: 100% (9/9 tarefas)
-- **Status**: � Completo
+- **Progresso**: 100% (13/13 tarefas - Incluindo Refatoração UI e Estabilidade)
+- **Status**: 🟢 Completo
 
 ### Fase 6: Produção (Anterior Fase 5)
 - **Progresso**: 30% (2/7 tarefas)

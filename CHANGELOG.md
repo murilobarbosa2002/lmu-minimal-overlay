@@ -7,6 +7,32 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR
 
 ---
 
+## [0.9.0] - 2026-02-01
+
+### Changed - Widget Expansion & Stability 🚀
+
+#### **Renomeação e Componentização** 📦
+- **InputCard**: `DashboardCard` renomeado para `InputCard` para melhor refletir sua função de visualização de entradas.
+- **CardBackground**: Lógica de renderização de fundo extraída para componente isolado `CardBackground` (`src/ui/rendering/components/card_background.py`).
+- **Refatoração**: `DashboardCardRenderer` renomeado para `InputCardRenderer`, utilizando o novo componente de background.
+
+#### **Correções de Opacidade e Visual** 🎨
+- **Startup "Ninja"** 🥷: Implementada estratégia agressiva de inicialização para eliminar flashes brancos/pretos.
+  - **Force Off-Screen**: Janela criada em coordernadas invisíveis (-32000).
+  - **Force Popup**: Estilo `WS_POPUP` forçado via API do Windows para garantir zero bordas.
+  - **Silent Reveal**: Janela exibida sem roubar foco ou animação (`SWP_NOACTIVATE`).
+  - **DWM Sync**: Delay estratégico para sincronização com o Desktop Window Manager.
+- **Correção Geral**: Opacidade ajustada para não depender de `LWA_ALPHA` que causava conflitos em algumas builds do Windows 11.
+- **Correção Windows**: Removida flag `LWA_ALPHA` que causava transparência global em toda a janela (texto desbotado). Agora apenas o fundo usa Color Keying.
+- **Correção Linux**: Janela agora limpa com `(0,0,0,0)` (transparente) em vez de magenta, garantindo integração correta com compositores Linux.
+- **Startup Limpo**: Implementada inicialização **Off-Screen** (janela criada em `-32000, -32000`). Transparência e limpeza de buffer ocorrem invisivelmente, com reveal instantâneo apenas após estar pronto. Elimina 100% de artefatos visuais ou flashes pretos.
+
+#### **Qualidade Técnica** 🛠️
+- **Múltiplos Cards**: Arquitetura validada para suportar múltiplas instâncias de widgets simultaneamente.
+- **Cobertura**: Mantida **100% de cobertura** (224 testes) após todas as refatorações e correções.
+
+---
+
 ## [0.8.0] - 2026-02-01
 
 ### Changed - Clean Code & Strict Test Isolation ✅
