@@ -17,17 +17,10 @@ class InputCardRenderer:
 
         self._border_radius = theme.get("border_radius", 24)
         self._border_color = tuple(theme.get("border_color", [255, 255, 255, 30]))
-        self._border_glow_color = tuple(
-            theme.get("border_glow_color", [255, 255, 255, 0])
-        )
-        self._border_glow_width = theme.get("border_glow_width", 0)
         self._lateral_padding = theme.get("lateral_padding", 20)
         self._gradient_top_multiplier = theme.get("gradient_top_multiplier", 1.2)
         self._gradient_bottom_multiplier = theme.get("gradient_bottom_multiplier", 0.8)
         self._default_alpha = theme.get("default_alpha", 240)
-        self._noise_intensity = theme.get("noise_intensity", 0.0)
-        self._inner_shadow_intensity = theme.get("inner_shadow_intensity", 0)
-        self._inner_shadow_size = theme.get("inner_shadow_size", 0)
 
         self.background = CardBackground(
             border_radius=self._border_radius,
@@ -35,11 +28,6 @@ class InputCardRenderer:
             gradient_top_multiplier=self._gradient_top_multiplier,
             gradient_bottom_multiplier=self._gradient_bottom_multiplier,
             default_alpha=self._default_alpha,
-            border_glow_color=self._border_glow_color,
-            border_glow_width=self._border_glow_width,
-            noise_intensity=self._noise_intensity,
-            inner_shadow_intensity=self._inner_shadow_intensity,
-            inner_shadow_size=self._inner_shadow_size,
         )
 
         self._speed_gear_left_margin = theme.get("speed_gear_left_margin", 10)
