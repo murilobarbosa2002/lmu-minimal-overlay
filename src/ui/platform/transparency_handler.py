@@ -17,7 +17,7 @@ class Win32TransparencyHandler(ITransparencyHandler):
         self.chroma_key_color = chroma_key_color
         self.alpha = alpha
 
-    def apply_transparency(self, hwnd: int) -> None:
+    def apply_transparency(self, window_handle: int) -> None:
         if sys.platform != "win32":
             return
 
@@ -26,17 +26,17 @@ class Win32TransparencyHandler(ITransparencyHandler):
             import win32con
             import win32api
 
-            win32gui.SetWindowLong(hwnd, win32con.GWL_STYLE, win32con.WS_POPUP | win32con.WS_VISIBLE)
+            win32gui.SetWindowLong(window_handle, win32con.GWL_STYLE, win32con.WS_POPUP | win32con.WS_VISIBLE)
 
-            ex_style = win32gui.GetWindowLong(hwnd, win32con.GWL_EXSTYLE)
-            win32gui.SetWindowLong(hwnd, win32con.GWL_EXSTYLE, ex_style | win32con.WS_EX_LAYERED)
+            ex_style = win32gui.GetWindowLong(window_handle, win32con.GWL_EXSTYLE)
+            win32gui.SetWindowLong(window_handle, win32con.GWL_EXSTYLE, ex_style | win32con.WS_EX_LAYERED)
 
             win32gui.SetLayeredWindowAttributes(
-                hwnd, win32api.RGB(*self.chroma_key_color), 0, win32con.LWA_COLORKEY
+                window_handle, win32api.RGB(*self.chroma_key_color), 0, win32con.LWA_COLORKEY
             )
 
             win32gui.SetWindowPos(
-                hwnd, 
+                window_handle, 
                 win32con.HWND_TOPMOST, 
                 0, 0, 0, 0, 
                 win32con.SWP_NOMOVE | win32con.SWP_NOSIZE | win32con.SWP_FRAMECHANGED
@@ -44,18 +44,18 @@ class Win32TransparencyHandler(ITransparencyHandler):
         except ImportError:
             pass
 
-    def show_window(self, hwnd: int) -> None:
+    def show_window(self, window_handle: int) -> None:
         if sys.platform != "win32":
             return
         try:
             import win32gui
             import win32con
             flags = win32con.SWP_NOMOVE | win32con.SWP_NOSIZE | win32con.SWP_SHOWWINDOW | win32con.SWP_NOACTIVATE
-            win32gui.SetWindowPos(hwnd, 0, 0, 0, 0, 0, flags)
+            win32gui.SetWindowPos(window_handle, 0, 0, 0, 0, 0, flags)
         except ImportError:
             pass
 
-    def set_window_pos(self, hwnd: int, x: int, y: int) -> None:
+    def set_window_pos(self, window_handle: int, position_x: int, position_y: int) -> None:
         if sys.platform != "win32":
             return
         try:
@@ -63,17 +63,17 @@ class Win32TransparencyHandler(ITransparencyHandler):
             import win32con
             
             flags = win32con.SWP_NOZORDER | win32con.SWP_NOSIZE | win32con.SWP_SHOWWINDOW | win32con.SWP_NOACTIVATE
-            win32gui.SetWindowPos(hwnd, 0, x, y, 0, 0, flags)
+            win32gui.SetWindowPos(window_handle, 0, position_x, position_y, 0, 0, flags)
         except ImportError:
             pass
 
 
 class NullTransparencyHandler(ITransparencyHandler):
-    def apply_transparency(self, hwnd: int) -> None:
+    def apply_transparency(self, window_handle: int) -> None:
         pass
 
-    def show_window(self, hwnd: int) -> None:
+    def show_window(self, window_handle: int) -> None:
         pass
 
-    def set_window_pos(self, hwnd: int, x: int, y: int) -> None:
+    def set_window_pos(self, window_handle: int, position_x: int, position_y: int) -> None:
         pass
