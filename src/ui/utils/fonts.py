@@ -26,7 +26,7 @@ class FontManager:
                     font.render("test", False, (0, 0, 0))
                     cls._fonts[key] = font
                     return font
-                except Exception as e:
+                except Exception:
                     pass
 
             try:

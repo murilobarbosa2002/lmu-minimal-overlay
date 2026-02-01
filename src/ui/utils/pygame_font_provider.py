@@ -27,7 +27,7 @@ class PygameFontProvider(IFontProvider):
                     font.render("test", False, (0, 0, 0))
                     self._fonts[key] = font
                     return font
-                except Exception as e:
+                except Exception:
                     pass
 
             try:

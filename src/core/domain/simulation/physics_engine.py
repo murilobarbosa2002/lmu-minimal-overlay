@@ -123,7 +123,6 @@ class PhysicsEngine:
 
         throttle_speed = self.THROTTLE_SPEED * dt
         brake_speed = self.BRAKE_SPEED * dt
-        steer_speed = self.STEERING_SPEED * dt
 
         if self.throttle < target_throttle:
             self.throttle = min(target_throttle, self.throttle + throttle_speed)

@@ -18,6 +18,12 @@ class DashboardCardRenderer:
         self._border_color = tuple(theme.get("border_color", [255, 255, 255, 30]))
         self._mask_color = tuple(theme.get("mask_color", [255, 255, 255]))
         self._lateral_padding = theme.get("lateral_padding", 20)
+        self._gradient_top_multiplier = theme.get("gradient_top_multiplier", 1.2)
+        self._gradient_bottom_multiplier = theme.get("gradient_bottom_multiplier", 0.8)
+        self._default_alpha = theme.get("default_alpha", 240)
+        self._speed_gear_left_margin = theme.get("speed_gear_left_margin", 10)
+        self._speed_gear_horizontal_margin = theme.get("speed_gear_horizontal_margin", 20)
+        self._bars_height = theme.get("bars_height", 90)
 
     def render(
         self,
@@ -45,10 +51,18 @@ class DashboardCardRenderer:
 
         r, g, b = bg_color[0], bg_color[1], bg_color[2]
 
-        top_color = (min(255, int(r * 1.2)), min(255, int(g * 1.2)), min(255, int(b * 1.2)))
-        bottom_color = (int(r * 0.8), int(g * 0.8), int(b * 0.8))
+        top_color = (
+            min(255, int(r * self._gradient_top_multiplier)),
+            min(255, int(g * self._gradient_top_multiplier)),
+            min(255, int(b * self._gradient_top_multiplier)),
+        )
+        bottom_color = (
+            int(r * self._gradient_bottom_multiplier),
+            int(g * self._gradient_bottom_multiplier),
+            int(b * self._gradient_bottom_multiplier),
+        )
 
-        alpha = bg_color[3] if len(bg_color) == 4 else 240
+        alpha = bg_color[3] if len(bg_color) == 4 else self._default_alpha
 
         for y_offset in range(height):
             ratio = y_offset / height
@@ -79,8 +93,8 @@ class DashboardCardRenderer:
 
         steering_right_edge = self._lateral_padding + self.steering.radius * 2
         bars_left_edge = width - self._lateral_padding - bars_total_width
-        speed_gear_x = position_x + steering_right_edge + 10
-        speed_gear_w = bars_left_edge - steering_right_edge - 20
+        speed_gear_x = position_x + steering_right_edge + self._speed_gear_left_margin
+        speed_gear_w = bars_left_edge - steering_right_edge - self._speed_gear_horizontal_margin
         speed_gear_y = position_y
         speed_gear_h = height
 
@@ -99,5 +113,5 @@ class DashboardCardRenderer:
             gear_color,
         )
 
-        bars_y = position_y + (height - 90) // 2
+        bars_y = position_y + (height - self._bars_height) // 2
         self.bars.render(surface, bars_x, bars_y, throttle_pct, brake_pct, ffb_level, text_color)

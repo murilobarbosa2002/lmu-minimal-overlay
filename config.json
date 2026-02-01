@@ -20,6 +20,12 @@
       "border_color": [255, 255, 255, 30],
       "mask_color": [255, 255, 255],
       "lateral_padding": 20,
+      "gradient_top_multiplier": 1.2,
+      "gradient_bottom_multiplier": 0.8,
+      "default_alpha": 240,
+      "speed_gear_left_margin": 10,
+      "speed_gear_horizontal_margin": 20,
+      "bars_height": 90,
       "width": 350,
       "height": 130
     },

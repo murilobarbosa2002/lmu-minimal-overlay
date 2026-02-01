@@ -52,7 +52,6 @@ class OverlayApp:
             except ValueError:
                 pass
         running_state = RunningState(self.state_machine, widgets=self.widgets)
-        edit_state = EditState(self.state_machine, widgets=self.widgets)
         self.state_machine.change_state(running_state)
         self.input_handler = InputHandler(self.state_machine, self.window, self.widgets)
 
