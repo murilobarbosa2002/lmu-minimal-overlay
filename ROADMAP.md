@@ -263,8 +263,8 @@ Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado co
 
 - [x] **Infra**
   - [x] Testar MockTelemetryProvider
-  - [ ] Testar SharedMemoryProvider
-  - [ ] Testar ITelemetryProvider interface
+  - [x] Testar SharedMemoryProvider
+  - [x] Testar ITelemetryProvider interface
 
 - [x] **UI**
   - [x] Testar cada widget isoladamente
