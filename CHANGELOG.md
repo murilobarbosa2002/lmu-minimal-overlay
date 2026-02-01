@@ -118,7 +118,7 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 - **Assets**: Reference images for original LMU HUD (`src/assets/images/hud-default-lmu*.png`).
 - **Roadmap**: Completed Phase 4 (Drag & Drop) and added Phase 5 (HUD Expansion).
 - **Visuals**: Premium editing visuals:
-  - **Selection**: Cyan rounded border with padding (8px radius, 5px gap).
+  - **Selection**: Cyan rounded border with **dynamic breathing animation** (pulsing padding).
   - **Dragging**: Card becomes semi-transparent (180/255 opacity).
 
 ### Fixed

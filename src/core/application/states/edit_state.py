@@ -8,9 +8,10 @@ class EditState (IApplicationState ):
         super ().__init__ (context )
         self .widgets =widgets 
         self .selected_widget :Widget |None =None 
+        self._time_accumulator = 0.0
 
     def on_enter (self )->None :
-        pass 
+        self._time_accumulator = 0.0
 
     def on_exit (self )->None :
         self .selected_widget =None 
@@ -31,6 +32,8 @@ class EditState (IApplicationState ):
         return handled 
 
     def update (self ,data :TelemetryData )->None :
+        self._time_accumulator += 0.05
+        
         for widget in self .widgets :
             widget .update (data ) 
 
@@ -39,6 +42,12 @@ class EditState (IApplicationState ):
             widget .draw (surface )
 
         if self .selected_widget :
+            import math
+            padding_base = 10
+            padding_oscillation = 2 * math.sin(self._time_accumulator * 4) 
+            current_padding = padding_base + padding_oscillation
+            
             rect = self.selected_widget.get_rect()
-            selection_rect = rect.inflate(10, 10)
+            selection_rect = rect.inflate(current_padding * 2, current_padding * 2)
+            
             pygame .draw .rect (surface ,(0 ,255 ,255 ),selection_rect ,2 ,border_radius =8 )

@@ -87,10 +87,12 @@ class TestEditState:
         # Color should be Cyan (0, 255, 255)
         assert args[0][1] == (0, 255, 255)
         
-        # Rect should be inflated (0,0,100,100) -> (-5,-5,110,110) due to inflate(10,10)
+        # Rect should be inflated. Base is 10px padding, but it oscillates.
+        # Initial time is 0, so sin(0) = 0. Padding = 10.
+        # Rect (0,0,100,100) -> inflate(20, 20) -> (-10, -10, 120, 120)
         drawn_rect = args[0][2]
-        assert drawn_rect.width == 110
-        assert drawn_rect.height == 110
+        assert drawn_rect.width == 120
+        assert drawn_rect.height == 120
         
         # Border radius should be 8
         assert args[1]['border_radius'] == 8
