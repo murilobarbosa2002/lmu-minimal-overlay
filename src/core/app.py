@@ -42,7 +42,7 @@ class OverlayApp:
         if not widgets_data:
             new_widgets_data = [
                 {
-                    "type": "DashboardCard",
+                    "type": "InputCard",
                     "position_x": 1700,
                     "position_y": 50,
                     "width": 350,

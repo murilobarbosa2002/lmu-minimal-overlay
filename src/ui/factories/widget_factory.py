@@ -1,6 +1,6 @@
 from typing import Dict, Type
 from src.ui.widgets.widget import Widget
-from src.ui.widgets.dashboard_card import DashboardCard
+from src.ui.widgets.input_card import InputCard
 
 
 class WidgetFactory:
@@ -9,7 +9,7 @@ class WidgetFactory:
         self._register_default_widgets()
 
     def _register_default_widgets(self) -> None:
-        self.register("DashboardCard", DashboardCard)
+        self.register("InputCard", InputCard)
 
     def register(self, widget_type: str, widget_class: Type[Widget]) -> None:
         self._registry[widget_type] = widget_class

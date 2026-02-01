@@ -2,10 +2,11 @@ import pygame
 from src.ui.rendering.components.speed_gear_display import SpeedGearDisplay
 from src.ui.rendering.components.steering_indicator import SteeringIndicator
 from src.ui.rendering.components.indicator_bars import IndicatorBars
+from src.ui.rendering.components.card_background import CardBackground
 from src.core.infrastructure.config_manager import ConfigManager
 
 
-class DashboardCardRenderer:
+class InputCardRenderer:
     def __init__(self):
         config = ConfigManager()
         theme = config.get_theme("dashboard_card")
@@ -21,6 +22,16 @@ class DashboardCardRenderer:
         self._gradient_top_multiplier = theme.get("gradient_top_multiplier", 1.2)
         self._gradient_bottom_multiplier = theme.get("gradient_bottom_multiplier", 0.8)
         self._default_alpha = theme.get("default_alpha", 240)
+        
+        self.background = CardBackground(
+            border_radius=self._border_radius,
+            border_color=self._border_color,
+            mask_color=self._mask_color,
+            gradient_top_multiplier=self._gradient_top_multiplier,
+            gradient_bottom_multiplier=self._gradient_bottom_multiplier,
+            default_alpha=self._default_alpha
+        )
+
         self._speed_gear_left_margin = theme.get("speed_gear_left_margin", 10)
         self._speed_gear_horizontal_margin = theme.get("speed_gear_horizontal_margin", 20)
         self._bars_height = theme.get("bars_height", 90)
@@ -45,44 +56,7 @@ class DashboardCardRenderer:
         text_color: tuple,
         gear_color: tuple,
     ) -> None:
-        bg_surface = pygame.Surface((width, height), pygame.SRCALPHA)
-
-        temp_surface = pygame.Surface((width, height), pygame.SRCALPHA)
-
-        r, g, b = bg_color[0], bg_color[1], bg_color[2]
-
-        top_color = (
-            min(255, int(r * self._gradient_top_multiplier)),
-            min(255, int(g * self._gradient_top_multiplier)),
-            min(255, int(b * self._gradient_top_multiplier)),
-        )
-        bottom_color = (
-            int(r * self._gradient_bottom_multiplier),
-            int(g * self._gradient_bottom_multiplier),
-            int(b * self._gradient_bottom_multiplier),
-        )
-
-        alpha = bg_color[3] if len(bg_color) == 4 else self._default_alpha
-
-        for y_offset in range(height):
-            ratio = y_offset / height
-            r = int(top_color[0] * (1 - ratio) + bottom_color[0] * ratio)
-            g = int(top_color[1] * (1 - ratio) + bottom_color[1] * ratio)
-            b = int(top_color[2] * (1 - ratio) + bottom_color[2] * ratio)
-            pygame.draw.line(temp_surface, (r, g, b, alpha), (0, y_offset), (width, y_offset))
-
-        bg_surface.blit(temp_surface, (0, 0))
-        mask = pygame.Surface((width, height), pygame.SRCALPHA)
-        pygame.draw.rect(mask, self._mask_color, (0, 0, width, height), border_radius=self._border_radius)
-        bg_surface.blit(mask, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
-
-        border_surf = pygame.Surface((width, height), pygame.SRCALPHA)
-        pygame.draw.rect(
-            border_surf, self._border_color, (0, 0, width, height), width=1, border_radius=self._border_radius
-        )
-        bg_surface.blit(border_surf, (0, 0))
-
-        surface.blit(bg_surface, (position_x, position_y))
+        self.background.render(surface, position_x, position_y, width, height, bg_color)
 
         steering_cx = position_x + self._lateral_padding + self.steering.radius
         steering_cy = position_y + height // 2

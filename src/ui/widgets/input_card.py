@@ -5,7 +5,7 @@ from src.core.infrastructure.config_manager import ConfigManager
 from src.core.domain.constants import INITIAL_SPEED, INITIAL_STEERING, INITIAL_THROTTLE, INITIAL_BRAKE, KM_TO_MILES
 
 
-class DashboardCard(Widget):
+class InputCard(Widget):
     def __init__(self, position_x: int, position_y: int, width: int = None, height: int = None):
         config = ConfigManager()
         theme = config.get_theme("dashboard_card")
@@ -53,10 +53,10 @@ class DashboardCard(Widget):
         self.ffb_level = data.ffb_level
 
     def draw(self, surface: pygame.Surface) -> None:
-        from src.ui.rendering.dashboard_card_renderer import DashboardCardRenderer
+        from src.ui.rendering.input_card_renderer import InputCardRenderer
 
         if not hasattr(self, "_renderer"):
-            self._renderer = DashboardCardRenderer()
+            self._renderer = InputCardRenderer()
 
         current_bg_color = self.bg_color
         if hasattr(self, "_draggable") and self._draggable.is_dragging:
