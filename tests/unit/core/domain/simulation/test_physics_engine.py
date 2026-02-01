@@ -8,6 +8,25 @@ def test_physics_engine_lerp():
     assert engine._lerp(0, 10, -0.5) == 0.0 # Clamping
     assert engine._lerp(0, 10, 1.5) == 10.0 # Clamping
 
+def test_rpm_calculation_neutral_gear():
+    engine = PhysicsEngine()
+    engine.gear = 0
+    engine.speed = 100.0
+    
+    rpm = engine._calculate_realistic_rpm(engine.speed, engine.gear)
+    
+    assert rpm == PhysicsEngine.IDLE_RPM
+
+def test_rpm_calculation_reverse_gear():
+    engine = PhysicsEngine()
+    engine.gear = -1
+    engine.speed = 20.0
+    
+    rpm = engine._calculate_realistic_rpm(engine.speed, engine.gear)
+    
+    assert rpm >= PhysicsEngine.IDLE_RPM
+    assert rpm <= PhysicsEngine.MAX_RPM
+
 def test_physics_engine_corner_exit():
     engine = PhysicsEngine()
     segment = TrackSegment(5.0, 200.0, 100.0, 'CORNER_EXIT', 0.5)
