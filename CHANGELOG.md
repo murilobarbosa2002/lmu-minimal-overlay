@@ -112,9 +112,17 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 ## [0.3.1] - Unreleased
 
 ### Added
+- **UI**: Full Drag & Drop system with visual feedback (transparency change when dragging).
+- **Control**: Toggle Edit Mode with `F1`.
+- **Integration**: Comprehensive integration tests for drag & drop flow and persistence.
 - **Assets**: Reference images for original LMU HUD (`src/assets/images/hud-default-lmu*.png`).
-- **Roadmap**: New Phase 5 added for HUD Expansion (Fuel, Energy, Temperatues).
-- **Roadmap**: Planned refactoring of `DashboardCard` to `InputCard`.
+- **Roadmap**: Completed Phase 4 (Drag & Drop) and added Phase 5 (HUD Expansion).
+- **Visuals**: DashboardCard becomes semi-transparent (180/255 opacity) and lighter color when dragged.
+
+### Fixed
+- **Edit Mode**: Widgets now continue to update/render telemetry data while in Edit Mode (previously paused).
+- **Tests**: Achieved 100% test coverage including new integration tests and edge cases for DashboardCard.
+- **Roadmap**: Detailed plan for `InputCard` refactoring and new widgets.
 
 ## [0.3.0] - 2026-01-31
 

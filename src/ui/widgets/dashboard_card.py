@@ -42,6 +42,10 @@ class DashboardCard (Widget ):
         if not hasattr (self ,'_renderer'):
             self ._renderer =DashboardCardRenderer ()
 
+        current_bg_color = self.bg_color
+        if hasattr(self, '_draggable') and self._draggable.is_dragging:
+            current_bg_color = (60, 70, 80, 180)
+
         self ._renderer .render (
         surface =surface ,
         x =self .x ,
@@ -55,7 +59,7 @@ class DashboardCard (Widget ):
         throttle_pct =self .throttle_pct ,
         brake_pct =self .brake_pct ,
         ffb_level =self .ffb_level ,
-        bg_color =self .bg_color ,
+        bg_color =current_bg_color ,
         text_color =self .text_color ,
         gear_color =self .gear_color 
         )

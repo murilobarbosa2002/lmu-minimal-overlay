@@ -22,6 +22,13 @@ O projeto adota padrões rigorosos de qualidade de código e testes para garanti
 - Mocking extensivo para isolar unidades com `unittest.mock`.
 - Testes unitários focam em comportamento e estados.
 
+## Testes de Integração
+
+- Localizados em `tests/integration/`.
+- Testam fluxos completos (ex: App Init -> User Input -> State Change -> Persistence).
+- Focam na interação entre múltiplos componentes (App, ConfigManager, Widgets, Event Loop).
+- Devem ser mantidos junto com os testes unitários para garantir a estabilidade do sistema.
+
 ## Executando Testes
 
 ```bash

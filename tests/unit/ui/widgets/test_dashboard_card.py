@@ -143,14 +143,42 @@ def test_unit_conversion():
     
     dashboard_card.set_unit("mph")
     assert dashboard_card.unit == "mph"
+
+def test_mph_coverage_explicit():
+    dashboard_card = DashboardCard(0, 0)
+    dashboard_card.unit = "mph"
+    data = Mock()
+    data.speed = 100.0
+    data.gear = 1
+    data.steering_angle = 0
+    data.throttle_pct = 0
+    data.brake_pct = 0
+    data.ffb_level = 0
     
     dashboard_card.update(data)
-    # 100 km/h * 0.621371 = 62.1371 -> 62
     assert dashboard_card.speed == 62
+
+def test_draw_visual_feedback_dragging():
+    dashboard_card = DashboardCard(0, 0)
+    # Mock draggable to simulate dragging state
+    mock_draggable = Mock()
+    mock_draggable.is_dragging = True
+    dashboard_card._draggable = mock_draggable
+    
+    # Mock renderer to verify call args
+    mock_renderer = Mock()
+    dashboard_card._renderer = mock_renderer
+    
+    surface = Mock()
+    dashboard_card.draw(surface)
+    
+    # Verify bg_color was changed to feedback color (60, 70, 80, 180)
+    args = mock_renderer.render.call_args[1]
+    assert args['bg_color'] == (60, 70, 80, 180)
     
     # Test invalid unit
     dashboard_card.set_unit("invalid")
-    assert dashboard_card.unit == "mph"
+    assert dashboard_card.unit == "km/h"
 
 def test_drag_and_drop():
     dashboard_card = DashboardCard(0, 0, 400, 130)

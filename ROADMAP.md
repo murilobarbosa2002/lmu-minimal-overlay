@@ -162,25 +162,35 @@ Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado co
   - [x] Implementar captura de eventos (F1, F2, ESC)
   - [x] Implementar salvamento ao fechar
 
-- [ ] **Testes de Integração**
-  - [ ] Testar fluxo completo de dados
-  - [ ] Testar transições de estado
-  - [ ] Testar drag & drop
-  - [ ] Testar persistência de layout
+- [x] **Testes de Integração**
+  - [x] Testar fluxo completo de dados
+  - [x] Testar transições de estado
+  - [x] Testar drag & drop (F1 toggle, persistência)
+  - [x] Testar persistência de layout
 
-### 4.2 Drag & Drop System
+### 4.2 Drag & Drop System (Concluído)
 
-- [ ] **Implementação**
-  - [ ] Detectar clique em widget
-  - [ ] Implementar arrastar widget
-  - [ ] Implementar soltar widget
-  - [ ] Salvar nova posição
-  - [ ] Feedback visual durante drag
+- [x] **Implementação**
+  - [x] Detectar clique em widget
+  - [x] Implementar arrastar widget
+  - [x] Implementar soltar widget
+  - [x] Salvar nova posição
+  - [x] Feedback visual durante drag (transparência/cor)
 
-- [ ] **Testes**
-  - [ ] Testar detecção de colisão
-  - [ ] Testar movimento de widget
-  - [ ] Testar salvamento de posição
+- [x] **Testes**
+  - [x] Testar detecção de colisão
+  - [x] Testar movimento de widget
+  - [x] Testar salvamento de posição
+
+### 4.3 Expansão de Widgets
+- [ ] **Refatoração UI**
+  - [ ] Renomear `DashboardCard` para `InputCard`
+  - [ ] Renomear `DashboardCardRenderer` para `InputCardRenderer`
+  - [ ] Criar sistema de cards múltiplos
+- [ ] **Novos Widgets**
+  - [ ] **Fuel & Energy Card**: Barra de Combustível, Energia (ERS/Bateria)
+  - [ ] **Car Status Card**: Óleo, Água, Pneus (4x), Freios
+- [ ] **Integração Real**: Conectar novos widgets ao `TelemetryData`
 
 ---
 
@@ -413,16 +423,6 @@ Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado co
 ### Fase 4: Integração
 - **Progresso**: 75% (6/8 tarefas)
 - **Status**: 🟡 Em Progresso
-
-### Fase 5: Expansão de Widgets (Novo)
-- [ ] **Refatoração UI**
-  - [ ] Renomear `DashboardCard` para `InputCard`
-  - [ ] Renomear `DashboardCardRenderer` para `InputCardRenderer`
-  - [ ] Criar sistema de cards múltiplos
-- [ ] **Novos Widgets**
-  - [ ] **Fuel & Energy Card**: Barra de Combustível, Energia (ERS/Bateria)
-  - [ ] **Car Status Card**: Óleo, Água, Pneus (4x), Freios
-- [ ] **Integração Real**: Conectar novos widgets ao `TelemetryData`
 
 ### Fase 6: Produção (Anterior Fase 5)
 - **Progresso**: 30% (2/7 tarefas)

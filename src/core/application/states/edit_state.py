@@ -31,7 +31,8 @@ class EditState (IApplicationState ):
         return handled 
 
     def update (self ,data :TelemetryData )->None :
-        pass 
+        for widget in self .widgets :
+            widget .update (data ) 
 
     def draw (self ,surface :pygame .Surface )->None :
         for widget in self .widgets :
