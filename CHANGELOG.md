@@ -27,9 +27,25 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR
 - **Correção Linux**: Janela agora limpa com `(0,0,0,0)` (transparente) em vez de magenta, garantindo integração correta com compositores Linux.
 - **Startup Limpo**: Implementada inicialização **Off-Screen** (janela criada em `-32000, -32000`). Transparência e limpeza de buffer ocorrem invisivelmente, com reveal instantâneo apenas após estar pronto. Elimina 100% de artefatos visuais ou flashes pretos.
 
+#### **Refatoração Clean Code Completa** 🧹
+- **Eliminação Total de Magic Numbers**: 
+  - Criadas constantes em `src/core/domain/constants.py`: `DEFAULT_WINDOW_WIDTH`, `DEFAULT_WINDOW_HEIGHT`, `DEFAULT_WINDOW_FPS`, `DEFAULT_WINDOW_X`, `DEFAULT_WINDOW_Y`, `WINDOW_FLUSH_CYCLES`
+  - Todos valores hardcoded (`800`, `600`, `60`, `100`, `0.1`, `-32000`) substituídos por constantes nomeadas
+- **Nomenclatura Descritiva**:
+  - Renomeado `x`, `y` → `window_position_x`, `window_position_y` em `WindowManager`
+  - Renomeado `hwnd` → `window_handle` em handlers de transparência
+  - Parâmetros de métodos atualizados: `set_position(position_x, position_y)`
+- **Remoção de Debug**: Eliminados todos `logger.debug` e imports de logging do código de produção
+- **Formatação PEP8**: Aplicado `black` em 56 arquivos (1264 inserções, 818 deleções)
+- **Propagação de Mudanças**: 
+  - `src/core/app.py`: Atualizado `save_state()` para usar novos atributos
+  - `src/ui/platform/transparency_handler.py`: Assinaturas de métodos atualizadas
+  - Todos os testes (228) atualizados e passando
+
 #### **Qualidade Técnica** 🛠️
 - **Múltiplos Cards**: Arquitetura validada para suportar múltiplas instâncias de widgets simultaneamente.
-- **Cobertura**: Mantida **100% de cobertura** (224 testes) após todas as refatorações e correções.
+- **Cobertura**: Mantida **100% de cobertura** (228 testes) após todas as refatorações e correções.
+- **Commits Estruturados**: 5 commits semânticos seguindo Conventional Commits
 
 ---
 
