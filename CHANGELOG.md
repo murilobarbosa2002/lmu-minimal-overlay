@@ -109,6 +109,13 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 - Implementação de widgets básicos
 - Sistema de configuração
 
+## [0.3.1] - Unreleased
+
+### Added
+- **Assets**: Reference images for original LMU HUD (`src/assets/images/hud-default-lmu*.png`).
+- **Roadmap**: New Phase 5 added for HUD Expansion (Fuel, Energy, Temperatues).
+- **Roadmap**: Planned refactoring of `DashboardCard` to `InputCard`.
+
 ## [0.3.0] - 2026-01-31
 
 ### Added

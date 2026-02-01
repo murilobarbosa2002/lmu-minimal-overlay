@@ -414,11 +414,21 @@ Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado co
 - **Progresso**: 75% (6/8 tarefas)
 - **Status**: 🟡 Em Progresso
 
-### Fase 5: Produção
+### Fase 5: Expansão de Widgets (Novo)
+- [ ] **Refatoração UI**
+  - [ ] Renomear `DashboardCard` para `InputCard`
+  - [ ] Renomear `DashboardCardRenderer` para `InputCardRenderer`
+  - [ ] Criar sistema de cards múltiplos
+- [ ] **Novos Widgets**
+  - [ ] **Fuel & Energy Card**: Barra de Combustível, Energia (ERS/Bateria)
+  - [ ] **Car Status Card**: Óleo, Água, Pneus (4x), Freios
+- [ ] **Integração Real**: Conectar novos widgets ao `TelemetryData`
+
+### Fase 6: Produção (Anterior Fase 5)
 - **Progresso**: 30% (2/7 tarefas)
 - **Status**: 🟡 Em Progresso
 
-### Fase 6: Performance
+### Fase 7: Performance (Anterior Fase 6)
 - **Progresso**: 0% (0/7 tarefas)
 - **Status**: ⚪ Não Iniciado
 
