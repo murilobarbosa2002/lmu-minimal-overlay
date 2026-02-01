@@ -18,6 +18,8 @@ class DashboardCard (Widget ):
         
         self .speed = defaults.get("speed", 0.0)
         self .gear = defaults.get("gear", 0)
+        self .rpm = defaults.get("rpm", 0)
+        self .max_rpm = defaults.get("max_rpm", 8000)
         self .unit = defaults.get("unit", "km/h")
         self .steering_angle = defaults.get("steering_angle", 0.0)
         self .throttle_pct = defaults.get("throttle_pct", 0.0)
@@ -42,6 +44,8 @@ class DashboardCard (Widget ):
 
         self .speed =round (raw_speed )
         self .gear =data .gear 
+        self .rpm =data .rpm 
+        self .max_rpm =data .max_rpm 
         self .steering_angle =data .steering_angle 
         self .throttle_pct =data .throttle_pct 
         self .brake_pct =data .brake_pct 
@@ -66,6 +70,8 @@ class DashboardCard (Widget ):
         speed =self .speed ,
         gear =self .gear ,
         unit =self .unit ,
+        rpm =self .rpm ,
+        max_rpm =self .max_rpm ,
         steering_angle =self .steering_angle ,
         throttle_pct =self .throttle_pct ,
         brake_pct =self .brake_pct ,

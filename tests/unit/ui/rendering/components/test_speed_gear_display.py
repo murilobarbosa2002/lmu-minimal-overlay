@@ -24,6 +24,8 @@ class TestSpeedGearDisplay:
             speed=150.0,
             gear=5,
             unit="km/h",
+            rpm=6500,
+            max_rpm=8000,
             text_color=(255, 255, 255),
             gear_color=(255, 200, 0)
         )
@@ -38,6 +40,7 @@ class TestSpeedGearDisplay:
             surface=self.surface,
             x=50, y=20, width=200, height=130,
             speed=5.0, gear=-1, unit="km/h",
+            rpm=1500, max_rpm=8000,
             text_color=(255, 255, 255),
             gear_color=(255, 200, 0)
         )
@@ -48,6 +51,7 @@ class TestSpeedGearDisplay:
             surface=self.surface,
             x=50, y=20, width=200, height=130,
             speed=0.0, gear=0, unit="km/h",
+            rpm=1500, max_rpm=8000,
             text_color=(255, 255, 255),
             gear_color=(255, 200, 0)
         )
@@ -59,6 +63,7 @@ class TestSpeedGearDisplay:
             surface=self.surface,
             x=50, y=20, width=200, height=130,
             speed=100.0, gear=3, unit="km/h",
+            rpm=5000, max_rpm=8000,
             text_color=(255, 255, 255),
             gear_color=(255, 200, 0)
         )

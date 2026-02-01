@@ -3,19 +3,55 @@ from typing import Dict
 from src .core .domain .simulation .track_segment import TrackSegment 
 
 class PhysicsEngine :
+    GEAR_RATIOS = {
+        -1: -3.5,
+        0: 0.0,
+        1: 3.08,
+        2: 2.19,
+        3: 1.71,
+        4: 1.39,
+        5: 1.16,
+        6: 1.00
+    }
+    
+    FINAL_DRIVE = 3.5
+    WHEEL_CIRCUMFERENCE = 1.9
+    IDLE_RPM = 1500
+    MAX_RPM = 8000
+    REDLINE_RPM = 7800
+    UPSHIFT_RPM = 7410
+    DOWNSHIFT_RPM = 3120
+    
     def __init__ (self ):
         self .speed =0.0 
-        self .rpm =800.0 
+        self .rpm =self.IDLE_RPM
         self .gear =1 
         self .throttle =0.0 
         self .brake =0.0 
         self .steering =0.0 
         self .clutch =0.0 
-        self ._gear_ratios ={1 :10 ,2 :18 ,3 :26 ,4 :34 ,5 :44 ,6 :55 }
 
     def _lerp (self ,start :float ,end :float ,t :float )->float :
         t =max (0.0 ,min (1.0 ,t ))
         return start +(end -start )*t 
+    
+    def _calculate_realistic_rpm(self, speed_kmh: float, gear: int) -> int:
+        if gear == 0:
+            return self.IDLE_RPM
+        
+        if gear == -1:
+            speed_ms = abs(speed_kmh) / 3.6
+            gear_ratio = abs(self.GEAR_RATIOS[-1])
+        else:
+            speed_ms = speed_kmh / 3.6
+            gear_ratio = self.GEAR_RATIOS.get(gear, 1.0)
+        
+        if speed_ms < 0.1:
+            return self.IDLE_RPM
+        
+        rpm = (speed_ms * 60 / self.WHEEL_CIRCUMFERENCE) * gear_ratio * self.FINAL_DRIVE
+        
+        return int(max(self.IDLE_RPM, min(self.MAX_RPM, rpm)))
 
     def update (self ,dt :float ,segment :TrackSegment ,progress :float )->None :
         target_throttle =0.0 
@@ -89,15 +125,15 @@ class PhysicsEngine :
         self .speed +=(acceleration -deceleration -aero_drag )*dt 
         self .speed =max (0.0 ,self .speed )
 
-        target_rpm =(self .speed /self ._gear_ratios [self .gear ])*1000 
-
-        if target_rpm >7800 and self .gear <6 :
+        target_rpm = self._calculate_realistic_rpm(self.speed, self.gear)
+        
+        if target_rpm > self.UPSHIFT_RPM and self .gear <6 :
             self .gear +=1 
-            self .rpm =(self .speed /self ._gear_ratios [self .gear ])*1000 
-        elif target_rpm <3500 and self .gear >1 :
+            self .rpm = self._calculate_realistic_rpm(self.speed, self.gear)
+        elif target_rpm < self.DOWNSHIFT_RPM and self .gear >1 :
             self .gear -=1 
-            self .rpm =(self .speed /self ._gear_ratios [self .gear ])*1000 
+            self .rpm = self._calculate_realistic_rpm(self.speed, self.gear)
         else :
             self .rpm =target_rpm +(random .random ()*50 -25 )
 
-        self .rpm =max (800 ,min (8200 ,self .rpm ))
+        self .rpm =max (self.IDLE_RPM ,min (self.MAX_RPM ,self .rpm ))

@@ -29,6 +29,8 @@ class DashboardCardRenderer :
     speed :float ,
     gear :int ,
     unit :str ,
+    rpm :int ,
+    max_rpm :int ,
     steering_angle :float ,
     throttle_pct :float ,
     brake_pct :float ,
@@ -83,12 +85,24 @@ class DashboardCardRenderer :
 
         steering_right_edge =self._lateral_padding +self .steering .radius *2 
         bars_left_edge =width -self._lateral_padding -bars_total_width 
-        speed_x =x +steering_right_edge +10 
-        speed_width =bars_left_edge -steering_right_edge -20 
+        speed_gear_x =x +steering_right_edge +10 
+        speed_gear_w =bars_left_edge -steering_right_edge -20 
+        speed_gear_y =y
+        speed_gear_h =height
 
         self .speed_gear .render (
-        surface ,x ,y ,width ,height ,
-        speed ,gear ,unit ,text_color ,gear_color 
+        surface ,
+        speed_gear_x ,
+        speed_gear_y ,
+        speed_gear_w ,
+        speed_gear_h ,
+        speed ,
+        gear ,
+        unit ,
+        rpm ,
+        max_rpm ,
+        text_color ,
+        gear_color 
         )
 
         bars_y =y +(height -90 )//2 
