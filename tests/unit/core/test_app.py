@@ -199,8 +199,8 @@ class TestOverlayApp:
         app.setup()
         
         # Setup window props
-        app.window.x = 10
-        app.window.y = 20
+        app.window.window_position_x = 10
+        app.window.window_position_y = 20
         app.window.width = 1920
         app.window.height = 1080
         

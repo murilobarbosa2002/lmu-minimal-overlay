@@ -123,7 +123,7 @@ def test_window_init_windows_os(mock_pygame, mock_time):
         mock_win32gui.SetWindowPos.assert_has_calls([
             call(12345, 0, -32000, -32000, 0, 0, flags_move),
             call(12345, mock_win32con.HWND_TOPMOST, 0, 0, 0, 0, flags_transparency),
-            call(12345, 0, 0, 0, 0, 0, flags_move),
+            call(12345, 0, 100, 100, 0, 0, flags_move),
             call(12345, 0, 0, 0, 0, 0, flags_show)
         ])
         
@@ -200,8 +200,8 @@ def test_set_position():
     wm = WindowManager()
     wm.set_position(100, 200)
     
-    assert wm.x == 100
-    assert wm.y == 200
+    assert wm.window_position_x == 100
+    assert wm.window_position_y == 200
     import os
     assert os.environ['SDL_VIDEO_WINDOW_POS'] == "100,200"
 
