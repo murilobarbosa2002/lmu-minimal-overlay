@@ -182,9 +182,9 @@ def test_draw_visual_feedback_dragging():
     surface = Mock()
     input_card.draw(surface)
 
-    # Verify bg_color was changed to feedback color (0, 15, 60, 200)
+    # Verify bg_color was changed to feedback color (15, 25, 60, 180)
     args = mock_renderer.render.call_args.kwargs
-    assert args["bg_color"] == (0, 15, 60, 200)
+    assert args["bg_color"] == (15, 25, 60, 180)
 
     # Test invalid unit
     input_card.set_unit("invalid")
