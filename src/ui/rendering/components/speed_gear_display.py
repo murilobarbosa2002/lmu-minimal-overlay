@@ -30,7 +30,9 @@ class SpeedGearDisplay:
         text_color: tuple[int, int, int],
         gear_color: tuple[int, int, int],
     ) -> None:
-        if self.speed_surf is None or int(speed) != getattr(self, "_cached_speed", None):
+        if self.speed_surf is None or int(speed) != getattr(
+            self, "_cached_speed", None
+        ):
             speed_font = FontManager.get_font(size=48, bold=True)
             self.speed_surf = speed_font.render(str(int(speed)), True, text_color)
             self._cached_speed = int(speed)

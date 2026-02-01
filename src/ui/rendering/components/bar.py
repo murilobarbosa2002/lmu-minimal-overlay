@@ -4,7 +4,13 @@ from src.core.infrastructure.config_manager import ConfigManager
 
 
 class Bar:
-    def __init__(self, label: str, color: tuple[int, int, int], width: int = None, height: int = None):
+    def __init__(
+        self,
+        label: str,
+        color: tuple[int, int, int],
+        width: int = None,
+        height: int = None,
+    ):
         config = ConfigManager()
         theme = config.get_theme("bar")
 
@@ -24,7 +30,14 @@ class Bar:
     def set_bidirectional(self, enabled: bool) -> None:
         self.bidirectional = enabled
 
-    def render(self, surface: pygame.Surface, x: int, y: int, value: float, text_color: tuple[int, int, int]) -> None:
+    def render(
+        self,
+        surface: pygame.Surface,
+        x: int,
+        y: int,
+        value: float,
+        text_color: tuple[int, int, int],
+    ) -> None:
         if not self.bidirectional:
             value = max(0.0, min(1.0, value))
         else:
@@ -48,13 +61,19 @@ class Bar:
 
         bg_rect = pygame.Rect(x, bar_y, self.width, self.height)
 
-        pygame.draw.rect(surface, self._bg_color, bg_rect, border_radius=self._border_radius)
+        pygame.draw.rect(
+            surface, self._bg_color, bg_rect, border_radius=self._border_radius
+        )
 
         if not self.bidirectional:
             fill_height = int(self.height * value)
             if fill_height > 0:
-                fill_rect = pygame.Rect(x, bar_y + self.height - fill_height, self.width, fill_height)
-                pygame.draw.rect(surface, self.color, fill_rect, border_radius=self._border_radius)
+                fill_rect = pygame.Rect(
+                    x, bar_y + self.height - fill_height, self.width, fill_height
+                )
+                pygame.draw.rect(
+                    surface, self.color, fill_rect, border_radius=self._border_radius
+                )
         else:
             center_y = bar_y + (self.height // 2)
             half_height = self.height // 2
@@ -63,7 +82,9 @@ class Bar:
 
             if fill_height > 0:
                 if value > 0:
-                    fill_rect = pygame.Rect(x, center_y - fill_height, self.width, fill_height)
+                    fill_rect = pygame.Rect(
+                        x, center_y - fill_height, self.width, fill_height
+                    )
                 else:
                     fill_rect = pygame.Rect(x, center_y, self.width, fill_height)
 
@@ -73,6 +94,14 @@ class Bar:
                 b = 0
                 color = (r, g, b)
 
-                pygame.draw.rect(surface, color, fill_rect, border_radius=self._border_radius)
+                pygame.draw.rect(
+                    surface, color, fill_rect, border_radius=self._border_radius
+                )
 
-            pygame.draw.line(surface, self._centerline_color, (x, center_y), (x + self.width, center_y), 1)
+            pygame.draw.line(
+                surface,
+                self._centerline_color,
+                (x, center_y),
+                (x + self.width, center_y),
+                1,
+            )

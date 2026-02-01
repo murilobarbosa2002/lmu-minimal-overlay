@@ -9,14 +9,18 @@ class PygameFontProvider(IFontProvider):
     def __init__(self):
         self._fonts: dict[tuple[str, int, bool], pygame.font.Font] = {}
 
-    def get_font(self, size: int, bold: bool = False, font_name: Optional[str] = None) -> pygame.font.Font:
+    def get_font(
+        self, size: int, bold: bool = False, font_name: Optional[str] = None
+    ) -> pygame.font.Font:
         key = (font_name or "default", size, bold)
         if key not in self._fonts:
             if not pygame.font.get_init():
                 pygame.font.init()
 
             bold_suffix = "-Bold.ttf" if bold else "-Regular.ttf"
-            font_path = os.path.join(os.getcwd(), "assets", "fonts", f"Roboto{bold_suffix}")
+            font_path = os.path.join(
+                os.getcwd(), "assets", "fonts", f"Roboto{bold_suffix}"
+            )
 
             if os.path.exists(font_path):
                 try:

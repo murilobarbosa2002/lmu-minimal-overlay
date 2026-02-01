@@ -81,7 +81,9 @@ class OverlayApp:
         self.window.update_display()
 
     def save_state(self) -> None:
-        if hasattr(self.window, "window_position_x") and hasattr(self.window, "window_position_y"):
+        if hasattr(self.window, "window_position_x") and hasattr(
+            self.window, "window_position_y"
+        ):
             win_cfg = {
                 "x": self.window.window_position_x,
                 "y": self.window.window_position_y,

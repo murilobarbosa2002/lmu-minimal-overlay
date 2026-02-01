@@ -4,7 +4,12 @@ from typing import Any, Callable, Dict, Type
 
 class IDIContainer(ABC):
     @abstractmethod
-    def register(self, interface: Type, implementation: Callable[..., Any], singleton: bool = False) -> None:
+    def register(
+        self,
+        interface: Type,
+        implementation: Callable[..., Any],
+        singleton: bool = False,
+    ) -> None:
         pass
 
     @abstractmethod
@@ -22,7 +27,12 @@ class SimpleDIContainer(IDIContainer):
         self._singletons: Dict[Type, Any] = {}
         self._is_singleton: Dict[Type, bool] = {}
 
-    def register(self, interface: Type, implementation: Callable[..., Any], singleton: bool = False) -> None:
+    def register(
+        self,
+        interface: Type,
+        implementation: Callable[..., Any],
+        singleton: bool = False,
+    ) -> None:
         self._services[interface] = implementation
         self._is_singleton[interface] = singleton
 

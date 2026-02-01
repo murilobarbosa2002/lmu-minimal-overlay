@@ -4,13 +4,15 @@ from src.core.domain.normalize import (
     normalize_word,
     denormalize_byte,
     denormalize_word,
-    clamp
+    clamp,
 )
+
 
 def test_normalize_byte_valid():
     assert normalize_byte(0) == 0.0
     assert normalize_byte(127) == pytest.approx(0.498, abs=0.001)
     assert normalize_byte(255) == 1.0
+
 
 def test_normalize_byte_invalid():
     with pytest.raises(ValueError, match="value deve estar entre 0 e 255"):
@@ -18,10 +20,12 @@ def test_normalize_byte_invalid():
     with pytest.raises(ValueError, match="value deve estar entre 0 e 255"):
         normalize_byte(256)
 
+
 def test_normalize_word_valid():
     assert normalize_word(0) == 0.0
     assert normalize_word(32767) == pytest.approx(0.5, abs=0.001)
     assert normalize_word(65535) == 1.0
+
 
 def test_normalize_word_invalid():
     with pytest.raises(ValueError, match="value deve estar entre 0 e 65535"):
@@ -29,10 +33,12 @@ def test_normalize_word_invalid():
     with pytest.raises(ValueError, match="value deve estar entre 0 e 65535"):
         normalize_word(65536)
 
+
 def test_denormalize_byte_valid():
     assert denormalize_byte(0.0) == 0
     assert denormalize_byte(0.5) == 128
     assert denormalize_byte(1.0) == 255
+
 
 def test_denormalize_byte_invalid():
     with pytest.raises(ValueError, match="value deve estar entre 0.0 e 1.0"):
@@ -40,16 +46,19 @@ def test_denormalize_byte_invalid():
     with pytest.raises(ValueError, match="value deve estar entre 0.0 e 1.0"):
         denormalize_byte(1.1)
 
+
 def test_denormalize_word_valid():
     assert denormalize_word(0.0) == 0
     assert denormalize_word(0.5) == 32768
     assert denormalize_word(1.0) == 65535
+
 
 def test_denormalize_word_invalid():
     with pytest.raises(ValueError, match="value deve estar entre 0.0 e 1.0"):
         denormalize_word(-0.1)
     with pytest.raises(ValueError, match="value deve estar entre 0.0 e 1.0"):
         denormalize_word(1.1)
+
 
 def test_clamp():
     assert clamp(0.5, 0.0, 1.0) == 0.5
@@ -59,9 +68,11 @@ def test_clamp():
     assert clamp(-10, 0, 100) == 0
     assert clamp(150, 0, 100) == 100
 
+
 def test_clamp_invalid():
     with pytest.raises(ValueError, match="min_val deve ser menor ou igual a max_val"):
         clamp(0.5, 1.0, 0.0)
+
 
 def test_round_trip_byte():
     original = 127
@@ -69,11 +80,13 @@ def test_round_trip_byte():
     denormalized = denormalize_byte(normalized)
     assert denormalized == original
 
+
 def test_round_trip_word():
     original = 32767
     normalized = normalize_word(original)
     denormalized = denormalize_word(normalized)
     assert denormalized == original
+
 
 def test_normalize_edge_cases_types():
     """Test handling of invalid types"""
@@ -84,26 +97,31 @@ def test_normalize_edge_cases_types():
     with pytest.raises(TypeError):
         normalize_word(None)
 
+
 def test_denormalize_edge_cases_nan_inf():
     """Test handling of NaN and Inf"""
     import math
-    
+
     # NaN fails range check (NaN comparison is always False)
     with pytest.raises(ValueError, match="value deve estar entre 0.0 e 1.0"):
         denormalize_byte(math.nan)
-        
+
     with pytest.raises(ValueError, match="value deve estar entre 0.0 e 1.0"):
         denormalize_byte(math.inf)
-        
+
     with pytest.raises(ValueError, match="value deve estar entre 0.0 e 1.0"):
         denormalize_byte(-math.inf)
+
 
 def test_clamp_edge_cases():
     """Test clamp with edge values"""
     import math
-    assert clamp(math.nan, 0.0, 1.0) == 1.0 # max(0, min(1, nan)) -> max(0, nan) -> 0 or nan? Implementation dependent, let's verify behavior or fix implementation if needed. 
+
+    assert (
+        clamp(math.nan, 0.0, 1.0) == 1.0
+    )  # max(0, min(1, nan)) -> max(0, nan) -> 0 or nan? Implementation dependent, let's verify behavior or fix implementation if needed.
     # Actually min(1.0, nan) is nan. max(0.0, nan) is nan.
-    # So clamp(nan) usually returns nan. 
+    # So clamp(nan) usually returns nan.
     # If we want strict input validation, we might want to check expected behavior.
     # Python's min/max with NaN is tricky.
     pass

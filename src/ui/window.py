@@ -5,12 +5,21 @@ import logging
 import time
 from typing import Optional
 
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(
+    level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s"
+)
 logger = logging.getLogger(__name__)
+
 
 class IWindowManager:
     pass
-from src.ui.platform.transparency_handler import ITransparencyHandler, Win32TransparencyHandler, NullTransparencyHandler
+
+
+from src.ui.platform.transparency_handler import (
+    ITransparencyHandler,
+    Win32TransparencyHandler,
+    NullTransparencyHandler,
+)
 
 
 from src.core.domain.constants import (
@@ -24,15 +33,18 @@ from src.core.domain.constants import (
     DEFAULT_WINDOW_HEIGHT,
     DEFAULT_WINDOW_FPS,
     DEFAULT_WINDOW_X,
-    DEFAULT_WINDOW_Y
+    DEFAULT_WINDOW_Y,
 )
 
+
 class WindowManager(IWindowManager):
-    def __init__(self, 
-                 title: str = DEFAULT_WINDOW_TITLE, 
-                 width: int = DEFAULT_WINDOW_WIDTH, 
-                 height: int = DEFAULT_WINDOW_HEIGHT,
-                 transparency_handler: Optional[ITransparencyHandler] = None):
+    def __init__(
+        self,
+        title: str = DEFAULT_WINDOW_TITLE,
+        width: int = DEFAULT_WINDOW_WIDTH,
+        height: int = DEFAULT_WINDOW_HEIGHT,
+        transparency_handler: Optional[ITransparencyHandler] = None,
+    ):
 
         self.title = title
         self.width = width
@@ -46,10 +58,14 @@ class WindowManager(IWindowManager):
             self.transparency_handler = transparency_handler
         else:
             if sys.platform == PLATFORM_WIN32:
-                from src.ui.platform.transparency_handler import Win32TransparencyHandler
+                from src.ui.platform.transparency_handler import (
+                    Win32TransparencyHandler,
+                )
+
                 self.transparency_handler = Win32TransparencyHandler()
             else:
                 from src.ui.platform.transparency_handler import NullTransparencyHandler
+
                 self.transparency_handler = NullTransparencyHandler()
 
         self.window_position_x = DEFAULT_WINDOW_X
@@ -67,7 +83,9 @@ class WindowManager(IWindowManager):
             os.environ["SDL_VIDEO_WINDOW_ALWAYS_ON_TOP"] = "1"
         else:
             logger.debug(f"Setting {ENV_SDL_VIDEO_WINDOW_POS} to off-screen")
-            os.environ[ENV_SDL_VIDEO_WINDOW_POS] = f"{OFFSCREEN_COORD},{OFFSCREEN_COORD}"
+            os.environ[ENV_SDL_VIDEO_WINDOW_POS] = (
+                f"{OFFSCREEN_COORD},{OFFSCREEN_COORD}"
+            )
 
         logger.debug("Calling pygame.init()")
         pygame.init()
@@ -82,8 +100,12 @@ class WindowManager(IWindowManager):
 
         if sys.platform == PLATFORM_WIN32:
             window_handle = pygame.display.get_wm_info()["window"]
-            logger.debug(f"Window handle obtained: {window_handle}. Forcing off-screen...")
-            self.transparency_handler.set_window_pos(window_handle, OFFSCREEN_COORD, OFFSCREEN_COORD)
+            logger.debug(
+                f"Window handle obtained: {window_handle}. Forcing off-screen..."
+            )
+            self.transparency_handler.set_window_pos(
+                window_handle, OFFSCREEN_COORD, OFFSCREEN_COORD
+            )
 
             logger.debug("Applying transparency...")
             self.transparency_handler.apply_transparency(window_handle)
@@ -98,10 +120,14 @@ class WindowManager(IWindowManager):
         if sys.platform == PLATFORM_WIN32:
             logger.debug(f"Waiting {DWM_SYNC_DELAY}s for DWM to apply transparency...")
             time.sleep(DWM_SYNC_DELAY)
-            logger.debug(f"Moving window to visible position ({self.window_position_x}, {self.window_position_y}) and showing...")
+            logger.debug(
+                f"Moving window to visible position ({self.window_position_x}, {self.window_position_y}) and showing..."
+            )
 
             window_handle = pygame.display.get_wm_info()["window"]
-            self.transparency_handler.set_window_pos(window_handle, self.window_position_x, self.window_position_y)
+            self.transparency_handler.set_window_pos(
+                window_handle, self.window_position_x, self.window_position_y
+            )
             self.transparency_handler.show_window(window_handle)
 
         self.is_running = True

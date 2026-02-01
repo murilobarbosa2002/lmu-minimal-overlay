@@ -2,11 +2,19 @@ import pygame
 from src.ui.widgets.widget import Widget
 from src.core.domain.telemetry_data import TelemetryData
 from src.core.infrastructure.config_manager import ConfigManager
-from src.core.domain.constants import INITIAL_SPEED, INITIAL_STEERING, INITIAL_THROTTLE, INITIAL_BRAKE, KM_TO_MILES
+from src.core.domain.constants import (
+    INITIAL_SPEED,
+    INITIAL_STEERING,
+    INITIAL_THROTTLE,
+    INITIAL_BRAKE,
+    KM_TO_MILES,
+)
 
 
 class InputCard(Widget):
-    def __init__(self, position_x: int, position_y: int, width: int = None, height: int = None):
+    def __init__(
+        self, position_x: int, position_y: int, width: int = None, height: int = None
+    ):
         config = ConfigManager()
         theme = config.get_theme("dashboard_card")
         defaults = config.get_defaults("telemetry")

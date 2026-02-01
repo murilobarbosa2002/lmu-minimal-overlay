@@ -22,18 +22,20 @@ class InputCardRenderer:
         self._gradient_top_multiplier = theme.get("gradient_top_multiplier", 1.2)
         self._gradient_bottom_multiplier = theme.get("gradient_bottom_multiplier", 0.8)
         self._default_alpha = theme.get("default_alpha", 240)
-        
+
         self.background = CardBackground(
             border_radius=self._border_radius,
             border_color=self._border_color,
             mask_color=self._mask_color,
             gradient_top_multiplier=self._gradient_top_multiplier,
             gradient_bottom_multiplier=self._gradient_bottom_multiplier,
-            default_alpha=self._default_alpha
+            default_alpha=self._default_alpha,
         )
 
         self._speed_gear_left_margin = theme.get("speed_gear_left_margin", 10)
-        self._speed_gear_horizontal_margin = theme.get("speed_gear_horizontal_margin", 20)
+        self._speed_gear_horizontal_margin = theme.get(
+            "speed_gear_horizontal_margin", 20
+        )
         self._bars_height = theme.get("bars_height", 90)
 
     def render(
@@ -60,7 +62,9 @@ class InputCardRenderer:
 
         steering_cx = position_x + self._lateral_padding + self.steering.radius
         steering_cy = position_y + height // 2
-        self.steering.render(surface, steering_cx, steering_cy, steering_angle, text_color)
+        self.steering.render(
+            surface, steering_cx, steering_cy, steering_angle, text_color
+        )
 
         bars_total_width = self.bars.get_total_width()
         bars_x = position_x + width - self._lateral_padding - bars_total_width
@@ -68,7 +72,9 @@ class InputCardRenderer:
         steering_right_edge = self._lateral_padding + self.steering.radius * 2
         bars_left_edge = width - self._lateral_padding - bars_total_width
         speed_gear_x = position_x + steering_right_edge + self._speed_gear_left_margin
-        speed_gear_w = bars_left_edge - steering_right_edge - self._speed_gear_horizontal_margin
+        speed_gear_w = (
+            bars_left_edge - steering_right_edge - self._speed_gear_horizontal_margin
+        )
         speed_gear_y = position_y
         speed_gear_h = height
 
@@ -88,4 +94,6 @@ class InputCardRenderer:
         )
 
         bars_y = position_y + (height - self._bars_height) // 2
-        self.bars.render(surface, bars_x, bars_y, throttle_pct, brake_pct, ffb_level, text_color)
+        self.bars.render(
+            surface, bars_x, bars_y, throttle_pct, brake_pct, ffb_level, text_color
+        )

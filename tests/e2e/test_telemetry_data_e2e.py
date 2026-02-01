@@ -1,5 +1,6 @@
 from src.core.domain.telemetry_data import TelemetryData
 
+
 def test_telemetry_data_full_workflow():
     raw_data = {
         "speed": 150.0,
@@ -11,7 +12,7 @@ def test_telemetry_data_full_workflow():
         "clutch_pct": 0.0,
         "steering_angle": -180.0,
         "ffb_level": 0.8,
-        "timestamp": 1234567890.0
+        "timestamp": 1234567890.0,
     }
     data = TelemetryData(**raw_data)
     assert data.speed == 150.0

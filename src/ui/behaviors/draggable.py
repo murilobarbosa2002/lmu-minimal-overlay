@@ -13,7 +13,10 @@ class DraggableBehavior:
             rect = self.widget.get_rect()
             if rect.collidepoint(mouse_pos):
                 self.is_dragging = True
-                self.drag_offset = (self.widget.position_x - mouse_pos[0], self.widget.position_y - mouse_pos[1])
+                self.drag_offset = (
+                    self.widget.position_x - mouse_pos[0],
+                    self.widget.position_y - mouse_pos[1],
+                )
                 return True
         return False
 

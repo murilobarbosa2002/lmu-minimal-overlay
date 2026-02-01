@@ -1,6 +1,7 @@
 import pytest
 from src.core.domain.telemetry_data import TelemetryData
 
+
 def test_telemetry_data_creation():
     data = TelemetryData(
         speed=120.5,
@@ -12,11 +13,12 @@ def test_telemetry_data_creation():
         clutch_pct=0.0,
         steering_angle=45.0,
         ffb_level=0.5,
-        timestamp=1234567890.0
+        timestamp=1234567890.0,
     )
     assert data.speed == 120.5
     assert data.rpm == 6000
     assert data.gear == 3
+
 
 def test_telemetry_data_validation_throttle():
     with pytest.raises(ValueError, match="throttle_pct deve estar entre"):
@@ -30,8 +32,9 @@ def test_telemetry_data_validation_throttle():
             clutch_pct=0.0,
             steering_angle=0.0,
             ffb_level=0.0,
-            timestamp=0.0
+            timestamp=0.0,
         )
+
 
 def test_telemetry_data_validation_brake():
     with pytest.raises(ValueError, match="brake_pct deve estar entre"):
@@ -45,8 +48,9 @@ def test_telemetry_data_validation_brake():
             clutch_pct=0.0,
             steering_angle=0.0,
             ffb_level=0.0,
-            timestamp=0.0
+            timestamp=0.0,
         )
+
 
 def test_telemetry_data_validation_clutch():
     with pytest.raises(ValueError, match="clutch_pct deve estar entre"):
@@ -60,8 +64,9 @@ def test_telemetry_data_validation_clutch():
             clutch_pct=1.5,
             steering_angle=0.0,
             ffb_level=0.0,
-            timestamp=0.0
+            timestamp=0.0,
         )
+
 
 def test_telemetry_data_validation_steering():
     with pytest.raises(ValueError, match="steering_angle deve estar entre"):
@@ -75,8 +80,9 @@ def test_telemetry_data_validation_steering():
             clutch_pct=0.0,
             steering_angle=1000.0,
             ffb_level=0.0,
-            timestamp=0.0
+            timestamp=0.0,
         )
+
 
 def test_telemetry_data_str():
     data = TelemetryData(
@@ -89,7 +95,7 @@ def test_telemetry_data_str():
         clutch_pct=0.0,
         steering_angle=0.0,
         ffb_level=0.0,
-        timestamp=0.0
+        timestamp=0.0,
     )
     result = str(data)
     assert "speed=100.0" in result

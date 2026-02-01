@@ -27,4 +27,6 @@ class WidgetFactory:
         width = widget_data.get("width", 350)
         height = widget_data.get("height", 130)
 
-        return widget_class(position_x=position_x, position_y=position_y, width=width, height=height)
+        return widget_class(
+            position_x=position_x, position_y=position_y, width=width, height=height
+        )

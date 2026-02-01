@@ -15,17 +15,23 @@ def normalize_word(value: int) -> float:
 
 def denormalize_byte(value: float) -> int:
     if not NORMALIZED_MIN <= value <= NORMALIZED_MAX:
-        raise ValueError(f"value deve estar entre {NORMALIZED_MIN} e {NORMALIZED_MAX}, recebido: {value}")
+        raise ValueError(
+            f"value deve estar entre {NORMALIZED_MIN} e {NORMALIZED_MAX}, recebido: {value}"
+        )
     return round(value * BYTE_MAX)
 
 
 def denormalize_word(value: float) -> int:
     if not NORMALIZED_MIN <= value <= NORMALIZED_MAX:
-        raise ValueError(f"value deve estar entre {NORMALIZED_MIN} e {NORMALIZED_MAX}, recebido: {value}")
+        raise ValueError(
+            f"value deve estar entre {NORMALIZED_MIN} e {NORMALIZED_MAX}, recebido: {value}"
+        )
     return round(value * WORD_MAX)
 
 
 def clamp(value: float, min_val: float, max_val: float) -> float:
     if min_val > max_val:
-        raise ValueError(f"min_val deve ser menor ou igual a max_val, recebido: min={min_val}, max={max_val}")
+        raise ValueError(
+            f"min_val deve ser menor ou igual a max_val, recebido: min={min_val}, max={max_val}"
+        )
     return max(min_val, min(max_val, value))

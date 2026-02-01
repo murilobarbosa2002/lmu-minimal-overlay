@@ -8,15 +8,18 @@ from src.core.domain.telemetry_data import TelemetryData
 # Initialize font module for tests
 pygame.font.init()
 
+
 def test_font_manager_singleton_behavior():
     font1 = FontManager.get_font(20)
     font2 = FontManager.get_font(20)
     assert font1 is font2
 
+
 def test_font_manager_different_sizes():
     font1 = FontManager.get_font(20)
     font2 = FontManager.get_font(30)
     assert font1 is not font2
+
 
 def test_input_card_init():
     input_card = InputCard(position_x=10, position_y=10)
@@ -32,6 +35,7 @@ def test_input_card_init():
     assert input_card.brake_pct == 0.0
     assert input_card.ffb_level == 0.0
 
+
 def test_input_card_update():
     input_card = InputCard(position_x=10, position_y=10)
     data = TelemetryData(
@@ -44,9 +48,9 @@ def test_input_card_update():
         clutch_pct=0.0,
         steering_angle=45.0,
         ffb_level=0.6,
-        timestamp=0.0
+        timestamp=0.0,
     )
-    
+
     input_card.update(data)
     assert input_card.speed == 120
     assert input_card.gear == 4
@@ -55,10 +59,11 @@ def test_input_card_update():
     assert input_card.brake_pct == 0.0
     assert input_card.ffb_level == 0.6
 
+
 def test_input_card_draw():
     input_card = InputCard(position_x=10, position_y=10)
     surface = pygame.Surface((800, 600))
-    
+
     # Setup state
     data = TelemetryData(
         speed=180.0,
@@ -70,18 +75,19 @@ def test_input_card_draw():
         clutch_pct=0.0,
         steering_angle=90.0,
         ffb_level=0.8,
-        timestamp=1.0
+        timestamp=1.0,
     )
     input_card.update(data)
-    
+
     # Draw should not raise exception
     input_card.draw(surface)
     assert True
 
+
 def test_input_card_draw_special_gears():
     input_card = InputCard(position_x=10, position_y=10)
     surface = pygame.Surface((800, 600))
-    
+
     # Reverse
     data = TelemetryData(
         speed=5.0,
@@ -93,11 +99,11 @@ def test_input_card_draw_special_gears():
         clutch_pct=1.0,
         steering_angle=0.0,
         ffb_level=0.0,
-        timestamp=2.0
+        timestamp=2.0,
     )
     input_card.update(data)
     input_card.draw(surface)
-    
+
     # Neutral
     data2 = TelemetryData(
         speed=0.0,
@@ -109,11 +115,12 @@ def test_input_card_draw_special_gears():
         clutch_pct=1.0,
         steering_angle=0.0,
         ffb_level=0.0,
-        timestamp=3.0
+        timestamp=3.0,
     )
     input_card.update(data2)
     input_card.draw(surface)
     assert True
+
 
 def test_input_card_input():
     input_card = InputCard(position_x=10, position_y=10)
@@ -122,6 +129,7 @@ def test_input_card_input():
     result = input_card.handle_input(event)
     # Should return False for non-mouse events
     assert result is False
+
 
 def test_unit_conversion():
     input_card = InputCard(position_x=0, position_y=0)
@@ -135,14 +143,15 @@ def test_unit_conversion():
         clutch_pct=0.0,
         steering_angle=0.0,
         ffb_level=0.3,
-        timestamp=4.0
+        timestamp=4.0,
     )
-    
+
     input_card.update(data)
     assert input_card.speed == 100
-    
+
     input_card.set_unit("mph")
     assert input_card.unit == "mph"
+
 
 def test_mph_coverage_explicit():
     input_card = InputCard(position_x=0, position_y=0)
@@ -154,9 +163,10 @@ def test_mph_coverage_explicit():
     data.throttle_pct = 0
     data.brake_pct = 0
     data.ffb_level = 0
-    
+
     input_card.update(data)
     assert input_card.speed == 62
+
 
 def test_draw_visual_feedback_dragging():
     input_card = InputCard(position_x=0, position_y=0)
@@ -164,44 +174,53 @@ def test_draw_visual_feedback_dragging():
     mock_draggable = Mock()
     mock_draggable.is_dragging = True
     input_card._draggable = mock_draggable
-    
+
     # Mock renderer to verify call args
     mock_renderer = Mock()
     input_card._renderer = mock_renderer
-    
+
     surface = Mock()
     input_card.draw(surface)
-    
+
     # Verify bg_color was changed to feedback color (25, 35, 50, 180)
     args = mock_renderer.render.call_args[1]
-    assert args['bg_color'] == (25, 35, 50, 180)
-    
+    assert args["bg_color"] == (25, 35, 50, 180)
+
     # Test invalid unit
     input_card.set_unit("invalid")
     assert input_card.unit == "km/h"
 
+
 def test_drag_and_drop():
     input_card = InputCard(position_x=0, position_y=0, width=400, height=130)
-    
+
     # 1. Mouse Down (Hit)
-    event_down = pygame.event.Event(pygame.MOUSEBUTTONDOWN, {"pos": (50, 50), "button": 1})
+    event_down = pygame.event.Event(
+        pygame.MOUSEBUTTONDOWN, {"pos": (50, 50), "button": 1}
+    )
     assert input_card.handle_input(event_down) is True
-    
+
     # 2. Mouse Motion (Dragging - requires checking DraggableBehavior)
-    event_move = pygame.event.Event(pygame.MOUSEMOTION, {"pos": (60, 60), "buttons": (1, 0, 0)})
+    event_move = pygame.event.Event(
+        pygame.MOUSEMOTION, {"pos": (60, 60), "buttons": (1, 0, 0)}
+    )
     # This creates new DraggableBehavior each time, so drag state isn't preserved
     # We just verify it doesn't crash
     input_card.handle_input(event_move)
-    
+
     # 3. Mouse Up
     event_up = pygame.event.Event(pygame.MOUSEBUTTONUP, {"pos": (60, 60), "button": 1})
     input_card.handle_input(event_up)
     assert True
 
+
 def test_drag_miss():
     input_card = InputCard(position_x=0, position_y=0, width=400, height=130)
-    event_down = pygame.event.Event(pygame.MOUSEBUTTONDOWN, {"pos": (500, 500), "button": 1})
+    event_down = pygame.event.Event(
+        pygame.MOUSEBUTTONDOWN, {"pos": (500, 500), "button": 1}
+    )
     assert input_card.handle_input(event_down) is False
+
 
 def test_get_rect():
     input_card = InputCard(position_x=100, position_y=200, width=400, height=130)
@@ -210,6 +229,7 @@ def test_get_rect():
     assert rect.y == 200
     assert rect.width == 400
     assert rect.height == 130
+
 
 def test_set_position():
     input_card = InputCard(position_x=0, position_y=0)

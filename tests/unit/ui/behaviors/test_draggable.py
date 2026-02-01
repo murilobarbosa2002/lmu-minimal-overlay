@@ -21,9 +21,9 @@ class TestDraggableBehavior:
         event = Mock()
         event.button = 1
         event.pos = (110, 110)
-        
+
         result = self.behavior.handle_mouse_down(event)
-        
+
         assert result is True
         assert self.behavior.is_dragging is True
         assert self.behavior.drag_offset == (100 - 110, 100 - 110)
@@ -32,9 +32,9 @@ class TestDraggableBehavior:
         event = Mock()
         event.button = 1
         event.pos = (200, 200)
-        
+
         result = self.behavior.handle_mouse_down(event)
-        
+
         assert result is False
         assert self.behavior.is_dragging is False
 
@@ -42,43 +42,43 @@ class TestDraggableBehavior:
         event = Mock()
         event.button = 3
         event.pos = (110, 110)
-        
+
         result = self.behavior.handle_mouse_down(event)
-        
+
         assert result is False
         assert self.behavior.is_dragging is False
 
     def test_mouse_up_stops_dragging(self):
         self.behavior.is_dragging = True
-        
+
         event = Mock()
         event.button = 1
-        
+
         result = self.behavior.handle_mouse_up(event)
-        
+
         assert result is False
         assert self.behavior.is_dragging is False
 
     def test_mouse_motion_while_dragging(self):
         self.behavior.is_dragging = True
         self.behavior.drag_offset = (-10, -10)
-        
+
         event = Mock()
         event.pos = (150, 150)
-        
+
         result = self.behavior.handle_mouse_motion(event)
-        
+
         assert result is True
         self.mock_widget.set_position.assert_called_once_with(140, 140)
 
     def test_mouse_motion_not_dragging(self):
         self.behavior.is_dragging = False
-        
+
         event = Mock()
         event.pos = (150, 150)
-        
+
         result = self.behavior.handle_mouse_motion(event)
-        
+
         assert result is False
         self.mock_widget.set_position.assert_not_called()
 
@@ -87,9 +87,9 @@ class TestDraggableBehavior:
         event.type = pygame.MOUSEBUTTONDOWN
         event.button = 1
         event.pos = (110, 110)
-        
+
         result = self.behavior.handle_input(event)
-        
+
         assert result is True
         assert self.behavior.is_dragging is True
 
@@ -98,29 +98,29 @@ class TestDraggableBehavior:
         event = Mock()
         event.type = pygame.MOUSEBUTTONUP
         event.button = 1
-        
+
         result = self.behavior.handle_input(event)
-        
+
         assert result is False
         assert self.behavior.is_dragging is False
 
     def test_handle_input_mouse_motion(self):
         self.behavior.is_dragging = True
         self.behavior.drag_offset = (-10, -10)
-        
+
         event = Mock()
         event.type = pygame.MOUSEMOTION
         event.pos = (150, 150)
-        
+
         result = self.behavior.handle_input(event)
-        
+
         assert result is True
         self.mock_widget.set_position.assert_called_once_with(140, 140)
 
     def test_handle_input_other_event(self):
         event = Mock()
         event.type = pygame.KEYDOWN
-        
+
         result = self.behavior.handle_input(event)
-        
+
         assert result is False

@@ -25,21 +25,29 @@ class SteeringIndicator:
 
         img_path = "src/assets/images/wheel-mockup.png"
         if not os.path.exists(img_path):
-            base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+            base_dir = os.path.dirname(
+                os.path.dirname(
+                    os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+                )
+            )
             img_path = os.path.join(base_dir, "src/assets/images/wheel-mockup.png")
 
         if os.path.exists(img_path):
             try:
                 raw_img = pygame.image.load(img_path)
                 diameter = self.radius * 2
-                self.wheel_image = pygame.transform.smoothscale(raw_img, (diameter, diameter))
+                self.wheel_image = pygame.transform.smoothscale(
+                    raw_img, (diameter, diameter)
+                )
 
                 self._cached_angle = 0.0
                 self._cached_rotated_image = self.wheel_image.copy()
             except Exception:
                 pass
 
-    def _rotate_point(self, point: tuple[float, float], angle_deg: float, cx: int, cy: int) -> tuple[int, int]:
+    def _rotate_point(
+        self, point: tuple[float, float], angle_deg: float, cx: int, cy: int
+    ) -> tuple[int, int]:
         x, y = point
         tx = x
         ty = y
@@ -53,7 +61,14 @@ class SteeringIndicator:
 
         return int(cx + rx), int(cy + ry)
 
-    def render(self, surface: pygame.Surface, cx: int, cy: int, angle: float, color: tuple[int, int, int]) -> None:
+    def render(
+        self,
+        surface: pygame.Surface,
+        cx: int,
+        cy: int,
+        angle: float,
+        color: tuple[int, int, int],
+    ) -> None:
         if self.wheel_image:
             if (
                 self._cached_rotated_image is None
@@ -61,7 +76,9 @@ class SteeringIndicator:
                 or abs(angle - self._cached_angle) > self._angle_tolerance
             ):
 
-                self._cached_rotated_image = pygame.transform.rotozoom(self.wheel_image, -angle, 1.0)
+                self._cached_rotated_image = pygame.transform.rotozoom(
+                    self.wheel_image, -angle, 1.0
+                )
                 self._cached_angle = angle
 
             new_rect = self._cached_rotated_image.get_rect(center=(cx, cy))

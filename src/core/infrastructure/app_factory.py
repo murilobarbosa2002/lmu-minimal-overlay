@@ -16,19 +16,29 @@ class AppFactory:
     def create(use_mock_provider: bool = True) -> OverlayApp:
         container = SimpleDIContainer()
 
-        container.register(IFontProvider, lambda c: PygameFontProvider(), singleton=True)
+        container.register(
+            IFontProvider, lambda c: PygameFontProvider(), singleton=True
+        )
 
         container.register(
             IWindowManager,
             lambda c: WindowManager(
-                title=c.resolve(IConfigManager).get_config("window", {}).get("title", "LMU Telemetry Overlay"),
-                width=c.resolve(IConfigManager).get_config("window", {}).get("default_width", 1920),
-                height=c.resolve(IConfigManager).get_config("window", {}).get("default_height", 1080),
+                title=c.resolve(IConfigManager)
+                .get_config("window", {})
+                .get("title", "LMU Telemetry Overlay"),
+                width=c.resolve(IConfigManager)
+                .get_config("window", {})
+                .get("default_width", 1920),
+                height=c.resolve(IConfigManager)
+                .get_config("window", {})
+                .get("default_height", 1080),
             ),
             singleton=True,
         )
 
-        container.register(ITelemetryProvider, lambda c: MockTelemetryProvider(), singleton=True)
+        container.register(
+            ITelemetryProvider, lambda c: MockTelemetryProvider(), singleton=True
+        )
 
         container.register(IConfigManager, lambda c: ConfigManager(), singleton=True)
 

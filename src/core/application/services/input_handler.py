@@ -6,7 +6,9 @@ from src.ui.window import WindowManager
 
 
 class InputHandler:
-    def __init__(self, state_machine: StateMachine, window: WindowManager, widgets: list):
+    def __init__(
+        self, state_machine: StateMachine, window: WindowManager, widgets: list
+    ):
         self.state_machine = state_machine
         self.window = window
         self.widgets = widgets
@@ -28,4 +30,6 @@ class InputHandler:
         if isinstance(self.state_machine.current_state, RunningState):
             self.state_machine.change_state(EditState(self.state_machine, self.widgets))
         else:
-            self.state_machine.change_state(RunningState(self.state_machine, self.widgets))
+            self.state_machine.change_state(
+                RunningState(self.state_machine, self.widgets)
+            )

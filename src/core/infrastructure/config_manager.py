@@ -31,7 +31,11 @@ class ConfigManager(IConfigManager):
         self._default_config = {
             "version": "1.0.0",
             "update_interval_ms": 16,
-            "window": {"title": "LMU Telemetry Overlay", "default_width": 1920, "default_height": 1080},
+            "window": {
+                "title": "LMU Telemetry Overlay",
+                "default_width": 1920,
+                "default_height": 1080,
+            },
             "theme": {
                 "dashboard_card": {
                     "bg_color": [10, 20, 30, 242],
@@ -92,13 +96,23 @@ class ConfigManager(IConfigManager):
                     "unit": "km/h",
                 }
             },
-            "colors": {"ffb_normal": [0, 255, 0], "ffb_warning": [255, 255, 0], "ffb_clipping": [255, 0, 0]},
+            "colors": {
+                "ffb_normal": [0, 255, 0],
+                "ffb_warning": [255, 255, 0],
+                "ffb_clipping": [255, 0, 0],
+            },
             "thresholds": {"ffb_warning": 0.8, "ffb_clipping": 0.95},
             "performance": {"fps_target": 60},
         }
 
         self._default_layout = {
-            "window": {"x": 100, "y": 100, "width": 1920, "height": 200, "always_on_top": True},
+            "window": {
+                "x": 100,
+                "y": 100,
+                "width": 1920,
+                "height": 200,
+                "always_on_top": True,
+            },
             "widgets": [],
         }
 
