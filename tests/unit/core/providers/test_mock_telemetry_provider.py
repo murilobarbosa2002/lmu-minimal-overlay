@@ -36,7 +36,7 @@ def test_mock_provider_physics_acceleration():
     provider = MockTelemetryProvider()
     
     # Force a STRAIGHT segment
-    provider._segments = [TrackSegment(10.0, 300.0, 0.0, 'STRAIGHT', 0.0)]
+    provider._track = [TrackSegment(10.0, 300.0, 0.0, 'STRAIGHT', 0.0)]
     provider._segment_index = 0
     provider._segment_start_time = time.time()
     
@@ -48,7 +48,7 @@ def test_mock_provider_physics_acceleration():
     
     # Simulate 0.5s step
     time.sleep(0.01) # Ensure time diff
-    provider._physics.update(0.5, provider._segments[0], 0.1)
+    provider._physics.update(0.5, provider._track[0], 0.1)
     
     # Should have throttle and acceleration
     assert provider._physics.throttle > 0.0
@@ -60,7 +60,7 @@ def test_mock_provider_physics_braking():
     provider = MockTelemetryProvider()
     
     # Force a BRAKING segment (Entry into slow corner)
-    provider._segments = [TrackSegment(5.0, 60.0, 200.0, 'CORNER_ENTRY', 0.0)]
+    provider._track = [TrackSegment(5.0, 60.0, 200.0, 'CORNER_ENTRY', 0.0)]
     provider._segment_index = 0
     provider._segment_start_time = time.time()
     
@@ -71,7 +71,7 @@ def test_mock_provider_physics_braking():
     provider._last_update = time.time()
     
     # Simulate 0.5s step
-    provider._physics.update(0.5, provider._segments[0], 0.1)
+    provider._physics.update(0.5, provider._track[0], 0.1)
     
     # Should have brake and deceleration
     assert provider._physics.brake > 0.0
@@ -85,7 +85,7 @@ def test_mock_provider_steering_logic():
     
     # Force a CORNER segment
     curvature = 0.8
-    provider._segments = [TrackSegment(5.0, 100.0, 100.0, 'CORNER_MID', curvature)]
+    provider._track = [TrackSegment(5.0, 100.0, 100.0, 'CORNER_MID', curvature)]
     
     # Simulate flow
     current_time = time.time()
@@ -121,7 +121,7 @@ def test_mock_provider_track_looping():
     provider = MockTelemetryProvider()
     
     # Force 1 short segment
-    provider._segments = [TrackSegment(1.0, 100.0, 100.0, 'STRAIGHT', 0.0)]
+    provider._track = [TrackSegment(1.0, 100.0, 100.0, 'STRAIGHT', 0.0)]
     provider._segment_index = 0
     provider._segment_start_time = time.time() - 1.1 # Past duration
     

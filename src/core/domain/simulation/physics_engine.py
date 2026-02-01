@@ -3,6 +3,15 @@ from typing import Dict
 from src .core .domain .simulation .track_segment import TrackSegment 
 from src .core .domain .rpm_calculator import RPMCalculator
 from src .core .infrastructure .config_manager import ConfigManager
+from src.core.domain.constants import (
+    INITIAL_SPEED,
+    INITIAL_THROTTLE,
+    INITIAL_BRAKE,
+    INITIAL_STEERING,
+    INITIAL_CLUTCH,
+    LERP_MIN,
+    LERP_MAX
+)
 
 class PhysicsEngine :
     def __init__ (self, config: ConfigManager = None):
@@ -66,13 +75,13 @@ class PhysicsEngine :
         self.ACCELERATION_FACTOR = vehicle_dynamics.get("acceleration_factor", 20.0)
         self.DECELERATION_FACTOR = vehicle_dynamics.get("deceleration_factor", 45.0)
         
-        self .speed =0.0 
+        self .speed =INITIAL_SPEED
         self .rpm =self.IDLE_RPM
         self .gear =self.INITIAL_GEAR
-        self .throttle =0.0 
-        self .brake =0.0 
-        self .steering =0.0 
-        self .clutch =0.0 
+        self .throttle =INITIAL_THROTTLE
+        self .brake =INITIAL_BRAKE
+        self .steering =INITIAL_STEERING
+        self .clutch =INITIAL_CLUTCH 
         
         self._rpm_calculator = RPMCalculator(
             gear_ratios=self.GEAR_RATIOS,
@@ -83,32 +92,32 @@ class PhysicsEngine :
         )
 
     def _lerp (self ,start :float ,end :float ,t :float )->float :
-        t =max (0.0 ,min (1.0 ,t ))
+        t =max (LERP_MIN ,min (LERP_MAX ,t ))
         return start +(end -start )*t 
     
     def update (self ,dt :float ,segment :TrackSegment ,progress :float )->None :
-        target_throttle =0.0 
-        target_brake =0.0 
-        target_steering =0.0 
+        target_throttle =INITIAL_THROTTLE
+        target_brake =INITIAL_BRAKE
+        target_steering =INITIAL_STEERING
 
         if segment .type =='STRAIGHT':
-            target_throttle =1.0 
-            target_steering =0.0 
+            target_throttle =LERP_MAX
+            target_steering =INITIAL_STEERING 
 
         elif segment .type =='CORNER_ENTRY':
             speed_diff =self .speed -segment .target_speed 
             brake_intensity =min (1.0 ,speed_diff /self.BRAKE_SENSITIVITY )
-            target_brake =brake_intensity if speed_diff >0 else 0.0 
+            target_brake =brake_intensity if speed_diff >0 else INITIAL_BRAKE 
             target_steering =segment .curvature *(progress *self.STEERING_ENTRY_FACTOR )
 
         elif segment .type =='CORNER_MID':
-            target_throttle =self.PARTIAL_THROTTLE if progress >self.THROTTLE_APPLICATION_POINT else 0.0 
-            target_brake =max (0.0 ,self.TRAIL_BRAKE_INTENSITY *(1.0 -progress *self.BRAKE_DECAY_RATE ))
+            target_throttle =self.PARTIAL_THROTTLE if progress >self.THROTTLE_APPLICATION_POINT else INITIAL_THROTTLE 
+            target_brake =max (INITIAL_BRAKE ,self.TRAIL_BRAKE_INTENSITY *(LERP_MAX -progress *self.BRAKE_DECAY_RATE ))
             target_steering =segment .curvature 
 
         elif segment .type =='CORNER_EXIT':
             target_throttle =self ._lerp (self.MIN_THROTTLE_EXIT ,self.MAX_THROTTLE_EXIT ,progress )
-            target_steering =self ._lerp (segment .curvature ,0.0 ,progress )
+            target_steering =self ._lerp (segment .curvature ,INITIAL_STEERING ,progress )
 
         throttle_speed =self.THROTTLE_SPEED *dt 
         brake_speed =self.BRAKE_SPEED *dt 
@@ -126,7 +135,7 @@ class PhysicsEngine :
 
         raw_target = target_steering
 
-        micro_correction = 0.0
+        micro_correction = INITIAL_STEERING
         if self.speed > self.JITTER_SPEED_THRESHOLD and abs(self.steering) > self.JITTER_ANGLE_THRESHOLD:
             load_factor = abs(self.steering) * (self.speed / self.JITTER_SPEED_FACTOR)
             intensity = self.JITTER_INTENSITY * min(1.0, load_factor)
@@ -145,18 +154,18 @@ class PhysicsEngine :
 
         aero_drag =self.AERO_DRAG_COEFFICIENT *self .speed 
 
-        torque =0.0 
+        torque =INITIAL_THROTTLE 
         if self.TORQUE_RPM_MIN <self .rpm <self.TORQUE_RPM_MAX :
             torque =self.TORQUE_PEAK 
         else :
             torque =self.TORQUE_OFF_PEAK 
 
-        gear_ratio =1.0 /(self .gear *self.GEAR_RATIO_DIVISOR )
+        gear_ratio =LERP_MAX /(self .gear *self.GEAR_RATIO_DIVISOR )
         acceleration =self .throttle *self.ACCELERATION_FACTOR *torque *gear_ratio 
         deceleration =self .brake *self.DECELERATION_FACTOR 
 
         self .speed +=(acceleration -deceleration -aero_drag )*dt 
-        self .speed =max (0.0 ,self .speed )
+        self .speed =max (INITIAL_SPEED ,self .speed )
 
         target_rpm = self._rpm_calculator.calculate(self.speed, self.gear)
         

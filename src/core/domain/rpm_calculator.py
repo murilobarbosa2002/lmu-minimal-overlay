@@ -1,3 +1,11 @@
+from src.core.domain.constants import (
+    KMH_TO_MS,
+    SECONDS_TO_MINUTES,
+    MINIMUM_SPEED_THRESHOLD,
+    DEFAULT_GEAR_RATIO
+)
+
+
 class RPMCalculator:
     def __init__(
         self,
@@ -18,15 +26,15 @@ class RPMCalculator:
             return self._idle_rpm
         
         if gear == -1:
-            speed_ms = abs(speed_kmh) / 3.6
+            speed_ms = abs(speed_kmh) / KMH_TO_MS
             gear_ratio = abs(self._gear_ratios[-1])
         else:
-            speed_ms = speed_kmh / 3.6
-            gear_ratio = self._gear_ratios.get(gear, 1.0)
+            speed_ms = speed_kmh / KMH_TO_MS
+            gear_ratio = self._gear_ratios.get(gear, DEFAULT_GEAR_RATIO)
         
-        if speed_ms < 0.1:
+        if speed_ms < MINIMUM_SPEED_THRESHOLD:
             return self._idle_rpm
         
-        rpm = (speed_ms * 60 / self._wheel_circumference) * gear_ratio * self._final_drive
+        rpm = (speed_ms * SECONDS_TO_MINUTES / self._wheel_circumference) * gear_ratio * self._final_drive
         
         return int(max(self._idle_rpm, min(self._max_rpm, rpm)))

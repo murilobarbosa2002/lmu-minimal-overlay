@@ -1,7 +1,15 @@
-import pygame 
-from src .ui .widgets .widget import Widget 
-from src.core.infrastructure.config_manager import ConfigManager
-from src .core .domain .telemetry_data import TelemetryData 
+import pygame
+from src .ui .widgets .widget import Widget
+from src .ui .rendering .dashboard_card_renderer import DashboardCardRenderer
+from src .core .domain .telemetry_data import TelemetryData
+from src .core .infrastructure .config_manager import ConfigManager
+from src.core.domain.constants import (
+    INITIAL_SPEED,
+    INITIAL_STEERING,
+    INITIAL_THROTTLE,
+    INITIAL_BRAKE,
+    KM_TO_MILES
+)
 
 
 class DashboardCard (Widget ):
@@ -9,23 +17,23 @@ class DashboardCard (Widget ):
         config = ConfigManager()
         theme = config.get_theme("dashboard_card")
         defaults = config.get_defaults("telemetry")
-        
-        self .x =x 
-        self .y =y 
+
+        self .x =x
+        self .y =y
         self .width = width if width is not None else theme.get("width", 350)
         self .height = height if height is not None else theme.get("height", 130)
         super ().__init__ (self.x ,self.y ,self.width ,self.height )
-        
-        self .speed = defaults.get("speed", 0.0)
-        self .gear = defaults.get("gear", 0)
-        self .rpm = defaults.get("rpm", 0)
+
+        self .speed = defaults.get("speed", INITIAL_SPEED)
+        self .gear = defaults.get("gear", 1)
+        self .rpm = defaults.get("rpm", 1500)
         self .max_rpm = defaults.get("max_rpm", 8000)
         self .unit = defaults.get("unit", "km/h")
-        self .steering_angle = defaults.get("steering_angle", 0.0)
-        self .throttle_pct = defaults.get("throttle_pct", 0.0)
-        self .brake_pct = defaults.get("brake_pct", 0.0)
-        self .ffb_level = defaults.get("ffb_level", 0.0)
-        self .is_dragging =False 
+        self .steering_angle = defaults.get("steering_angle", INITIAL_STEERING)
+        self .throttle_pct = defaults.get("throttle_pct", INITIAL_THROTTLE)
+        self .brake_pct = defaults.get("brake_pct", INITIAL_BRAKE)
+        self .ffb_level = defaults.get("ffb_level", INITIAL_THROTTLE)
+        self .is_dragging =False
         self .drag_offset =(0 ,0 )
 
         self .bg_color = tuple(theme.get("bg_color", [10, 20, 30, 242]))
@@ -40,7 +48,7 @@ class DashboardCard (Widget ):
     def update (self ,data :TelemetryData )->None :
         raw_speed =data .speed 
         if self .unit =="mph":
-            raw_speed *=0.621371 
+            raw_speed *=KM_TO_MILES 
 
         self .speed =round (raw_speed )
         self .gear =data .gear 

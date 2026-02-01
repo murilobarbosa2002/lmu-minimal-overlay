@@ -1,25 +1,37 @@
 import time 
-import random 
-from dataclasses import replace 
-from src .core .providers .i_telemetry_provider import ITelemetryProvider 
-from src .core .domain .telemetry_data import TelemetryData 
-from src .core .domain .simulation .physics_engine import PhysicsEngine 
-from src .core .domain .simulation .track_generator import TrackGenerator 
+import time
+import random
+from dataclasses import replace
+from src .core .providers .i_telemetry_provider import ITelemetryProvider
+from src .core .domain .telemetry_data import TelemetryData
+from src .core .domain .simulation .physics_engine import PhysicsEngine
+from src .core .domain .simulation .track_generator import TrackGenerator
 from src.core.infrastructure.config_manager import ConfigManager
+from src.core.domain.constants import (
+    INITIAL_INDEX,
+    INITIAL_PROGRESS,
+    INITIAL_TIMESTAMP,
+    LERP_MAX
+)
 
 
 class MockTelemetryProvider (ITelemetryProvider ):
-    def __init__ (self ):
+    def __init__ (self, config: ConfigManager = None):
         self ._start_time =time .time ()
         self ._last_update =time .time ()
 
-        self ._physics =PhysicsEngine ()
-        self ._segments =TrackGenerator .generate_track ()
+        config = config or ConfigManager()
+        conversion_config = config.get_config("conversion", {})
+        self._steering_degrees_full_lock = conversion_config.get("steering_degrees_full_lock", 540.0)
+        self._lateral_g_speed_divisor = conversion_config.get("lateral_g_speed_divisor", 100.0)
 
-        self ._segment_index =0 
+        self ._physics =PhysicsEngine (config)
+        self ._track =TrackGenerator .generate_track ()
+
+        self ._segment_index =INITIAL_INDEX
+        self ._segment_progress =INITIAL_PROGRESS
         self ._segment_start_time =time .time ()
 
-        config = ConfigManager()
         defaults = config.get_defaults("telemetry")
 
         self .data =TelemetryData (
@@ -32,7 +44,7 @@ class MockTelemetryProvider (ITelemetryProvider ):
         clutch_pct =defaults.get("clutch_pct", 0.0),
         steering_angle =defaults.get("steering_angle", 0.0),
         ffb_level =defaults.get("ffb_level", 0.0),
-        timestamp =0.0 
+        timestamp =INITIAL_TIMESTAMP 
         )
 
     def _update_data (self )->None :
@@ -40,15 +52,15 @@ class MockTelemetryProvider (ITelemetryProvider ):
         dt =current_time -self ._last_update 
         self ._last_update =current_time 
 
-        segment =self ._segments [self ._segment_index ]
+        segment =self ._track [self ._segment_index ]
         segment_elapsed =current_time -self ._segment_start_time 
         progress =segment_elapsed /segment .duration 
 
-        if progress >=1.0 :
-            self ._segment_index =(self ._segment_index +1 )%len (self ._segments )
+        if progress >=LERP_MAX:
+            self ._segment_index =(self ._segment_index +1 )%len (self ._track )
             self ._segment_start_time =current_time 
-            segment =self ._segments [self ._segment_index ]
-            progress =0.0 
+            segment =self ._track [self ._segment_index ]
+            progress =INITIAL_PROGRESS 
 
         self ._physics .update (dt ,segment ,progress )
 
@@ -57,9 +69,9 @@ class MockTelemetryProvider (ITelemetryProvider ):
         self .data .gear =self ._physics .gear 
         self .data .throttle_pct =self ._physics .throttle 
         self .data .brake_pct =self ._physics .brake 
-        self .data .steering_angle =self ._physics .steering *540.0 
+        self .data .steering_angle =self ._physics .steering *self._steering_degrees_full_lock 
 
-        lateral_g = self._physics.steering * (self._physics.speed / 100.0)
+        lateral_g = self._physics.steering * (self._physics.speed / self._lateral_g_speed_divisor)
         
         road_noise = random.uniform(-0.05, 0.05)
         if 'CORNER' in segment.type:
