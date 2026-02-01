@@ -78,7 +78,22 @@ class TestEditState:
         state.draw(surface)
             
         widget.draw.assert_called_with(surface)
+        widget.draw.assert_called_with(surface)
+        
+        # Verify premium visuals
         mock_draw_rect.assert_called_once()
+        args = mock_draw_rect.call_args
+        
+        # Color should be Cyan (0, 255, 255)
+        assert args[0][1] == (0, 255, 255)
+        
+        # Rect should be inflated (0,0,100,100) -> (-5,-5,110,110) due to inflate(10,10)
+        drawn_rect = args[0][2]
+        assert drawn_rect.width == 110
+        assert drawn_rect.height == 110
+        
+        # Border radius should be 8
+        assert args[1]['border_radius'] == 8
 
     def test_update_propagates_data_to_widgets(self):
         context = Mock()

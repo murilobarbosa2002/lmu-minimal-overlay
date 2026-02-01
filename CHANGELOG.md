@@ -117,7 +117,9 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 - **Integration**: Comprehensive integration tests for drag & drop flow and persistence.
 - **Assets**: Reference images for original LMU HUD (`src/assets/images/hud-default-lmu*.png`).
 - **Roadmap**: Completed Phase 4 (Drag & Drop) and added Phase 5 (HUD Expansion).
-- **Visuals**: DashboardCard becomes semi-transparent (180/255 opacity) and lighter color when dragged.
+- **Visuals**: Premium editing visuals:
+  - **Selection**: Cyan rounded border with padding (8px radius, 5px gap).
+  - **Dragging**: Card becomes semi-transparent (180/255 opacity).
 
 ### Fixed
 - **Edit Mode**: Widgets now continue to update/render telemetry data while in Edit Mode (previously paused).

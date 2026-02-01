@@ -39,4 +39,6 @@ class EditState (IApplicationState ):
             widget .draw (surface )
 
         if self .selected_widget :
-            pygame .draw .rect (surface ,(255 ,0 ,0 ),self .selected_widget .get_rect (),2 )
+            rect = self.selected_widget.get_rect()
+            selection_rect = rect.inflate(10, 10)
+            pygame .draw .rect (surface ,(0 ,255 ,255 ),selection_rect ,2 ,border_radius =8 )
