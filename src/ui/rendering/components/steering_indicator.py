@@ -11,6 +11,10 @@ class SteeringIndicator :
         self .radius = radius if radius is not None else theme.get("radius", 30)
         self .wheel_image =None
         
+        self._cached_angle = None
+        self._cached_rotated_image = None
+        self._angle_tolerance = theme.get("angle_tolerance", 0.5)
+        
         self._color_rim = tuple(theme.get("color_rim", [30, 30, 30]))
         self._color_marker = tuple(theme.get("color_marker", [255, 200, 0]))
         self._color_center = tuple(theme.get("color_center", [50, 50, 50]))
@@ -56,9 +60,15 @@ class SteeringIndicator :
     color :tuple [int ,int ,int ]
     )->None :
         if self.wheel_image:
-            rotated_img = pygame.transform.rotozoom(self.wheel_image, -angle, 1.0)
-            new_rect = rotated_img.get_rect(center=(cx, cy))
-            surface.blit(rotated_img, new_rect)
+            if (self._cached_rotated_image is None or 
+                self._cached_angle is None or 
+                abs(angle - self._cached_angle) > self._angle_tolerance):
+                
+                self._cached_rotated_image = pygame.transform.rotozoom(self.wheel_image, -angle, 1.0)
+                self._cached_angle = angle
+            
+            new_rect = self._cached_rotated_image.get_rect(center=(cx, cy))
+            surface.blit(self._cached_rotated_image, new_rect)
             return
 
         r = self.radius

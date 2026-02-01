@@ -31,7 +31,8 @@
       "color_center": [50, 50, 50],
       "tick_start": 30,
       "tick_end": 150,
-      "tick_step": 10
+      "tick_step": 10,
+      "angle_tolerance": 0.5
     },
     
     "bar": {
