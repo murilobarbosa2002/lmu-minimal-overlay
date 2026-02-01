@@ -1,4 +1,19 @@
 import pygame
+from src.core.domain.constants import (
+    MAX_COLOR_VALUE,
+    MIN_COLOR_VALUE,
+    ALPHA_CHANNEL_INDEX,
+    RED_CHANNEL_INDEX,
+    GREEN_CHANNEL_INDEX,
+    BLUE_CHANNEL_INDEX,
+    RGBA_TUPLE_LENGTH,
+    ALPHA_THRESHOLD_FOR_MASKING,
+    FULL_ALPHA,
+    TRANSPARENT_ALPHA,
+    MASK_WHITE_COLOR,
+    TRANSPARENT_COLOR,
+    BORDER_WIDTH,
+)
 
 
 class CardBackground:
@@ -28,62 +43,85 @@ class CardBackground:
         bg_surface = pygame.Surface((width, height), pygame.SRCALPHA)
         temp_surface = pygame.Surface((width, height), pygame.SRCALPHA)
 
-        r, g, b = bg_color[0], bg_color[1], bg_color[2]
+        red = bg_color[RED_CHANNEL_INDEX]
+        green = bg_color[GREEN_CHANNEL_INDEX]
+        blue = bg_color[BLUE_CHANNEL_INDEX]
 
         top_color = (
-            min(255, int(r * self._gradient_top_multiplier)),
-            min(255, int(g * self._gradient_top_multiplier)),
-            min(255, int(b * self._gradient_top_multiplier)),
+            min(MAX_COLOR_VALUE, int(red * self._gradient_top_multiplier)),
+            min(MAX_COLOR_VALUE, int(green * self._gradient_top_multiplier)),
+            min(MAX_COLOR_VALUE, int(blue * self._gradient_top_multiplier)),
         )
         bottom_color = (
-            int(r * self._gradient_bottom_multiplier),
-            int(g * self._gradient_bottom_multiplier),
-            int(b * self._gradient_bottom_multiplier),
+            int(red * self._gradient_bottom_multiplier),
+            int(green * self._gradient_bottom_multiplier),
+            int(blue * self._gradient_bottom_multiplier),
         )
 
-        alpha = bg_color[3] if len(bg_color) == 4 else self._default_alpha
+        alpha = (
+            bg_color[ALPHA_CHANNEL_INDEX]
+            if len(bg_color) == RGBA_TUPLE_LENGTH
+            else self._default_alpha
+        )
 
         for y_offset in range(height):
-            ratio = y_offset / height
-            r_curr = int(top_color[0] * (1 - ratio) + bottom_color[0] * ratio)
-            g_curr = int(top_color[1] * (1 - ratio) + bottom_color[1] * ratio)
-            b_curr = int(top_color[2] * (1 - ratio) + bottom_color[2] * ratio)
+            gradient_ratio = y_offset / height
+            current_red = int(
+                top_color[RED_CHANNEL_INDEX] * (1 - gradient_ratio)
+                + bottom_color[RED_CHANNEL_INDEX] * gradient_ratio
+            )
+            current_green = int(
+                top_color[GREEN_CHANNEL_INDEX] * (1 - gradient_ratio)
+                + bottom_color[GREEN_CHANNEL_INDEX] * gradient_ratio
+            )
+            current_blue = int(
+                top_color[BLUE_CHANNEL_INDEX] * (1 - gradient_ratio)
+                + bottom_color[BLUE_CHANNEL_INDEX] * gradient_ratio
+            )
             pygame.draw.line(
                 temp_surface,
-                (r_curr, g_curr, b_curr, alpha),
-                (0, y_offset),
+                (current_red, current_green, current_blue, alpha),
+                (MIN_COLOR_VALUE, y_offset),
                 (width, y_offset),
             )
 
-        bg_surface.blit(temp_surface, (0, 0))
+        bg_surface.blit(temp_surface, (MIN_COLOR_VALUE, MIN_COLOR_VALUE))
 
         mask = pygame.Surface((width, height), pygame.SRCALPHA)
-        mask.fill((0, 0, 0, 0))
+        mask.fill(TRANSPARENT_COLOR)
         pygame.draw.rect(
             mask,
-            (255, 255, 255, 255),
-            (0, 0, width, height),
+            MASK_WHITE_COLOR,
+            (MIN_COLOR_VALUE, MIN_COLOR_VALUE, width, height),
             border_radius=self._border_radius,
         )
 
         final_surface = pygame.Surface((width, height), pygame.SRCALPHA)
-        final_surface.fill((0, 0, 0, 0))
+        final_surface.fill(TRANSPARENT_COLOR)
 
-        for y in range(height):
-            for x in range(width):
-                mask_alpha = mask.get_at((x, y))[3]
-                if mask_alpha > 128:
-                    pixel = bg_surface.get_at((x, y))
-                    final_surface.set_at((x, y), (pixel[0], pixel[1], pixel[2], 255))
+        for y_position in range(height):
+            for x_position in range(width):
+                mask_alpha = mask.get_at((x_position, y_position))[ALPHA_CHANNEL_INDEX]
+                if mask_alpha > ALPHA_THRESHOLD_FOR_MASKING:
+                    pixel = bg_surface.get_at((x_position, y_position))
+                    final_surface.set_at(
+                        (x_position, y_position),
+                        (
+                            pixel[RED_CHANNEL_INDEX],
+                            pixel[GREEN_CHANNEL_INDEX],
+                            pixel[BLUE_CHANNEL_INDEX],
+                            FULL_ALPHA,
+                        ),
+                    )
 
         border_surf = pygame.Surface((width, height), pygame.SRCALPHA)
         pygame.draw.rect(
             border_surf,
             self._border_color,
-            (0, 0, width, height),
-            width=1,
+            (MIN_COLOR_VALUE, MIN_COLOR_VALUE, width, height),
+            width=BORDER_WIDTH,
             border_radius=self._border_radius,
         )
-        final_surface.blit(border_surf, (0, 0))
+        final_surface.blit(border_surf, (MIN_COLOR_VALUE, MIN_COLOR_VALUE))
 
         surface.blit(final_surface, (position_x, position_y))
