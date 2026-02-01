@@ -225,7 +225,7 @@ Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado co
   - [x] Transições de transparência suaves ao arrastar
 
 ### 4.4 Expansão de Widgets
-- [ ] **Refatoração UI**
+- [x] **Refatoração UI**
   - [x] Renomear `DashboardCard` para `InputCard`
   - [x] Renomear `DashboardCardRenderer` para `InputCardRenderer`
   - [x] Criar sistema de cards múltiplos
