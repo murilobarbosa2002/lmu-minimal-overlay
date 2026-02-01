@@ -22,9 +22,9 @@ class WidgetFactory:
 
         widget_class = self._registry[widget_type]
 
-        x = widget_data.get("x", 0)
-        y = widget_data.get("y", 0)
+        position_x = widget_data.get("position_x", 0)
+        position_y = widget_data.get("position_y", 0)
         width = widget_data.get("width", 350)
         height = widget_data.get("height", 130)
 
-        return widget_class(x=x, y=y, width=width, height=height)
+        return widget_class(position_x=position_x, position_y=position_y, width=width, height=height)

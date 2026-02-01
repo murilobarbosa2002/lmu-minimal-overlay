@@ -20,8 +20,8 @@ def test_font_manager_different_sizes():
 
 def test_dashboard_card_init():
     dashboard_card = DashboardCard(position_x=10, position_y=10)
-    assert dashboard_card.x == 10
-    assert dashboard_card.y == 10
+    assert dashboard_card.position_x == 10
+    assert dashboard_card.position_y == 10
     assert dashboard_card.width == 350
     assert dashboard_card.height == 130
     assert dashboard_card.speed == 0.0
@@ -33,7 +33,7 @@ def test_dashboard_card_init():
     assert dashboard_card.ffb_level == 0.0
 
 def test_dashboard_card_update():
-    dashboard_card = DashboardCard(10, 10)
+    dashboard_card = DashboardCard(position_x=10, position_y=10)
     data = TelemetryData(
         speed=120.0,
         rpm=6000,
@@ -56,7 +56,7 @@ def test_dashboard_card_update():
     assert dashboard_card.ffb_level == 0.6
 
 def test_dashboard_card_draw():
-    dashboard_card = DashboardCard(10, 10)
+    dashboard_card = DashboardCard(position_x=10, position_y=10)
     surface = pygame.Surface((800, 600))
     
     # Setup state
@@ -79,7 +79,7 @@ def test_dashboard_card_draw():
     assert True
 
 def test_dashboard_card_draw_special_gears():
-    dashboard_card = DashboardCard(10, 10)
+    dashboard_card = DashboardCard(position_x=10, position_y=10)
     surface = pygame.Surface((800, 600))
     
     # Reverse
@@ -116,7 +116,7 @@ def test_dashboard_card_draw_special_gears():
     assert True
 
 def test_dashboard_card_input():
-    dashboard_card = DashboardCard(10, 10)
+    dashboard_card = DashboardCard(position_x=10, position_y=10)
     # Use actual pygame event
     event = pygame.event.Event(pygame.KEYDOWN, {"key": pygame.K_SPACE})
     result = dashboard_card.handle_input(event)
@@ -124,7 +124,7 @@ def test_dashboard_card_input():
     assert result is False
 
 def test_unit_conversion():
-    dashboard_card = DashboardCard(0, 0)
+    dashboard_card = DashboardCard(position_x=0, position_y=0)
     data = TelemetryData(
         speed=100.0,  # km/h
         rpm=5000,
@@ -145,7 +145,7 @@ def test_unit_conversion():
     assert dashboard_card.unit == "mph"
 
 def test_mph_coverage_explicit():
-    dashboard_card = DashboardCard(0, 0)
+    dashboard_card = DashboardCard(position_x=0, position_y=0)
     dashboard_card.unit = "mph"
     data = Mock()
     data.speed = 100.0
@@ -159,7 +159,7 @@ def test_mph_coverage_explicit():
     assert dashboard_card.speed == 62
 
 def test_draw_visual_feedback_dragging():
-    dashboard_card = DashboardCard(0, 0)
+    dashboard_card = DashboardCard(position_x=0, position_y=0)
     # Mock draggable to simulate dragging state
     mock_draggable = Mock()
     mock_draggable.is_dragging = True
@@ -181,7 +181,7 @@ def test_draw_visual_feedback_dragging():
     assert dashboard_card.unit == "km/h"
 
 def test_drag_and_drop():
-    dashboard_card = DashboardCard(0, 0, 400, 130)
+    dashboard_card = DashboardCard(position_x=0, position_y=0, width=400, height=130)
     
     # 1. Mouse Down (Hit)
     event_down = pygame.event.Event(pygame.MOUSEBUTTONDOWN, {"pos": (50, 50), "button": 1})
@@ -199,20 +199,20 @@ def test_drag_and_drop():
     assert True
 
 def test_drag_miss():
-    dashboard_card = DashboardCard(0, 0, 400, 130)
+    dashboard_card = DashboardCard(position_x=0, position_y=0, width=400, height=130)
     event_down = pygame.event.Event(pygame.MOUSEBUTTONDOWN, {"pos": (500, 500), "button": 1})
     assert dashboard_card.handle_input(event_down) is False
 
 def test_get_rect():
-    dashboard_card = DashboardCard(100, 200, 400, 130)
+    dashboard_card = DashboardCard(position_x=100, position_y=200, width=400, height=130)
     rect = dashboard_card.get_rect()
-    assert rect.x == 100
-    assert rect.y == 200
+    assert rect.position_x == 100
+    assert rect.position_y == 200
     assert rect.width == 400
     assert rect.height == 130
 
 def test_set_position():
-    dashboard_card = DashboardCard(0, 0)
+    dashboard_card = DashboardCard(position_x=0, position_y=0)
     dashboard_card.set_position(150, 250)
-    assert dashboard_card.x == 150
-    assert dashboard_card.y == 250
+    assert dashboard_card.position_x == 150
+    assert dashboard_card.position_y == 250
