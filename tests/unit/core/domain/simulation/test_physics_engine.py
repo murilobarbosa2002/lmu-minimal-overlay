@@ -13,7 +13,7 @@ def test_rpm_calculation_neutral_gear():
     engine.gear = 0
     engine.speed = 100.0
     
-    rpm = engine._calculate_realistic_rpm(engine.speed, engine.gear)
+    rpm = engine._rpm_calculator.calculate(engine.speed, engine.gear)
     
     assert rpm == PhysicsEngine.IDLE_RPM
 
@@ -22,7 +22,7 @@ def test_rpm_calculation_reverse_gear():
     engine.gear = -1
     engine.speed = 20.0
     
-    rpm = engine._calculate_realistic_rpm(engine.speed, engine.gear)
+    rpm = engine._rpm_calculator.calculate(engine.speed, engine.gear)
     
     assert rpm >= PhysicsEngine.IDLE_RPM
     assert rpm <= PhysicsEngine.MAX_RPM
