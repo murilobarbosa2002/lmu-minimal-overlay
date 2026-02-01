@@ -15,7 +15,7 @@ def test_rpm_calculation_neutral_gear():
     
     rpm = engine._rpm_calculator.calculate(engine.speed, engine.gear)
     
-    assert rpm == PhysicsEngine.IDLE_RPM
+    assert rpm == engine.IDLE_RPM
 
 def test_rpm_calculation_reverse_gear():
     engine = PhysicsEngine()
@@ -24,8 +24,8 @@ def test_rpm_calculation_reverse_gear():
     
     rpm = engine._rpm_calculator.calculate(engine.speed, engine.gear)
     
-    assert rpm >= PhysicsEngine.IDLE_RPM
-    assert rpm <= PhysicsEngine.MAX_RPM
+    assert rpm >= engine.IDLE_RPM
+    assert rpm <= engine.MAX_RPM
 
 def test_physics_engine_corner_exit():
     engine = PhysicsEngine()

@@ -2,28 +2,26 @@ import random
 from typing import Dict 
 from src .core .domain .simulation .track_segment import TrackSegment 
 from src .core .domain .rpm_calculator import RPMCalculator
+from src .core .infrastructure .config_manager import ConfigManager
 
 class PhysicsEngine :
-    GEAR_RATIOS = {
-        -1: -3.5,
-        0: 0.0,
-        1: 3.08,
-        2: 2.19,
-        3: 1.71,
-        4: 1.39,
-        5: 1.16,
-        6: 1.00
-    }
-    
-    FINAL_DRIVE = 3.5
-    WHEEL_CIRCUMFERENCE = 1.9
-    IDLE_RPM = 1500
-    MAX_RPM = 8000
-    REDLINE_RPM = 7800
-    UPSHIFT_RPM = 7410
-    DOWNSHIFT_RPM = 3120
-    
-    def __init__ (self ):
+    def __init__ (self, config: ConfigManager = None):
+        if config is None:
+            config = ConfigManager()
+        
+        physics_config = config.get_config("physics", {})
+        
+        gear_ratios_config = physics_config.get("gear_ratios", {})
+        self.GEAR_RATIOS = {int(k): v for k, v in gear_ratios_config.items()}
+        
+        self.FINAL_DRIVE = physics_config.get("final_drive", 3.5)
+        self.WHEEL_CIRCUMFERENCE = physics_config.get("wheel_circumference", 1.9)
+        self.IDLE_RPM = physics_config.get("idle_rpm", 1500)
+        self.MAX_RPM = physics_config.get("max_rpm", 8000)
+        self.REDLINE_RPM = physics_config.get("redline_rpm", 7800)
+        self.UPSHIFT_RPM = physics_config.get("upshift_rpm", 7410)
+        self.DOWNSHIFT_RPM = physics_config.get("downshift_rpm", 3120)
+        
         self .speed =0.0 
         self .rpm =self.IDLE_RPM
         self .gear =1 
