@@ -115,13 +115,14 @@ class CardBackground:
                 mask_alpha = mask.get_at((x_position, y_position))[ALPHA_CHANNEL_INDEX]
                 if mask_alpha > ALPHA_THRESHOLD_FOR_MASKING:
                     pixel = bg_surface.get_at((x_position, y_position))
+                    pixel_alpha = pixel[ALPHA_CHANNEL_INDEX]
                     final_surface.set_at(
                         (x_position, y_position),
                         (
                             pixel[RED_CHANNEL_INDEX],
                             pixel[GREEN_CHANNEL_INDEX],
                             pixel[BLUE_CHANNEL_INDEX],
-                            FULL_ALPHA,
+                            pixel_alpha,
                         ),
                     )
 
