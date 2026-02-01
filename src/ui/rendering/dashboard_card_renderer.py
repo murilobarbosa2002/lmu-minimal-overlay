@@ -1,17 +1,23 @@
-import pygame 
-from src .ui .rendering .components import (
-SteeringIndicator ,
-SpeedGearDisplay ,
-IndicatorBars 
-)
+import pygame
+from src .ui .rendering .components .speed_gear_display import SpeedGearDisplay
+from src .ui .rendering .components .steering_indicator import SteeringIndicator
+from src .ui .rendering .components .indicator_bars import IndicatorBars
+from src.core.infrastructure.config_manager import ConfigManager
 
 
 class DashboardCardRenderer :
-
     def __init__ (self ):
-        self .steering =SteeringIndicator (radius =45 )
+        config = ConfigManager()
+        theme = config.get_theme("dashboard_card")
+
         self .speed_gear =SpeedGearDisplay ()
-        self .bars =IndicatorBars (spacing =12 )
+        self .steering =SteeringIndicator ()
+        self .bars =IndicatorBars ()
+
+        self._border_radius = theme.get("border_radius", 24)
+        self._border_color = tuple(theme.get("border_color", [255, 255, 255, 30]))
+        self._mask_color = tuple(theme.get("mask_color", [255, 255, 255]))
+        self._lateral_padding = theme.get("lateral_padding", 20)
 
     def render (
     self ,
@@ -34,9 +40,21 @@ class DashboardCardRenderer :
         bg_surface =pygame .Surface ((width ,height ),pygame .SRCALPHA )
 
         temp_surface =pygame .Surface ((width ,height ),pygame .SRCALPHA )
-        top_color =(15 ,25 ,45 )
-        bottom_color =(5 ,10 ,20 )
-        alpha =250 
+        
+        r, g, b = bg_color[0], bg_color[1], bg_color[2]
+        
+        top_color = (
+            min(255, int(r * 1.2)), 
+            min(255, int(g * 1.2)), 
+            min(255, int(b * 1.2))
+        )
+        bottom_color = (
+            int(r * 0.8), 
+            int(g * 0.8), 
+            int(b * 0.8)
+        )
+        
+        alpha = bg_color[3] if len(bg_color) == 4 else 240 
 
         for y_offset in range (height ):
             ratio =y_offset /height 
@@ -47,26 +65,24 @@ class DashboardCardRenderer :
 
         bg_surface .blit (temp_surface ,(0 ,0 ))
         mask =pygame .Surface ((width ,height ),pygame .SRCALPHA )
-        pygame .draw .rect (mask ,(255 ,255 ,255 ),(0 ,0 ,width ,height ),border_radius =24 )
+        pygame .draw .rect (mask ,self._mask_color ,(0 ,0 ,width ,height ),border_radius =self._border_radius )
         bg_surface .blit (mask ,(0 ,0 ),special_flags =pygame .BLEND_RGBA_MULT )
 
         border_surf =pygame .Surface ((width ,height ),pygame .SRCALPHA )
-        pygame .draw .rect (border_surf ,(255 ,255 ,255 ,30 ),(0 ,0 ,width ,height ),width =1 ,border_radius =24 )
+        pygame .draw .rect (border_surf ,self._border_color ,(0 ,0 ,width ,height ),width =1 ,border_radius =self._border_radius )
         bg_surface .blit (border_surf ,(0 ,0 ))
 
         surface .blit (bg_surface ,(x ,y ))
 
-        lateral_padding =20 
-
-        steering_cx =x +lateral_padding +self .steering .radius 
+        steering_cx =x +self._lateral_padding +self .steering .radius 
         steering_cy =y +height //2 
         self .steering .render (surface ,steering_cx ,steering_cy ,steering_angle ,text_color )
 
         bars_total_width =self .bars .get_total_width ()
-        bars_x =x +width -lateral_padding -bars_total_width 
+        bars_x =x +width -self._lateral_padding -bars_total_width 
 
-        steering_right_edge =lateral_padding +self .steering .radius *2 
-        bars_left_edge =width -lateral_padding -bars_total_width 
+        steering_right_edge =self._lateral_padding +self .steering .radius *2 
+        bars_left_edge =width -self._lateral_padding -bars_total_width 
         speed_x =x +steering_right_edge +10 
         speed_width =bars_left_edge -steering_right_edge -20 
 

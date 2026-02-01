@@ -25,15 +25,24 @@ class TestAppFactory:
         assert 'font_provider' in call_kwargs
         assert 'config_manager' in call_kwargs
 
-    @patch('src.core.infrastructure.app_factory.ConfigManager')
-    @patch('src.core.infrastructure.app_factory.WindowManager')
-    @patch('src.core.infrastructure.app_factory.MockTelemetryProvider')
-    @patch('src.core.infrastructure.app_factory.PygameFontProvider')
-    @patch('src.core.infrastructure.app_factory.OverlayApp')
-    def test_create_uses_di_container(self, mock_app, mock_font, mock_provider, mock_window, mock_config):
+    @patch("src.core.infrastructure.app_factory.WidgetFactory")
+    @patch("src.core.infrastructure.app_factory.WindowManager")
+    @patch("src.core.infrastructure.app_factory.PygameFontProvider")
+    @patch("src.core.infrastructure.app_factory.MockTelemetryProvider")
+    @patch("src.core.infrastructure.app_factory.ConfigManager")
+    def test_create_uses_di_container(self, mock_config, mock_provider, mock_font, mock_window, mock_factory):
+        mock_config_instance = Mock()
+        mock_config_instance.get_config.return_value = {
+            "title": "LMU Telemetry Overlay",
+            "default_width": 1920,
+            "default_height": 1080
+        }
+        mock_config.return_value = mock_config_instance
+        
         AppFactory.create()
         
-        mock_window.assert_called_once_with(title="LMU Telemetry Overlay", width=1920, height=1080)
         mock_provider.assert_called_once()
         mock_font.assert_called_once()
+        mock_window.assert_called_once_with(title="LMU Telemetry Overlay", width=1920, height=1080)
+        mock_factory.assert_called_once()
         mock_config.assert_called_once()

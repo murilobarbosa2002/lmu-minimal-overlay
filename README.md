@@ -15,10 +15,13 @@ Overlay de telemetria em tempo real para Le Mans Ultimate. HUD transparente que 
 - **Overlay Transparente**: HUD que não interfere com o jogo
 - **Telemetria em Tempo Real**: Speed, RPM, inputs de pedais e volante (60 Hz)
 - **Indicador de FFB**: Visualização de força do force feedback com detecção de clipping
+- **100% Configurável**: Todos os parâmetros visuais via `config.json` - zero valores hardcoded
+- **Sistema de Temas**: Crie temas personalizados modificando cores, dimensões e estilos
 - **Drag & Drop**: Posicione widgets livremente na tela
-- **Persistência**: Layout salvo automaticamente
+- **Persistência**: Layout e configurações salvos automaticamente
 - **Design Minimalista**: Interface flat UI moderna
 - **Desenvolvimento WSL**: Funciona sem o jogo usando dados mockados
+- **100% Test Coverage**: 207 testes unitários e de integração
 
 ## 🚀 Quick Start
 

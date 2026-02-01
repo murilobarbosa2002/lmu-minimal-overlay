@@ -28,7 +28,11 @@ class AppFactory :
 
         container .register (
         IWindowManager ,
-        lambda c :WindowManager (title ="LMU Telemetry Overlay",width =1920 ,height =1080 ),
+        lambda c: WindowManager(
+            title=c.resolve(IConfigManager).get_config("window", {}).get("title", "LMU Telemetry Overlay"),
+            width=c.resolve(IConfigManager).get_config("window", {}).get("default_width", 1920),
+            height=c.resolve(IConfigManager).get_config("window", {}).get("default_height", 1080)
+        ),
         singleton =True 
         )
 

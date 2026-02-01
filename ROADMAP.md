@@ -2,7 +2,7 @@
 
 Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado continuamente conforme o progresso.
 
-**Última atualização**: 2026-01-31 (v0.3.0)
+**Última atualização**: 2026-02-01 (v0.4.0 - Complete Configuration Centralization)
 
 ---
 
@@ -145,6 +145,30 @@ Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado co
   - [x] Criar estrutura padrão
   - [x] Definir posições padrão de widgets
   - [x] Documentar estrutura
+
+### 3.3 Complete Configuration Centralization (2026-02-01)
+
+- [x] **Extended ConfigManager Schema**
+  - [x] Add `window` section (title, dimensions)
+  - [x] Add `steering_indicator` theme (colors, radius, tick parameters)
+  - [x] Add `bar` theme (dimensions, colors, padding, fonts, border_radius)
+  - [x] Add `indicator_bars` theme (spacing, bar colors)
+  - [x] Add `edit_mode` theme (selection colors, border properties, animation)
+  - [x] Enhance `dashboard_card` theme (border colors, mask color, padding)
+
+- [x] **Component Refactoring** (31+ values centralized)
+  - [x] Refactor `SteeringIndicator` (7 values: colors, dimensions, tick ranges)
+  - [x] Refactor `Bar` (8 values: dimensions, colors, padding, fonts, border_radius)
+  - [x] Refactor `IndicatorBars` (4 values: spacing, bar colors)
+  - [x] Refactor `DashboardCardRenderer` (4 values: border properties, padding)
+  - [x] Refactor `EditState` (5 values: selection colors, border, animation)
+  - [x] Refactor `WindowManager` (3 values: window title, dimensions)
+
+- [x] **Testing & Documentation**
+  - [x] Update all tests for ConfigManager integration
+  - [x] Verify 207/207 tests passing with 100% coverage
+  - [x] Create comprehensive configuration guide
+  - [x] Update CHANGELOG, README, ROADMAP
 
 ---
 
@@ -424,7 +448,7 @@ Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado co
 - **Status**: 🟢 Completo
 
 ### Fase 3: Configuração
-- **Progresso**: 100% (6/6 tarefas)
+- **Progresso**: 100% (9/9 tarefas - incluindo Phase 3.3 Complete Centralization)
 - **Status**: 🟢 Completo
 
 ### Fase 4: Integração
