@@ -14,15 +14,16 @@ class TestOverlayApp:
         mock_provider = Mock()
         mock_font_provider = Mock()
         mock_config_manager = Mock()
-        # Default behavior for get_layout to return empty list for widgets
-        # and empty dict for window config
+        mock_widget_factory = Mock()
+        
         mock_config_manager.get_layout.side_effect = lambda key, default=None: [] if key == "widgets" else {}
         
         return OverlayApp(
             window=mock_window,
             provider=mock_provider,
             font_provider=mock_font_provider,
-            config_manager=mock_config_manager
+            config_manager=mock_config_manager,
+            widget_factory=mock_widget_factory
         )
 
     def test_setup_initializes_components(self, app):
@@ -121,13 +122,59 @@ class TestOverlayApp:
             {"type": "DashboardCard", "x": 100, "y": 200, "width": 300, "height": 100}
         ] if key == "widgets" else {}
         
+        # Setup widget factory to return a widget-like mock
+        mock_widget = Mock()
+        mock_widget.x = 100
+        mock_widget.y = 200
+        app.widget_factory.create_widget.return_value = mock_widget
+        
         app.setup()
         
         assert len(app.widgets) == 1
         assert app.widgets[0].x == 100
         assert app.widgets[0].y == 200
 
+    def test_setup_handles_invalid_widgets(self, app):
+        # Setup config with one valid and one invalid widget
+        app.config_manager.get_layout.side_effect = lambda key, default=None: [
+            {"type": "DashboardCard", "x": 100, "y": 200},
+            {"type": "UnknownWidget", "x": 0, "y": 0}
+        ] if key == "widgets" else {}
+        
+        # Configure factory to raise ValueError for unknown type
+        def create_side_effect(data):
+            if data["type"] == "UnknownWidget":
+                raise ValueError("Unknown widget type")
+            mock = Mock()
+            mock.x = data["x"]
+            mock.y = data["y"]
+            return mock
+            
+        app.widget_factory.create_widget.side_effect = create_side_effect
+        
+        app.setup()
+        
+        # Should populate valid widget and skip invalid one (gracefully)
+        assert len(app.widgets) == 1
+        assert app.widgets[0].x == 100
+        # Verification that it didn't crash is implicit by reaching here
+
     def test_save_state(self, app):
+        # Setup valid widget for setup()
+        mock_widget = Mock()
+        mock_widget.x = 100
+        mock_widget.y = 200
+        mock_widget.width = 350
+        mock_widget.height = 130
+        # Mock class name for serialization
+        mock_widget.__class__.__name__ = "DashboardCard"
+        
+        app.config_manager.get_layout.side_effect = lambda key, default=None: [
+            {"type": "DashboardCard", "x": 100, "y": 200}
+        ] if key == "widgets" else {}
+        
+        app.widget_factory.create_widget.return_value = mock_widget
+        
         app.setup()
         
         # Setup window props

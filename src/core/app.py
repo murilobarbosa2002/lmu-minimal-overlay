@@ -8,7 +8,7 @@ from src .core .application .states .running_state import RunningState
 from src .core .application .states .edit_state import EditState 
 from src .core .providers .i_telemetry_provider import ITelemetryProvider 
 from src .core .interfaces .i_config_manager import IConfigManager 
-from src .ui .widgets .dashboard_card import DashboardCard 
+from src .core .infrastructure .widget_factory import WidgetFactory 
 
 
 class OverlayApp :
@@ -17,12 +17,14 @@ class OverlayApp :
     window :IWindowManager ,
     provider :ITelemetryProvider ,
     font_provider :IFontProvider ,
-    config_manager :IConfigManager 
+    config_manager :IConfigManager ,
+    widget_factory :WidgetFactory 
     ):
         self .window =window 
         self .provider =provider 
         self .font_provider =font_provider 
         self .config_manager =config_manager 
+        self .widget_factory =widget_factory 
         self .state_machine =StateMachine ()
         self .widgets =[]
         self .input_handler =None 
@@ -40,9 +42,6 @@ class OverlayApp :
         widgets_data =self .config_manager .get_layout ("widgets",[])
         
         if not widgets_data :
-            default_widget =DashboardCard (x =1700 ,y =50 ,width =350 ,height =130 )
-            self .widgets .append (default_widget )
-            
             new_widgets_data =[{
                 "type":"DashboardCard",
                 "x":1700 ,
@@ -51,15 +50,14 @@ class OverlayApp :
                 "height":130 
             }]
             self .config_manager .set_layout ("widgets",new_widgets_data )
-        else :
-            for w_data in widgets_data :
-                if w_data .get ("type")=="DashboardCard":
-                    self .widgets .append (DashboardCard (
-                        x =w_data .get ("x",1700 ),
-                        y =w_data .get ("y",50 ),
-                        width =w_data .get ("width",350 ),
-                        height =w_data .get ("height",130 )
-                    ))
+            widgets_data =new_widgets_data 
+        
+        for w_data in widgets_data :
+            try :
+                widget =self .widget_factory .create_widget (w_data )
+                self .widgets .append (widget )
+            except ValueError :
+                pass
         running_state =RunningState (self .state_machine ,widgets =self .widgets )
         edit_state =EditState (self .state_machine ,widgets =self .widgets )
         self .state_machine .change_state (running_state )

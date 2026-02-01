@@ -8,7 +8,7 @@ from src .core .providers .i_telemetry_provider import ITelemetryProvider
 from src .core .providers .mock_telemetry_provider import MockTelemetryProvider 
 from src .core .interfaces .i_config_manager import IConfigManager 
 from src .core .infrastructure .config_manager import ConfigManager 
-from src .ui .widgets .dashboard_card import DashboardCard 
+from src .core .infrastructure .widget_factory import WidgetFactory 
 from src .core .application .services .state_machine import StateMachine 
 from src .core .application .states .running_state import RunningState 
 from src .core .application .states .edit_state import EditState 
@@ -48,12 +48,14 @@ class AppFactory :
         provider =container .resolve (ITelemetryProvider )
         font_provider =container .resolve (IFontProvider )
         config_manager =container .resolve (IConfigManager )
+        widget_factory =WidgetFactory ()
 
         app =OverlayApp (
             window =window ,
             provider =provider ,
             font_provider =font_provider ,
-            config_manager =config_manager 
+            config_manager =config_manager ,
+            widget_factory =widget_factory 
         )
 
         return app 
