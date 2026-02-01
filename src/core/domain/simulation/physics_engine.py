@@ -1,4 +1,5 @@
 import random
+from typing import Dict
 from src.core.domain.simulation.track_segment import TrackSegment
 from src.core.domain.rpm_calculator import RPMCalculator
 from src.core.infrastructure.config_manager import ConfigManager
@@ -43,7 +44,9 @@ class PhysicsEngine:
         self.STEERING_ENTRY_FACTOR = corner_entry.get("steering_entry_factor", 0.3)
 
         corner_mid = driver_ai.get("corner_mid", {})
-        self.THROTTLE_APPLICATION_POINT = corner_mid.get("throttle_application_point", 0.7)
+        self.THROTTLE_APPLICATION_POINT = corner_mid.get(
+            "throttle_application_point", 0.7
+        )
         self.PARTIAL_THROTTLE = corner_mid.get("partial_throttle", 0.2)
         self.TRAIL_BRAKE_INTENSITY = corner_mid.get("trail_brake_intensity", 0.4)
         self.BRAKE_DECAY_RATE = corner_mid.get("brake_decay_rate", 1.5)
@@ -58,15 +61,21 @@ class PhysicsEngine:
         self.STEERING_SPEED = input_response.get("steering_speed", 2.0)
 
         steering_dynamics = physics_config.get("steering_dynamics", {})
-        self.JITTER_SPEED_THRESHOLD = steering_dynamics.get("jitter_speed_threshold", 40.0)
-        self.JITTER_ANGLE_THRESHOLD = steering_dynamics.get("jitter_angle_threshold", 0.1)
+        self.JITTER_SPEED_THRESHOLD = steering_dynamics.get(
+            "jitter_speed_threshold", 40.0
+        )
+        self.JITTER_ANGLE_THRESHOLD = steering_dynamics.get(
+            "jitter_angle_threshold", 0.1
+        )
         self.JITTER_INTENSITY = steering_dynamics.get("jitter_intensity", 0.002)
         self.JITTER_SPEED_FACTOR = steering_dynamics.get("jitter_speed_factor", 100.0)
         self.MAX_STEER_RATE = steering_dynamics.get("max_steer_rate", 2.5)
         self.SMOOTHING_FACTOR = steering_dynamics.get("smoothing_factor", 5.0)
 
         vehicle_dynamics = physics_config.get("vehicle_dynamics", {})
-        self.AERO_DRAG_COEFFICIENT = vehicle_dynamics.get("aero_drag_coefficient", 0.005)
+        self.AERO_DRAG_COEFFICIENT = vehicle_dynamics.get(
+            "aero_drag_coefficient", 0.005
+        )
         self.TORQUE_RPM_MIN = vehicle_dynamics.get("torque_rpm_min", 3000)
         self.TORQUE_RPM_MAX = vehicle_dynamics.get("torque_rpm_max", 7000)
         self.TORQUE_PEAK = vehicle_dynamics.get("torque_peak", 1.0)
@@ -108,21 +117,32 @@ class PhysicsEngine:
             speed_diff = self.speed - segment.target_speed
             brake_intensity = min(1.0, speed_diff / self.BRAKE_SENSITIVITY)
             target_brake = brake_intensity if speed_diff > 0 else INITIAL_BRAKE
-            target_steering = segment.curvature * (progress * self.STEERING_ENTRY_FACTOR)
+            target_steering = segment.curvature * (
+                progress * self.STEERING_ENTRY_FACTOR
+            )
 
         elif segment.type == "CORNER_MID":
-            target_throttle = self.PARTIAL_THROTTLE if progress > self.THROTTLE_APPLICATION_POINT else INITIAL_THROTTLE
+            target_throttle = (
+                self.PARTIAL_THROTTLE
+                if progress > self.THROTTLE_APPLICATION_POINT
+                else INITIAL_THROTTLE
+            )
             target_brake = max(
-                INITIAL_BRAKE, self.TRAIL_BRAKE_INTENSITY * (LERP_MAX - progress * self.BRAKE_DECAY_RATE)
+                INITIAL_BRAKE,
+                self.TRAIL_BRAKE_INTENSITY
+                * (LERP_MAX - progress * self.BRAKE_DECAY_RATE),
             )
             target_steering = segment.curvature
 
         elif segment.type == "CORNER_EXIT":
-            target_throttle = self._lerp(self.MIN_THROTTLE_EXIT, self.MAX_THROTTLE_EXIT, progress)
+            target_throttle = self._lerp(
+                self.MIN_THROTTLE_EXIT, self.MAX_THROTTLE_EXIT, progress
+            )
             target_steering = self._lerp(segment.curvature, INITIAL_STEERING, progress)
 
         throttle_speed = self.THROTTLE_SPEED * dt
         brake_speed = self.BRAKE_SPEED * dt
+        steer_speed = self.STEERING_SPEED * dt
 
         if self.throttle < target_throttle:
             self.throttle = min(target_throttle, self.throttle + throttle_speed)
@@ -137,7 +157,10 @@ class PhysicsEngine:
         raw_target = target_steering
 
         micro_correction = INITIAL_STEERING
-        if self.speed > self.JITTER_SPEED_THRESHOLD and abs(self.steering) > self.JITTER_ANGLE_THRESHOLD:
+        if (
+            self.speed > self.JITTER_SPEED_THRESHOLD
+            and abs(self.steering) > self.JITTER_ANGLE_THRESHOLD
+        ):
             load_factor = abs(self.steering) * (self.speed / self.JITTER_SPEED_FACTOR)
             intensity = self.JITTER_INTENSITY * min(1.0, load_factor)
             micro_correction = random.uniform(-intensity, intensity)
@@ -177,6 +200,8 @@ class PhysicsEngine:
             self.gear -= 1
             self.rpm = self._rpm_calculator.calculate(self.speed, self.gear)
         else:
-            self.rpm = target_rpm + (random.random() * self.RPM_NOISE_RANGE * 2 - self.RPM_NOISE_RANGE)
+            self.rpm = target_rpm + (
+                random.random() * self.RPM_NOISE_RANGE * 2 - self.RPM_NOISE_RANGE
+            )
 
         self.rpm = max(self.IDLE_RPM, min(self.MAX_RPM, self.rpm))

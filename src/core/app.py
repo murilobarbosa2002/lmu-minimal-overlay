@@ -1,4 +1,5 @@
 import sys
+import pygame
 from src.ui.interfaces.i_window_manager import IWindowManager
 from src.ui.interfaces.i_font_provider import IFontProvider
 from src.core.application.services.state_machine import StateMachine
@@ -7,7 +8,7 @@ from src.core.application.states.running_state import RunningState
 from src.core.application.states.edit_state import EditState
 from src.core.providers.i_telemetry_provider import ITelemetryProvider
 from src.core.interfaces.i_config_manager import IConfigManager
-from src.ui.factories.widget_factory import WidgetFactory
+from src.core.infrastructure.widget_factory import WidgetFactory
 
 
 class OverlayApp:
@@ -41,7 +42,15 @@ class OverlayApp:
         widgets_data = self.config_manager.get_layout("widgets", [])
 
         if not widgets_data:
-            new_widgets_data = [{"type": "DashboardCard", "x": 1700, "y": 50, "width": 350, "height": 130}]
+            new_widgets_data = [
+                {
+                    "type": "DashboardCard",
+                    "x": 1700,
+                    "y": 50,
+                    "width": 350,
+                    "height": 130,
+                }
+            ]
             self.config_manager.set_layout("widgets", new_widgets_data)
             widgets_data = new_widgets_data
 
@@ -52,6 +61,7 @@ class OverlayApp:
             except ValueError:
                 pass
         running_state = RunningState(self.state_machine, widgets=self.widgets)
+        edit_state = EditState(self.state_machine, widgets=self.widgets)
         self.state_machine.change_state(running_state)
         self.input_handler = InputHandler(self.state_machine, self.window, self.widgets)
 

@@ -1,5 +1,10 @@
 from dataclasses import dataclass
-from src.core.domain.constants import PERCENTAGE_MIN, PERCENTAGE_MAX, STEERING_ANGLE_MIN, STEERING_ANGLE_MAX
+from src.core.domain.constants import (
+    PERCENTAGE_MIN,
+    PERCENTAGE_MAX,
+    STEERING_ANGLE_MIN,
+    STEERING_ANGLE_MAX,
+)
 
 
 @dataclass
@@ -30,9 +35,10 @@ class TelemetryData:
             )
         if not STEERING_ANGLE_MIN <= self.steering_angle <= STEERING_ANGLE_MAX:
             raise ValueError(
-    def __repr__(self) -> str:
-        return (f"TelemetryData(speed={self.speed}, rpm={self.rpm}, gear={self.gear}, "
-f"throttle={self.throttle_pct}, brake={self.brake_pct})")
+                f"steering_angle deve estar entre {STEERING_ANGLE_MIN} e {STEERING_ANGLE_MAX}, recebido: {self.steering_angle}"
+            )
+
+    def __str__(self) -> str:
         return (
             f"TelemetryData(speed={self.speed:.1f}, rpm={self.rpm}, gear={self.gear}, "
             f"throttle={self.throttle_pct:.2f}, brake={self.brake_pct:.2f})"

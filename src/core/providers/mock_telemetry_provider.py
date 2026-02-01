@@ -1,4 +1,5 @@
-# import time
+import time
+import time
 import random
 from dataclasses import replace
 from src.core.providers.i_telemetry_provider import ITelemetryProvider
@@ -27,8 +28,12 @@ class MockTelemetryProvider(ITelemetryProvider):
 
         config = config or ConfigManager()
         conversion_config = config.get_config("conversion", {})
-        self._steering_degrees_full_lock = conversion_config.get("steering_degrees_full_lock", 540.0)
-        self._lateral_g_speed_divisor = conversion_config.get("lateral_g_speed_divisor", 100.0)
+        self._steering_degrees_full_lock = conversion_config.get(
+            "steering_degrees_full_lock", 540.0
+        )
+        self._lateral_g_speed_divisor = conversion_config.get(
+            "lateral_g_speed_divisor", 100.0
+        )
 
         self._physics = PhysicsEngine(config)
         self._track = TrackGenerator.generate_track()
@@ -74,13 +79,19 @@ class MockTelemetryProvider(ITelemetryProvider):
         self.data.gear = self._physics.gear
         self.data.throttle_pct = self._physics.throttle
         self.data.brake_pct = self._physics.brake
-        self.data.steering_angle = self._physics.steering * self._steering_degrees_full_lock
+        self.data.steering_angle = (
+            self._physics.steering * self._steering_degrees_full_lock
+        )
 
-        lateral_g = self._physics.steering * (self._physics.speed / self._lateral_g_speed_divisor)
+        lateral_g = self._physics.steering * (
+            self._physics.speed / self._lateral_g_speed_divisor
+        )
 
         road_noise = random.uniform(ROAD_NOISE_MIN, ROAD_NOISE_MAX)
         if "CORNER" in segment.type:
-            road_noise += random.uniform(CORNER_NOISE_MIN, CORNER_NOISE_MAX) * abs(self._physics.steering)
+            road_noise += random.uniform(CORNER_NOISE_MIN, CORNER_NOISE_MAX) * abs(
+                self._physics.steering
+            )
 
         self.data.ffb_level = max(FFB_MIN, min(FFB_MAX, lateral_g + road_noise))
 
