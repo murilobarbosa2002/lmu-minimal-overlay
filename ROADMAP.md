@@ -182,7 +182,14 @@ Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado co
   - [x] Testar movimento de widget
   - [x] Testar salvamento de posição
 
-### 4.3 Expansão de Widgets
+### 4.3 Visual Polish (Concluído)
+
+- [x] **Premium Effects**
+  - [x] Animação de "Respiração" na borda de seleção
+  - [x] Borda arredondada e styling moderno
+  - [x] Transições de transparência suaves ao arrastar
+
+### 4.4 Expansão de Widgets
 - [ ] **Refatoração UI**
   - [ ] Renomear `DashboardCard` para `InputCard`
   - [ ] Renomear `DashboardCardRenderer` para `InputCardRenderer`
@@ -421,8 +428,8 @@ Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado co
 - **Status**: 🟢 Completo
 
 ### Fase 4: Integração
-- **Progresso**: 75% (6/8 tarefas)
-- **Status**: 🟡 Em Progresso
+- **Progresso**: 100% (9/9 tarefas)
+- **Status**: � Completo
 
 ### Fase 6: Produção (Anterior Fase 5)
 - **Progresso**: 30% (2/7 tarefas)
