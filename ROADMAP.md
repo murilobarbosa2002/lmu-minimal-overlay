@@ -2,7 +2,7 @@
 
 Roadmap detalhado de desenvolvimento do projeto. Este documento é atualizado continuamente conforme o progresso.
 
-**Última atualização**: 2026-02-01 (v0.4.0 - Complete Configuration Centralization)
+**Última atualização**: 2026-02-01 (v0.6.0 - RPM Display & Configurable Physics)
 
 ---
 

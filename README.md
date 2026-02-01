@@ -14,14 +14,17 @@ Overlay de telemetria em tempo real para Le Mans Ultimate. HUD transparente que 
 
 - **Overlay Transparente**: HUD que não interfere com o jogo
 - **Telemetria em Tempo Real**: Speed, RPM, inputs de pedais e volante (60 Hz)
+- **Display de RPM**: Exibição realista de RPM com simulação baseada em relações de marcha
 - **Indicador de FFB**: Visualização de força do force feedback com detecção de clipping
-- **100% Configurável**: Todos os parâmetros visuais via `config.json` - zero valores hardcoded
+- **100% Configurável**: Todos os parâmetros visuais e físicos via `config.json` - zero valores hardcoded
+- **Física Configurável**: Relações de marcha, final drive, RPM limits personalizáveis
+- **Suporte Multi-Carro**: Configure diferentes tipos de carro (LMP2, GT3, F1)
 - **Sistema de Temas**: Crie temas personalizados modificando cores, dimensões e estilos
 - **Drag & Drop**: Posicione widgets livremente na tela
 - **Persistência**: Layout e configurações salvos automaticamente
 - **Design Minimalista**: Interface flat UI moderna
 - **Desenvolvimento WSL**: Funciona sem o jogo usando dados mockados
-- **100% Test Coverage**: 207 testes unitários e de integração
+- **100% Test Coverage**: 217 testes unitários e de integração
 
 ## 🚀 Quick Start
 
@@ -77,7 +80,7 @@ Documentação completa disponível em [GitHub Pages](https://murilobarbosa2002.
 
 | Widget | Descrição | Dados |
 |--------|-----------|-------|
-| Widget | Descrição | Dados |
+| **DashboardCard** | Dashboard compacto integrado | Speed, RPM, Gear, Steering, Throttle, Brake, FFB |
 |--------|-----------|-------|
 | **DashboardCard** | Card principal integrado | Speed, Gear, Steering, Pedals, FFB |
 | **FPS Counter** | Contador de quadros | FPS atual |

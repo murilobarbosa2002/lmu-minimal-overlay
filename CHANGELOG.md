@@ -3,7 +3,42 @@
 Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
-e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
+e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
+
+---
+
+## [0.6.0] - 2026-02-01
+
+### Adicionado
+- **Display de RPM**: RPM agora exibido abaixo da velocidade com fonte e cor configuráveis
+- **Simulação Realista de RPM**: Cálculo baseado em relações de marcha estilo LMP2
+- **Física Configurável**: Todas as constantes de física agora em `config.json`
+- **RPMCalculator**: Nova classe de domínio para cálculo de RPM reutilizável
+- **Suporte Multi-Carro**: Configuração permite diferentes tipos de carro (LMP2, GT3, F1)
+
+### Modificado
+- **Volante Maior**: Raio aumentado de 45px para 60px (33% maior)
+- **PhysicsEngine**: Refatorado para usar RPMCalculator e carregar configuração
+- **Arquitetura**: Melhor separação de responsabilidades (SRP)
+
+### Técnico
+- **100% Coverage**: Alcançado 100% de cobertura de testes (217 testes)
+- **Código Limpo**: Removido diretório vazio `/src/infra`
+- **Performance**: Limpeza de `__pycache__` do repositório
+
+---
+
+## [0.5.0] - 2026-02-01
+
+### Adicionado
+- **Configuração Completa**: Sistema de configuração centralizado consolidado
+- **Guia de Configuração**: Documentação completa em `configuration-complete.md`
+
+### Corrigido
+- **Opacidade**: Correção no tratamento de opacidade em componentes de renderização
+- **Config Duplicado**: Consolidação de arquivos de configuração duplicados
+
+---
 
 ## [Unreleased]
 
