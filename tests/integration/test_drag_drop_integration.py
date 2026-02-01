@@ -42,7 +42,7 @@ class TestDragDropIntegration:
         # We need to mock DashboardCardRenderer inside DashboardCard or it will try to load images/fonts
         # We can do this by patching the import in test setup or mocking the _renderer attribute
         
-        real_widget = DashboardCard(x=100, y=100)
+        real_widget = DashboardCard(position_x=100, position_y=100)
         # Prevent renderer instantiation
         real_widget._renderer = Mock() 
         # Just in case
@@ -79,7 +79,7 @@ class TestDragDropIntegration:
         
         # 2. Drag Widget
         # Widget is at 100, 100. Size 350x130 (default) or 300x100 (from config? factory override config)
-        # Our real_widget was init with x=100, y=100.
+        # Our real_widget was init with position_x=100, position_y=100.
         
         # Mouse Down at 110, 110 (inside widget)
         down_event = MagicMock()

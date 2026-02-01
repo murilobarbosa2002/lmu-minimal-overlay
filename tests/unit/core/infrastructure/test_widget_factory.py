@@ -58,7 +58,7 @@ def test_unknown_widget_type_raises_error():
 
 def test_register_custom_widget():
     class CustomWidget(Widget):
-        def __init__(self, x=0, y=0, width=100, height=100):
+        def __init__(self, position_x=0, position_y=0, width=100, height=100):
             super().__init__(x, y, width, height)
         
         def draw(self, surface):

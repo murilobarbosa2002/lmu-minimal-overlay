@@ -1,9 +1,4 @@
-from src.core.domain.constants import (
-    BYTE_MAX,
-    WORD_MAX,
-    NORMALIZED_MIN,
-    NORMALIZED_MAX
-)
+from src.core.domain.constants import BYTE_MAX, WORD_MAX, NORMALIZED_MIN, NORMALIZED_MAX
 
 
 def normalize_byte(value: int) -> float:

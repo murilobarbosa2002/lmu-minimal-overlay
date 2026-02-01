@@ -19,7 +19,7 @@ def test_font_manager_different_sizes():
     assert font1 is not font2
 
 def test_dashboard_card_init():
-    dashboard_card = DashboardCard(x=10, y=10)
+    dashboard_card = DashboardCard(position_x=10, position_y=10)
     assert dashboard_card.x == 10
     assert dashboard_card.y == 10
     assert dashboard_card.width == 350

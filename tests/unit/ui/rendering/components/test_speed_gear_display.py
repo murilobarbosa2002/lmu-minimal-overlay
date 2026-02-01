@@ -17,8 +17,8 @@ class TestSpeedGearDisplay:
     def test_render_basic(self):
         self.display.render(
             surface=self.surface,
-            x=50,
-            y=20,
+            position_x=50,
+            position_y=20,
             width=200,
             height=130,
             speed=150.0,
@@ -38,7 +38,7 @@ class TestSpeedGearDisplay:
         # Reverse
         self.display.render(
             surface=self.surface,
-            x=50, y=20, width=200, height=130,
+            position_x=50, position_y=20, width=200, height=130,
             speed=5.0, gear=-1, unit="km/h",
             rpm=1500, max_rpm=8000,
             text_color=(255, 255, 255),
@@ -49,7 +49,7 @@ class TestSpeedGearDisplay:
         # Neutral
         self.display.render(
             surface=self.surface,
-            x=50, y=20, width=200, height=130,
+            position_x=50, position_y=20, width=200, height=130,
             speed=0.0, gear=0, unit="km/h",
             rpm=1500, max_rpm=8000,
             text_color=(255, 255, 255),
@@ -61,7 +61,7 @@ class TestSpeedGearDisplay:
         # Populate cache
         self.display.render(
             surface=self.surface,
-            x=50, y=20, width=200, height=130,
+            position_x=50, position_y=20, width=200, height=130,
             speed=100.0, gear=3, unit="km/h",
             rpm=5000, max_rpm=8000,
             text_color=(255, 255, 255),

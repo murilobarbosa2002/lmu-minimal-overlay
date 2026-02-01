@@ -1,6 +1,6 @@
 import os
 
-os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "1"
+os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "1"
 
 from src.core.infrastructure.app_factory import AppFactory
 

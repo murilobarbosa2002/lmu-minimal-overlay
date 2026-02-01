@@ -27,8 +27,8 @@ def test_concrete_widget_implementation():
     widget = ConcreteWidget(10, 20, 100, 50)
     
     assert isinstance(widget, Widget)
-    assert widget.x == 10
-    assert widget.y == 20
+    assert widget.position_x == 10
+    assert widget.position_y == 20
     assert widget.width == 100
     assert widget.height == 50
     assert widget.rect == pygame.Rect(10, 20, 100, 50)
@@ -44,8 +44,8 @@ def test_widget_positioning():
     widget = MovableWidget(0, 0, 50, 50)
     widget.set_position(100, 100)
     
-    assert widget.x == 100
-    assert widget.y == 100
+    assert widget.position_x == 100
+    assert widget.position_y == 100
     assert widget.rect.x == 100
     assert widget.rect.y == 100
     assert widget.get_rect() == widget.rect

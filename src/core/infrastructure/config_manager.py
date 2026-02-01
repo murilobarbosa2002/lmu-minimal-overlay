@@ -1,8 +1,9 @@
 import json
 import os
 import threading
-from typing import Any, Dict, Optional
+from typing import Any, Dict
 from src.core.interfaces.i_config_manager import IConfigManager
+
 
 class ConfigManager(IConfigManager):
     _instance = None
@@ -18,26 +19,19 @@ class ConfigManager(IConfigManager):
     def __init__(self):
         if self._initialized:
             return
-            
+
         self._config_file = "config.json"
         self._layout_file = "layout.json"
-        
+
         self._config_data: Dict[str, Any] = {}
         self._layout_data: Dict[str, Any] = {}
-        
+
         self._file_lock = threading.Lock()
-        
-        
+
         self._default_config = {
             "version": "1.0.0",
             "update_interval_ms": 16,
-            
-            "window": {
-                "title": "LMU Telemetry Overlay",
-                "default_width": 1920,
-                "default_height": 1080
-            },
-            
+            "window": {"title": "LMU Telemetry Overlay", "default_width": 1920, "default_height": 1080},
             "theme": {
                 "dashboard_card": {
                     "bg_color": [10, 20, 30, 242],
@@ -49,9 +43,8 @@ class ConfigManager(IConfigManager):
                     "mask_color": [255, 255, 255],
                     "lateral_padding": 20,
                     "width": 350,
-                    "height": 130
+                    "height": 130,
                 },
-                
                 "steering_indicator": {
                     "radius": 45,
                     "color_rim": [30, 30, 30],
@@ -59,9 +52,8 @@ class ConfigManager(IConfigManager):
                     "color_center": [50, 50, 50],
                     "tick_start": 30,
                     "tick_end": 150,
-                    "tick_step": 10
+                    "tick_step": 10,
                 },
-                
                 "bar": {
                     "width": 18,
                     "height": 70,
@@ -70,25 +62,22 @@ class ConfigManager(IConfigManager):
                     "centerline_color": [100, 100, 100],
                     "padding": 5,
                     "font_size_value": 16,
-                    "font_size_label": 14
+                    "font_size_label": 14,
                 },
-                
                 "indicator_bars": {
                     "spacing": 12,
                     "throttle_color": [0, 255, 0],
                     "brake_color": [255, 0, 0],
-                    "ffb_color": [255, 165, 0]
+                    "ffb_color": [255, 165, 0],
                 },
-                
                 "edit_mode": {
                     "selection_color": [0, 255, 255],
                     "selection_border_width": 2,
                     "selection_border_radius": 8,
                     "padding_min": 8,
-                    "padding_max": 12
-                }
+                    "padding_max": 12,
+                },
             },
-            
             "defaults": {
                 "telemetry": {
                     "speed": 0.0,
@@ -100,37 +89,19 @@ class ConfigManager(IConfigManager):
                     "clutch_pct": 0.0,
                     "steering_angle": 0.0,
                     "ffb_level": 0.0,
-                    "unit": "km/h"
+                    "unit": "km/h",
                 }
             },
-            
-            "colors": {
-                "ffb_normal": [0, 255, 0],
-                "ffb_warning": [255, 255, 0],
-                "ffb_clipping": [255, 0, 0]
-            },
-            
-            "thresholds": {
-                "ffb_warning": 0.8,
-                "ffb_clipping": 0.95
-            },
-            
-            "performance": {
-                "fps_target": 60
-            }
+            "colors": {"ffb_normal": [0, 255, 0], "ffb_warning": [255, 255, 0], "ffb_clipping": [255, 0, 0]},
+            "thresholds": {"ffb_warning": 0.8, "ffb_clipping": 0.95},
+            "performance": {"fps_target": 60},
         }
-        
+
         self._default_layout = {
-            "window": {
-                "x": 100,
-                "y": 100,
-                "width": 1920,
-                "height": 200,
-                "always_on_top": True
-            },
-            "widgets": []
+            "window": {"x": 100, "y": 100, "width": 1920, "height": 200, "always_on_top": True},
+            "widgets": [],
         }
-        
+
         self._initialized = True
         self.load_config()
         self.load_layout()
@@ -142,7 +113,7 @@ class ConfigManager(IConfigManager):
                 self._save_json(self._config_file, self._config_data)
             else:
                 try:
-                    with open(self._config_file, 'r') as f:
+                    with open(self._config_file, "r") as f:
                         self._config_data = json.load(f)
                 except (json.JSONDecodeError, IOError):
                     self._config_data = self._default_config.copy()
@@ -158,7 +129,7 @@ class ConfigManager(IConfigManager):
                 self._save_json(self._layout_file, self._layout_data)
             else:
                 try:
-                    with open(self._layout_file, 'r') as f:
+                    with open(self._layout_file, "r") as f:
                         self._layout_data = json.load(f)
                 except (json.JSONDecodeError, IOError):
                     self._layout_data = self._default_layout.copy()
@@ -183,15 +154,15 @@ class ConfigManager(IConfigManager):
 
     def _save_json(self, filename: str, data: Dict[str, Any]) -> None:
         try:
-            with open(filename, 'w') as f:
+            with open(filename, "w") as f:
                 json.dump(data, f, indent=4)
         except IOError:
             pass
-    
+
     def get_theme(self, widget_name: str) -> Dict[str, Any]:
         theme = self._config_data.get("theme", {})
         return theme.get(widget_name, {})
-    
+
     def get_defaults(self, category: str) -> Dict[str, Any]:
         defaults = self._config_data.get("defaults", {})
         return defaults.get(category, {})

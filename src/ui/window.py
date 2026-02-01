@@ -1,85 +1,83 @@
-import pygame 
-import sys 
-import os 
-from src .ui .interfaces .i_window_manager import IWindowManager 
-from src .ui .platform .transparency_handler import ITransparencyHandler ,Win32TransparencyHandler ,NullTransparencyHandler 
+import pygame
+import sys
+import os
+from src.ui.interfaces.i_window_manager import IWindowManager
+from src.ui.platform.transparency_handler import ITransparencyHandler, Win32TransparencyHandler, NullTransparencyHandler
 
 
-class WindowManager (IWindowManager ):
-    def __init__ (
-    self ,
-    title :str ="LMU Overlay",
-    width :int =800 ,
-    height :int =600 ,
-    transparency_handler :ITransparencyHandler |None =None 
+class WindowManager(IWindowManager):
+    def __init__(
+        self,
+        title: str = "LMU Overlay",
+        width: int = 800,
+        height: int = 600,
+        transparency_handler: ITransparencyHandler | None = None,
     ):
-        self .title =title 
-        self .width =width 
-        self .height =height 
-        self ._surface :pygame .Surface |None =None 
-        self ._is_running =False 
-        self .clock =pygame .time .Clock ()
-        self .fps =60 
+        self.title = title
+        self.width = width
+        self.height = height
+        self._surface: pygame.Surface | None = None
+        self._is_running = False
+        self.clock = pygame.time.Clock()
+        self.fps = 60
 
-        if transparency_handler is None :
-            self .transparency_handler =(
-            Win32TransparencyHandler ()if sys .platform =="win32"
-            else NullTransparencyHandler ()
+        if transparency_handler is None:
+            self.transparency_handler = (
+                Win32TransparencyHandler() if sys.platform == "win32" else NullTransparencyHandler()
             )
-        else :
-            self .transparency_handler =transparency_handler 
-        
-        self .x =0 
-        self .y =0 
+        else:
+            self.transparency_handler = transparency_handler
 
-    def set_position (self ,x :int ,y :int )->None :
-        self .x =x 
-        self .y =y 
-        os .environ ['SDL_VIDEO_WINDOW_POS']="%d,%d" %(x ,y )
+        self.x = 0
+        self.y = 0
 
-    def init (self )->None :
-        if sys .platform !="win32":
-            os .environ ['SDL_VIDEO_WINDOW_ALWAYS_ON_TOP']='1'
-        
-        pygame .init ()
-        pygame .display .set_caption (self .title )
-        flags =pygame .SRCALPHA |pygame .NOFRAME 
-        self ._surface =pygame .display .set_mode ((self .width ,self .height ),flags )
+    def set_position(self, x: int, y: int) -> None:
+        self.x = x
+        self.y = y
+        os.environ["SDL_VIDEO_WINDOW_POS"] = "%d,%d" % (x, y)
 
-        if sys .platform =="win32":
-            hwnd =pygame .display .get_wm_info ()["window"]
-            self .transparency_handler .apply_transparency (hwnd )
+    def init(self) -> None:
+        if sys.platform != "win32":
+            os.environ["SDL_VIDEO_WINDOW_ALWAYS_ON_TOP"] = "1"
 
-        self ._is_running =True 
+        pygame.init()
+        pygame.display.set_caption(self.title)
+        flags = pygame.SRCALPHA | pygame.NOFRAME
+        self._surface = pygame.display.set_mode((self.width, self.height), flags)
 
-    def clear (self )->None :
-        if self ._surface :
-            self ._surface .fill ((255 ,0 ,128 ))
+        if sys.platform == "win32":
+            hwnd = pygame.display.get_wm_info()["window"]
+            self.transparency_handler.apply_transparency(hwnd)
 
-    def update_display (self )->None :
-        pygame .display .flip ()
-        self .clock .tick (self .fps )
+        self._is_running = True
 
-    def handle_events (self )->list [pygame .event .Event ]:
-        events =pygame .event .get ()
-        for event in events :
-            if event .type ==pygame .QUIT :
-                self ._is_running =False 
-        return events 
+    def clear(self) -> None:
+        if self._surface:
+            self._surface.fill((255, 0, 128))
 
-    def close (self )->None :
-        self ._is_running =False 
-        pygame .quit ()
+    def update_display(self) -> None:
+        pygame.display.flip()
+        self.clock.tick(self.fps)
 
-    @property 
-    def surface (self )->pygame .Surface |None :
-        return self ._surface 
+    def handle_events(self) -> list[pygame.event.Event]:
+        events = pygame.event.get()
+        for event in events:
+            if event.type == pygame.QUIT:
+                self._is_running = False
+        return events
 
-    @property 
-    def is_running (self )->bool :
-        return self ._is_running 
+    def close(self) -> None:
+        self._is_running = False
+        pygame.quit()
 
-    @is_running .setter 
-    def is_running (self ,value :bool )->None :
-        self ._is_running =value 
+    @property
+    def surface(self) -> pygame.Surface | None:
+        return self._surface
 
+    @property
+    def is_running(self) -> bool:
+        return self._is_running
+
+    @is_running.setter
+    def is_running(self, value: bool) -> None:
+        self._is_running = value

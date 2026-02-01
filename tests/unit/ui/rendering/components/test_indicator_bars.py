@@ -18,8 +18,8 @@ class TestIndicatorBars:
     def test_render_all_bars(self):
         self.bars.render(
             surface=self.surface,
-            x=50,
-            y=50,
+            position_x=50,
+            position_y=50,
             throttle=0.8,
             brake=0.3,
             ffb=0.6,

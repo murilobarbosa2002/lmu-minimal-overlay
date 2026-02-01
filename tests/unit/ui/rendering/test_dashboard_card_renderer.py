@@ -18,8 +18,8 @@ class TestDashboardCardRenderer:
     def test_render_calls_components(self):
         self.renderer.render(
             surface=self.surface,
-            x=100,
-            y=100,
+            position_x=100,
+            position_y=100,
             width=400,
             height=130,
             speed=120.0,
@@ -41,8 +41,8 @@ class TestDashboardCardRenderer:
     def test_render_draws_background(self):
         self.renderer.render(
             surface=self.surface,
-            x=50,
-            y=50,
+            position_x=50,
+            position_y=50,
             width=400,
             height=130,
             speed=180.0,
@@ -68,7 +68,7 @@ class TestDashboardCardRenderer:
         with patch('pygame.draw.line') as mock_draw_line:
             self.renderer.render(
                 surface=self.surface,
-                x=50, y=50, width=400, height=130,
+                position_x=50, position_y=50, width=400, height=130,
                 speed=180.0, gear=6, unit="km/h",
                 rpm=7000, max_rpm=8000,
                 steering_angle=0.0, throttle_pct=1.0, brake_pct=0.3, ffb_level=0.8,
