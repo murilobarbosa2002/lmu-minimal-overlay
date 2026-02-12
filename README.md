@@ -26,7 +26,6 @@ Overlay de telemetria em tempo real para Le Mans Ultimate. HUD transparente que 
 - **Design Minimalista**: Interface flat UI moderna
 - **Desenvolvimento WSL**: Funciona sem o jogo usando dados mockados
 - **100% Test Coverage**: 217 testes unitários e de integração
-- **Agent Rules**: Políticas de código documentadas em `.agent/rules.md`
 
 ## 🚀 Quick Start
 
